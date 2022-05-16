@@ -57,4 +57,12 @@ public class Rating {
     public void setHabitation(Habitation habitation) {
         this.habitation = habitation;
     }
+
+    public int getRatingId() {
+        return ratingId;
+    }
+
+    public void setRatingId(int ratingId) {
+        this.ratingId = ratingId;
+    }
 }

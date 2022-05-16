@@ -2,6 +2,8 @@ package fr.isep.homeExchange.config;
 
 import fr.isep.homeExchange.model.Habitation;
 import fr.isep.homeExchange.repository.HabitationRepository;
+import fr.isep.homeExchange.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,12 @@ import java.util.List;
 
 @Configuration
 public class HabitationConfig {
+
+    private final UserRepository userRepository;
+    @Autowired
+    public HabitationConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Bean
     CommandLineRunner commandLineRunner(HabitationRepository repository) {

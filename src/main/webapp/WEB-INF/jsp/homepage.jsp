@@ -6,8 +6,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
+    <link rel="stylesheet" href="">
 </head>
 <body>
+<header>
+    Texte
+</header>
 <div>
     <form action="/habitation/search" method="post">
         <table>
