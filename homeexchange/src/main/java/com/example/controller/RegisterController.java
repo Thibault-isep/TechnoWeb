@@ -1,9 +1,4 @@
-package com.example.Login;
-
-import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package com.example.controller;
 
 import com.example.model.User;
 import com.example.model.UserRepository;
@@ -13,16 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestBody;
 
-
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 @Controller
-public class LoginController {
+public class RegisterController {
 
     @Autowired
     private UserRepository userRepo;
@@ -33,12 +28,11 @@ public class LoginController {
     }
 
     @PostMapping("/process_register")
-    public String processRegister(User user) {
+    public String processRegister(@RequestBody User user) throws SQLException {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-
-        userRepo.save(user);
+        userRepo.save(new User());
 
         return "register_success";
     }

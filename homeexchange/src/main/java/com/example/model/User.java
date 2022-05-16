@@ -35,6 +35,24 @@ public class User {
     @Column(nullable = false, unique = true, length = 45)
     private String email;
 
+    @Column(nullable = false, unique = true, length = 45)
+    private String adress;
+
+    @Column(nullable = false, unique = false, length = 45)
+    private String city;
+
+    @Column(nullable = false, unique = true, length = 45)
+    private String dob;
+
+    @Column(nullable = false, unique = true, length = 45)
+    private String gender;
+
+    @Column(nullable = false, unique = true, length = 45)
+    private int phone_number;
+
+    @Column(nullable = false, unique = true, length = 45)
+    private int zip_code;
+
     @Column(nullable = false, length = 64)
     private String password;
 
