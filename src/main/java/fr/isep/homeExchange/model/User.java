@@ -26,6 +26,11 @@ public class User {
     private String phone_number;
     private String description;
 
+    public User(String fname, String lname) {
+        this.first_name = fname;
+        this.last_name = lname;
+    }
+
     public User(String first_name, String last_name, String email, String username, String password, LocalDate dob, int gender, String address, String city, String zip_code, String phone_number, String description) {
         this.first_name = first_name;
         this.last_name = last_name;

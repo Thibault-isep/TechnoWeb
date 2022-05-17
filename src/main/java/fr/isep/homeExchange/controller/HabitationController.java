@@ -5,13 +5,14 @@ import fr.isep.homeExchange.model.Rating;
 import fr.isep.homeExchange.repository.HabitationRepository;
 import fr.isep.homeExchange.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
+@Controller
 public class HabitationController {
 
     private HabitationRepository habitationRepository;
@@ -32,7 +33,7 @@ public class HabitationController {
 
     //NON RELIE AU VIEW//
     @GetMapping("/getHabitationsByUser/{user}")
-    public List<Habitation> getHabitationsByUserId(@PathVariable ("user") Integer userId){
+    public List<Habitation> getHabitationsByUserUserId(@PathVariable ("user") Integer userId){
         return habitationRepository.findAll().stream()
                 .filter(habitation -> userId.equals(habitation.getUser().getUserId()))
                 .collect(Collectors.toList());
