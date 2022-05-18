@@ -6,9 +6,8 @@ import fr.isep.homeExchange.repository.HabitationRepository;
 import fr.isep.homeExchange.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -40,6 +39,19 @@ public class UserController {
     @GetMapping("/getUsersHab/{userId}")
     public List<Habitation> getUsersHab(@PathVariable("userId") Integer userId) {
         return habitationRepository.getHabitationsByUserId(1);
+    }
+
+    @PostMapping("/login-verif")
+    @ResponseBody
+    public String login(@RequestParam(name = "Fname") String Fname, @RequestParam(name = "LName") String LName) {
+        User user = new User(Fname, LName);
+        userRepository.save(user);
+        return Fname + LName;
+    }
+
+    @GetMapping(value = "login")
+    public String homePage(Model model) {
+        return "login";
     }
 }
 

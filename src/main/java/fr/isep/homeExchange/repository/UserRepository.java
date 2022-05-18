@@ -8,9 +8,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT h FROM Habitation h WHERE h.user.userId = :x")
     public List<Habitation> usersHabitation(@Param("x") int id);
+
+    Optional<User> findUserByUsername(String username);
 }

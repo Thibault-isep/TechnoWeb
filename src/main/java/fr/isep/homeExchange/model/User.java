@@ -25,13 +25,14 @@ public class User {
     private String zip_code;
     private String phone_number;
     private String description;
+    private String roles;
 
     public User(String fname, String lname) {
         this.first_name = fname;
         this.last_name = lname;
     }
 
-    public User(String first_name, String last_name, String email, String username, String password, LocalDate dob, int gender, String address, String city, String zip_code, String phone_number, String description) {
+    public User(String first_name, String last_name, String email, String username, String password, LocalDate dob, int gender, String address, String city, String zip_code, String phone_number, String description, String roles) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -44,6 +45,7 @@ public class User {
         this.zip_code = zip_code;
         this.phone_number = phone_number;
         this.description = description;
+        this.roles = roles;
     }
 
 
@@ -161,5 +163,13 @@ public class User {
                 ", name='" + first_name + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 }
