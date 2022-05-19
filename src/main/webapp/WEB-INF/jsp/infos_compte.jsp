@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="">
 </head>
 <body>
-<c: foreach var="user" items="user" >
-    ${user.first_name}
-</c:>
+<c:if test="$ !empty sessionScope.user" >
+    <p>Vous êtes ${sessionScope.user.email} ${sessionScope.user.first_name} ${sessionScope.user.username}</p>
+</c:if>
 </body>

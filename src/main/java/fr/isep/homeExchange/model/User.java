@@ -155,21 +155,31 @@ public class User {
         this.email = email;
     }
 
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", name='" + first_name + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
     public String getRoles() {
         return roles;
     }
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", dob=" + dob +
+                ", gender=" + gender +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", zip_code='" + zip_code + '\'' +
+                ", phone_number='" + phone_number + '\'' +
+                ", description='" + description + '\'' +
+                ", roles='" + roles + '\'' +
+                '}';
     }
 }
