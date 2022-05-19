@@ -9,15 +9,15 @@
     <title>Login</title>
 </head>
 <body>
-<h1>Login</h1>
-<h2>${errorMsg}</h2>
+<h1>Register</h1>
 <form method="post">
-    <label for="Username">Username</label>
-    <input name="Username" id="Username" type="text" placeholder="username">
+    <label for="FName">FName</label>
+    <input name="FName" id="FName" type="text" placeholder="name">
     <br>
-    <label for="Password">Password</label>
-    <input name="Password" id="Password" type="text" placeholder="Password">
+    <label for="LName">LName</label>
+    <input name="LName" id="LName" type="text" placeholder="lastname">
     <br>
     <input type="submit" value="envoyer">
 </form>
+
 </body>
