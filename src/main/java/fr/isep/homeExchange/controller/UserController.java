@@ -104,5 +104,12 @@ public class UserController {
             return("infos_compte");
         }
     }
+
+    @GetMapping("logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(true);
+        session.invalidate();
+        return "index";
+    }
 }
 
