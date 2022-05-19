@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Controller
 public class ApplicationController {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -37,18 +38,18 @@ public class ApplicationController {
     }
 
     @GetMapping("login")
-    public String login() {
+    public String login(HttpServletRequest request, HttpServletResponse response) {
         return "login";
     }
 
     @PostMapping("login")
-    public String verifLogin(ModelMap modelMap, @RequestParam String Username, @RequestParam String Password, Model model, HttpServletRequest httpServletRequest, HttpServletResponse response) {
-        HttpSession s = httpServletRequest.getSession();
+    public String verifLogin(ModelMap modelMap, @RequestParam String Username, @RequestParam String Password, Model model, HttpServletRequest request, HttpServletResponse response) {
         User user = userRepository.findAll().stream()
                 .filter(userstream -> Username.equals(userstream.getUsername()))
                 .findAny().get();
         model.addAttribute("user", user);
-        s.setAttribute("userId", user.getUserId());
+        HttpSession session = request.getSession();
+        session.setAttribute("user", user);
         if (user.getPassword().equals(Password)) {
             return "index";
         }
@@ -57,9 +58,13 @@ public class ApplicationController {
     }
 
     @GetMapping("infos_compte")
-    public String infos_compte(HttpServletRequest httpServletRequest, Model model, HttpSession httpSession, HttpServletResponse httpServletResponse) {
-        HttpSession s = httpServletRequest.getSession();
-        model.addAttribute("user", s.getAttribute("user"));
-        return("infos_compte");
+    public String infos_compte(Model model, HttpSession httpSession) {
+        if (httpSession.getAttribute("user") == null) {
+            return "index";
+        } else {
+            System.out.println("hello" + httpSession.getAttribute("user"));
+            model.addAttribute("user",httpSession.getAttribute("user"));
+            return("infos_compte");
+        }
     }
 }
