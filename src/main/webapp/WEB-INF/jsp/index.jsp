@@ -13,5 +13,5 @@
         <p>Bienvenue ! ${user.username}</p>
     </c:>
     <a href="infos_compte">infos de compte</a>
-    <a href="login">login</a>
+    <a href="login">login</a><a href="logout">logout</a>
 </body>
