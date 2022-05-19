@@ -26,8 +26,8 @@ public class HomeExchangeApplication {
 		ReservationRepository reservationRepository = configurableApplicationContext.getBean(ReservationRepository.class);
 		RatingRepository ratingRepository = configurableApplicationContext.getBean(RatingRepository.class);
 
-		User Barth = new User("Barth", "Est", "email", "BarthEst", "Pass", LocalDate.of(2000, 11,10), 0, "10 rue Jules Ferry", "Levallois", "92300", "0606060606", "I'm Barthelemy Estignard");
-		User Thibault = new User("Thibault", "Chanier", "Thibault.Chanier@gmail.com", "ThibChan", "Pass2", LocalDate.of(1911, 01, 02), 0, "24 rue de Vanves", "Issy-les-Moulineaux", "92130", "0707070707", "Too old for that stuff");
+		User Barth = new User("Barth", "Est", "email", "BarthEst", "Pass", LocalDate.of(2000, 11,10), 0, "10 rue Jules Ferry", "Levallois", "92300", "0606060606", "I'm Barthelemy Estignard","ROLE_USER");
+		User Thibault = new User("Thibault", "Chanier", "Thibault.Chanier@gmail.com", "ThibChan", "Pass2", LocalDate.of(1911, 01, 02), 0, "24 rue de Vanves", "Issy-les-Moulineaux", "92130", "0707070707", "Too old for that stuff", "ROLE_ADMIN");
 		List<User> users = Arrays.asList(Barth, Thibault);
 		userRepository.saveAll(users);
 		Habitation hab1 = new Habitation(16, "10 rue Jules Ferry", Barth);
