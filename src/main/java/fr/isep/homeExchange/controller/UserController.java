@@ -31,7 +31,9 @@ public class UserController {
 
     //NON RELIE AU VIEW//
     @GetMapping("/getUsers")
-    public List<User> getUsers() {return userRepository.findAll();}
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
 
     @GetMapping("/getUsers/{user}")
     public List<User> getUserById(@PathVariable("user") Integer userId) {
@@ -76,17 +78,23 @@ public class UserController {
     }
 
     @GetMapping("login")
-    public String login(HttpServletRequest request, HttpServletResponse response) {
-        return "login";
+    public String login(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        if (session.getAttribute("user") == null) {
+            return "login";
+        } else {
+            return "index";
+        }
     }
 
     @PostMapping("login")
     public String verifLogin(ModelMap modelMap, @RequestParam String Username, @RequestParam String Password, Model model, HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(true);
+        System.out.println(session.getAttribute("user"));
+        System.out.println(session.getAttributeNames());
         User user = userRepository.findAll().stream()
                 .filter(userstream -> Username.equals(userstream.getUsername()))
                 .findAny().get();
         model.addAttribute("user", user);
-        HttpSession session = request.getSession();
         session.setAttribute("user", user);
         if (user.getPassword().equals(Password)) {
             return "index";
@@ -95,13 +103,14 @@ public class UserController {
         return "login";
     }
 
+
     @GetMapping("infos_compte")
     public String infos_compte(Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("user") == null) {
             return "index";
         } else {
-            model.addAttribute("user",httpSession.getAttribute("user"));
-            return("infos_compte");
+            model.addAttribute("user", httpSession.getAttribute("user"));
+            return ("infos_compte");
         }
     }
 
@@ -109,7 +118,7 @@ public class UserController {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
         session.invalidate();
-        return "index";
+        return "logoutsuccessful";
     }
 }
 
