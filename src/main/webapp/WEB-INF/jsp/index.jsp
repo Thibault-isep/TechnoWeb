@@ -10,7 +10,7 @@
 </head>
 <body>
     <c: foreach var="user" items="user" >
-        <p>Bienvenue ! ${user.first_name}</p>
+        <p>Bienvenue ! ${user.username}</p>
     </c:>
     <a href="infos_compte">infos de compte</a>
     <a href="login">login</a>
