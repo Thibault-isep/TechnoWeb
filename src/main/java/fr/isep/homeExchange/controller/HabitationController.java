@@ -58,11 +58,17 @@ public class HabitationController {
     }
 
     @GetMapping(value = "profile")
-    public String profile(Model model, @RequestParam(name = "userId") int userId){
-        List<Habitation> usersHabitationsList = habitationRepository.getHabitationsByUserId(userId);
+    public String profile(Model model, @RequestParam(name = "userId") int userId) {
+        List<Habitation> usersHabitationsList = habitationRepository.getHabitationByUserId(userId);
         model.addAttribute("UsersHabitationsList", usersHabitationsList);
         return "profile";
     }
+
+    @RequestMapping(value = "habitation/{idHabitation}")
+    public String habitationInformations(Model model, @PathVariable("idHabitation") int idHabitation) {
+        Habitation habitation = habitationRepository.getHabitationByIdHabitation(idHabitation);
+        model.addAttribute("habitation", habitation);
+        System.out.println(habitation.getIdHabitation());
+        return "habitationInformations";
+    }
 }
-
-

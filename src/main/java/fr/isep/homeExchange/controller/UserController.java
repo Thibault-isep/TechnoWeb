@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Controller
 public class UserController {
 
@@ -42,7 +43,7 @@ public class UserController {
 
     @GetMapping("/getUsersHab/{userId}")
     public List<Habitation> getUsersHab(@PathVariable("userId") Integer userId) {
-        return habitationRepository.getHabitationsByUserId(1);
+        return habitationRepository.getHabitationByUserId(1);
     }
 
     @PostMapping("/login-verif")
@@ -112,4 +113,3 @@ public class UserController {
         return "index";
     }
 }
-

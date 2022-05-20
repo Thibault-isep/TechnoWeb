@@ -26,6 +26,7 @@
                     <td>${h.idHabitation}</td>
                     <td>${h.bathrooms}</td>
                     <td>${h.city}</td>
+                    <td><form action="/habitation/${h.idHabitation}" method="POST"><input type="submit" name="seeHabitation" value="See the habitation"/></form></td>
                 </tr>
                 </c:forEach>
                 </tr>
