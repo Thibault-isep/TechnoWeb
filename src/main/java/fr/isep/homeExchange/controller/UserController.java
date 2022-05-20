@@ -74,12 +74,13 @@ public class UserController {
     @PostMapping("register")
     public String saveRegister(@RequestParam String FName, @RequestParam String LName, HttpSession httpSession) {
         userRepository.save(new User(FName, LName));
+        System.out.println(httpSession.getAttribute("userId"));
         return "index";
     }
 
     @GetMapping("login")
-    public String login(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        if (session.getAttribute("user") == null) {
+    public String login(HttpSession session) {
+        if (session.getAttribute("userId") == null) {
             return "login";
         } else {
             return "index";
@@ -89,13 +90,11 @@ public class UserController {
     @PostMapping("login")
     public String verifLogin(ModelMap modelMap, @RequestParam String Username, @RequestParam String Password, Model model, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
-        System.out.println(session.getAttribute("user"));
-        System.out.println(session.getAttributeNames());
         User user = userRepository.findAll().stream()
                 .filter(userstream -> Username.equals(userstream.getUsername()))
                 .findAny().get();
         model.addAttribute("user", user);
-        session.setAttribute("user", user);
+        session.setAttribute("userId", user.getUserId());
         if (user.getPassword().equals(Password)) {
             return "index";
         }
@@ -103,15 +102,24 @@ public class UserController {
         return "login";
     }
 
-
-    @GetMapping("infos_compte")
-    public String infos_compte(Model model, HttpSession httpSession) {
-        if (httpSession.getAttribute("user") == null) {
+    @GetMapping("collectInfoCompte")
+    public String collectInfosCompte(Model model, HttpSession httpSession) {
+        System.out.println(httpSession.getAttribute("userId"));
+        if (httpSession.getAttribute("userId") == null) {
             return "index";
         } else {
-            model.addAttribute("user", httpSession.getAttribute("user"));
-            return ("infos_compte");
+            User user = getUserBySession(httpSession);
+            System.out.println(user.getUsername());
+            List<Habitation> habits = habitationRepository.getHabitationsByUserId(user.getUserId());
+            model.addAttribute("user", user);
+            model.addAttribute("habits", habits);
+            return "infoscompte";
         }
+    }
+
+    @RequestMapping("infoscompte")
+    public String infos_compte(Model model, HttpSession httpSession, HttpServletRequest request, HttpServletResponse response) {
+        return ("infoscompte");
     }
 
     @GetMapping("logout")
@@ -119,6 +127,11 @@ public class UserController {
         HttpSession session = request.getSession(true);
         session.invalidate();
         return "logoutsuccessful";
+    }
+
+    private User getUserBySession(HttpSession session) {
+        int userId = (int) session.getAttribute("userId");
+        return userRepository.findUserByUserId(userId);
     }
 }
 

@@ -39,7 +39,7 @@ public class Habitation {
         this.user = user;
     }
 
-    public Habitation(String type, int bed, int rooms, int bathrooms, boolean isGarden, boolean isGarage, boolean isWifi, String description, boolean available, String address, String city, String country, String zip_code, String services, String constraints) {
+    public Habitation(String type, int bed, int rooms, int bathrooms, boolean isGarden, boolean isGarage, boolean isWifi, String description, boolean available, String address, String city, String country, String zip_code, String services, String constraints,User user) {
         this.type = type;
         this.bed = bed;
         this.rooms = rooms;
@@ -54,6 +54,103 @@ public class Habitation {
         this.country = country;
         this.zip_code = zip_code;
         this.services = services;
+        this.constraints = constraints;
+        this.user = user;
+    }
+
+    public int getBed() {
+        return bed;
+    }
+
+    public void setBed(int bed) {
+        this.bed = bed;
+    }
+
+    public int getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(int rooms) {
+        this.rooms = rooms;
+    }
+
+    public boolean isGarden() {
+        return isGarden;
+    }
+
+    public void setGarden(boolean garden) {
+        isGarden = garden;
+    }
+
+    public boolean isGarage() {
+        return isGarage;
+    }
+
+    public void setGarage(boolean garage) {
+        isGarage = garage;
+    }
+
+    public boolean isWifi() {
+        return isWifi;
+    }
+
+    public void setWifi(boolean wifi) {
+        isWifi = wifi;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getZip_code() {
+        return zip_code;
+    }
+
+    public void setZip_code(String zip_code) {
+        this.zip_code = zip_code;
+    }
+
+    public String getServices() {
+        return services;
+    }
+
+    public void setServices(String services) {
+        this.services = services;
+    }
+
+    public String getConstraints() {
+        return constraints;
+    }
+
+    public void setConstraints(String constraints) {
         this.constraints = constraints;
     }
 
@@ -104,8 +201,23 @@ public class Habitation {
     @Override
     public String toString() {
         return "Habitation{" +
-                "habitationId=" + idHabitation +
+                "idHabitation=" + idHabitation +
                 ", type='" + type + '\'' +
+                ", bed=" + bed +
+                ", rooms=" + rooms +
+                ", bathrooms=" + bathrooms +
+                ", isGarden=" + isGarden +
+                ", isGarage=" + isGarage +
+                ", isWifi=" + isWifi +
+                ", description='" + description + '\'' +
+                ", available=" + available +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", zip_code='" + zip_code + '\'' +
+                ", services='" + services + '\'' +
+                ", constraints='" + constraints + '\'' +
+                ", user=" + user +
                 '}';
     }
 }

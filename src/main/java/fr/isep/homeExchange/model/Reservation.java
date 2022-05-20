@@ -40,7 +40,10 @@ public class Reservation {
         this.user = user;
     }
 
-    public Reservation(){}
+    public Reservation() {
+
+    }
+
 
     public String getName() {
         return name;
