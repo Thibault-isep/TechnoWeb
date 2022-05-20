@@ -30,5 +30,6 @@
         </c:forEach>
     </table>
 </c:if>
+<a href="/">Menu</a>
 
 </body>

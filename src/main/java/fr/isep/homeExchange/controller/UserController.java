@@ -62,7 +62,12 @@ public class UserController {
 
 
     @RequestMapping("/")
-    public String home() {
+    public String home(HttpSession session, Model model) {
+        if (session.getAttribute("userId") == null) {
+            return "index";
+        }
+        User user = getUserBySession(session);
+        model = createUserModel(user, model);
         return "index";
     }
 
@@ -79,10 +84,12 @@ public class UserController {
     }
 
     @GetMapping("login")
-    public String login(HttpSession session) {
+    public String login(HttpSession session, Model model) {
         if (session.getAttribute("userId") == null) {
             return "login";
         } else {
+            User user = getUserBySession(session);
+            model = createUserModel(user, model);
             return "index";
         }
     }
@@ -93,7 +100,7 @@ public class UserController {
         User user = userRepository.findAll().stream()
                 .filter(userstream -> Username.equals(userstream.getUsername()))
                 .findAny().get();
-        model.addAttribute("user", user);
+        model = createUserModel(user, model);
         session.setAttribute("userId", user.getUserId());
         if (user.getPassword().equals(Password)) {
             return "index";
@@ -109,9 +116,9 @@ public class UserController {
             return "index";
         } else {
             User user = getUserBySession(httpSession);
+            model = createUserModel(user, model);
             System.out.println(user.getUsername());
             List<Habitation> habits = habitationRepository.getHabitationsByUserId(user.getUserId());
-            model.addAttribute("user", user);
             model.addAttribute("habits", habits);
             return "infoscompte";
         }
@@ -132,6 +139,10 @@ public class UserController {
     private User getUserBySession(HttpSession session) {
         int userId = (int) session.getAttribute("userId");
         return userRepository.findUserByUserId(userId);
+    }
+
+    private Model createUserModel(User user, Model model) {
+        return model.addAttribute("user", user);
     }
 }
 
