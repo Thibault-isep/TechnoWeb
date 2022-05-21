@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,14 +22,8 @@ public class ApplicationController {
     private UserRepository userRepository;
 
     @RequestMapping("/")
-    public String home(Model model, HttpSession httpSession) {
-        if (httpSession.getAttribute("user") == null) {
-            return "index";
-        } else {
-            System.out.println("hello" + httpSession.getAttribute("user"));
-            model.addAttribute("user",httpSession.getAttribute("user"));
-            return "index";
-        }
+    public String home() {
+        return "index";
     }
 
     @GetMapping("register")
@@ -50,7 +43,7 @@ public class ApplicationController {
     }
 
     @PostMapping("login")
-    public String verifLogin(ModelMap modelMap, @RequestParam String Username, @RequestParam String Password, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String verifLogin(ModelMap modelMap, @RequestParam String Username, @RequestParam String Password, Model model, HttpServletRequest request, HttpServletResponse response) {
         User user = userRepository.findAll().stream()
                 .filter(userstream -> Username.equals(userstream.getUsername()))
                 .findAny().get();
@@ -58,7 +51,7 @@ public class ApplicationController {
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
         if (user.getPassword().equals(Password)) {
-            response.sendRedirect("/infos_compte");
+            return "index";
         }
         modelMap.put("errorMsg", "Please provide the correct username and password");
         return "login";
