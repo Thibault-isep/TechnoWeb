@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto',sans-serif;
+}
+
+.header{
+    min-height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 7%;
+}
+.logo{
+    color: white;
+}
+.nav-links li{
+    list-style: none;
+    display: inline-block;
+    margin: 10px 30px;
+}
+
+.nav-links li a{
+    text-decoration: none;
+    color: #fff;
+}
+.connexion-links li{
+    list-style: none;
+    display: inline-block;
+    margin: 10px 30px;
+}
+
+.connexion-links li a{
+    text-decoration: none;
+    color: #fff;
+}
+.register-btn{
+    background: #fff;
+    color: black !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.container{
+    padding: 0 7%;
+}
+
+.header h1{
+    font-size: 4vw;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+    padding-top: 22%;
+}
+
+.search-bar{
+    background: white;
+    width: 60%;
+    margin: 30px auto;
+    padding: 6px 10px 6px 30px;
+    border-radius: 50px;
+}
+
+.search-bar form{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-bar form input{
+    display: block;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+.search-bar form button{
+    background: #008489;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.search-bar form button img{
+    width: 15px;
+    margin-top: 7px;
+}
+
+.location-input{
+    flex: 0.8;
+}
+
+.other-input{
+    flex: 0.4;
+}
+.search-bar form label{
+    font-weight: 600;
+}
+
+/*-------------TRENDING PLACES --------------*/
+.sub-title{
+    margin: 50px 0 20px;
+    font-size: 2.2vw;
+    font-weight: 500;
+    color: black;
+}
+.trending{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px, 1fr));
+    grid-gap: 30px;
+    margin-bottom: 30px;
+}
+
+.trending div img{
+    width: 350px;
+    height: 250px;
+    border-radius: 10px;
+}
+
+.trending h3{
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/*---Call to action --- */
+.cta{
+    margin: 80px 0;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 5%;
+    color: white;
+}
+
+.cta h3{
+    font-size: 4vw;
+    line-height: 5.3vw;
+    font-weight: 500;
+}
+
+.cta p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.cta-btn{
+    background: #008489;
+    color: white;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.about{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.paragraphe{
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    justify-content: space-around;
+    align-items: center;
+    text-align: justify;
+}
+
+/*--Listing--*/
+
+nav.white{
+    background: white;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+}
+nav.white .logo{
+    color: #008489;
+}
+nav.white .nav-links li a{
+    color: black;
+}
+
+nav.white .register-btn{
+    background: #008489;
+    color: white !important;
+}
+nav.white .login-btn{
+    color: black !important;
+}
+.active{
+    position: relative;
+}
+.active::after{
+    content: '';
+    width: 25px;
+    height: 2px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -12px;
+    border-radius: 2px;
+}
+nav.white a.active::after{
+    background: #008489;
+}
+
+.list-container{
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.left-col{
+    flex-basis: 70%;
+}
+.left-col h1{
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.house{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 30px 0;
+    border-top: 1px solid #ccc;
+}
+
+.house-img{
+    flex-basis: 40%;
+}
+.house-img img{
+    width: 300px;
+    border-radius: 12px;
+}
+
+.house-info{
+    flex-basis: 58%;
+    color: #555;
+}
+
+.house-info h3{
+    font-weight: 600;
+    color: #333;
+    font-size: 22px;
+    margin: 4px 0;
+}
+
+.house-info i{
+    color: #008489;
+    font-size: 18px;
+    margin: 10px 1px;
+}
+.right-col{
+    flex-basis: 25%;
+}
+
+/*----House details------*/
+.house-details{
+    padding: 0 12%;
+}
+
+.house-title{
+    margin-top: 50px;
+}
+
+.house-title h1{
+    font-weight: 600;
+}
+
+.house-title .row{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.house-title span{
+    max-resolution: 0 20px;
+}
+
+.house-title i{
+    color: #008489;
+}
+
+.gallery{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-areas: 'first first . .' 'first first . .';
+    margin: 20px 0;
+}
+
+.gallery div img{
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+}
+
+.gallery-img-1{
+    grid-area: first;
+}
+
+.small-details h2{
+    font-weight: 500;
+}
+.line{
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px 0 50px;
+}
+
+.reservation{
+    margin: 30px 0;
+    background: #fff;
+    box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 10px 50px;
+    justify-content: space-between;
+}
+
+.reservation label{
+    display: block;
+}
+
+.reservation div{
+    padding: 20px;
+}
+
+.reservation input{
+    background: transparent;
+    border: 0;
+    outline: none;
+}
+
+.reservation button{
+    background: #008489;
+    border: 0;
+    outline: none;
+    color: #fff;
+    padding: 18px;
+    width: 350px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}

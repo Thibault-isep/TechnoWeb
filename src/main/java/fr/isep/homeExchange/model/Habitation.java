@@ -18,9 +18,9 @@ public class Habitation {
     private int bed;
     private int rooms;
     private int bathrooms;
-    private boolean isGarden;
-    private boolean isGarage;
-    private boolean isWifi;
+    private boolean hasGarden;
+    private boolean hasGarage;
+    private boolean hasWifi;
     private String description;
     private boolean available;
     private String address;
@@ -39,14 +39,14 @@ public class Habitation {
         this.user = user;
     }
 
-    public Habitation(String type, int bed, int rooms, int bathrooms, boolean isGarden, boolean isGarage, boolean isWifi, String description, boolean available, String address, String city, String country, String zip_code, String services, String constraints) {
+    public Habitation(String type, int bed, int rooms, int bathrooms, boolean isGarden, boolean hasGarage, boolean hasWifi, String description, boolean available, String address, String city, String country, String zip_code, String services, String constraints) {
         this.type = type;
         this.bed = bed;
         this.rooms = rooms;
         this.bathrooms = bathrooms;
-        this.isGarden = isGarden;
-        this.isGarage = isGarage;
-        this.isWifi = isWifi;
+        this.hasGarden = isGarden;
+        this.hasGarage = hasGarage;
+        this.hasWifi = hasWifi;
         this.description = description;
         this.available = available;
         this.address = address;
@@ -65,8 +65,8 @@ public class Habitation {
         return idHabitation;
     }
 
-    public void setIdHabitation(int id) {
-        this.idHabitation = id;
+    public void setIdHabitation(int idHabitation) {
+        this.idHabitation = idHabitation;
     }
 
     public String getType() {
@@ -77,6 +77,22 @@ public class Habitation {
         this.type = type;
     }
 
+    public int getBed() {
+        return bed;
+    }
+
+    public void setBed(int bed) {
+        this.bed = bed;
+    }
+
+    public int getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(int rooms) {
+        this.rooms = rooms;
+    }
+
     public int getBathrooms() {
         return bathrooms;
     }
@@ -85,12 +101,92 @@ public class Habitation {
         this.bathrooms = bathrooms;
     }
 
+    public boolean isHasGarden() {
+        return hasGarden;
+    }
+
+    public void setHasGarden(boolean hasGarden) {
+        this.hasGarden = hasGarden;
+    }
+
+    public boolean isHasGarage() {
+        return hasGarage;
+    }
+
+    public void setHasGarage(boolean hasGarage) {
+        this.hasGarage = hasGarage;
+    }
+
+    public boolean isHasWifi() {
+        return hasWifi;
+    }
+
+    public void setHasWifi(boolean hasWifi) {
+        this.hasWifi = hasWifi;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getCity() {
         return city;
     }
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getZip_code() {
+        return zip_code;
+    }
+
+    public void setZip_code(String zip_code) {
+        this.zip_code = zip_code;
+    }
+
+    public String getServices() {
+        return services;
+    }
+
+    public void setServices(String services) {
+        this.services = services;
+    }
+
+    public String getConstraints() {
+        return constraints;
+    }
+
+    public void setConstraints(String constraints) {
+        this.constraints = constraints;
     }
 
     public User getUser() {
@@ -104,8 +200,23 @@ public class Habitation {
     @Override
     public String toString() {
         return "Habitation{" +
-                "habitationId=" + idHabitation +
+                "idHabitation=" + idHabitation +
                 ", type='" + type + '\'' +
+                ", bed=" + bed +
+                ", rooms=" + rooms +
+                ", bathrooms=" + bathrooms +
+                ", hasGarden=" + hasGarden +
+                ", hasGarage=" + hasGarage +
+                ", hasWifi=" + hasWifi +
+                ", description='" + description + '\'' +
+                ", available=" + available +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", zip_code='" + zip_code + '\'' +
+                ", services='" + services + '\'' +
+                ", constraints='" + constraints + '\'' +
+                ", user=" + user +
                 '}';
     }
 }

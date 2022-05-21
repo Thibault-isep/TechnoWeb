@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,19 +44,34 @@ public class HabitationController {
     public List<Habitation> getHabitations() {return habitationRepository.findAll();}
     ////
 
+    @RequestMapping(value = "habitation/{id}")
+    public String getHabitationById(Model model, @PathVariable ("id") int id){
+        Habitation habitation = habitationRepository.getHabitationByIdHabitation(id);
+        Float average = ratingRepository.getAverageRate(id);
+        model.addAttribute("rating",average);
+        model.addAttribute("habitation",habitation);
+        return "habitation";
+    }
+
     @RequestMapping(value = "habitation/search")
     public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch) {
         List<Habitation> habitationsList = habitationRepository.getHabitationByCity(userSearch);
+        List<Integer> habitationsIdList = habitationsList.stream().map(Habitation::getIdHabitation).collect(Collectors.toList());
+        List<Float> ratingListByHabitation = new ArrayList<Float>();
+        for (int id: habitationsIdList) {
+            Float average = ratingRepository.getAverageRate(id);
+            if(average == null){
+
+            }else {
+                ratingListByHabitation.add(average);
+            }
+        }
+        model.addAttribute("city", userSearch);
         model.addAttribute("result", habitationsList);
+        model.addAttribute("rating", ratingListByHabitation);
         return "searchResults";
     }
 
-    @GetMapping(value = {"", "homepage"})
-    public String homePage(Model model) {
-        List<Habitation> habitationList = habitationRepository.findAll();
-        model.addAttribute("habitations", habitationList);
-        return "homepage";
-    }
 
     @GetMapping(value = "profile")
     public String profile(Model model, @RequestParam(name = "userId") int userId){
