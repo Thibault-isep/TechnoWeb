@@ -19,4 +19,6 @@ public interface HabitationRepository extends JpaRepository<Habitation, Long> {
 
     @Query("SELECT h FROM Habitation h")
     public List<Habitation> findAll();
+
+    public Habitation getHabitationByIdHabitation(int id);
 }
