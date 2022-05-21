@@ -22,14 +22,12 @@ public class Reservation {
     private boolean active;
 
     @OneToOne
-    @JoinColumn(name = "Habitation")
+    @JoinColumn(name = "habitation_id")
     private Habitation habitation;
 
     @OneToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_id")
     private User user;
-
-
 
     public Reservation(String name, LocalDate start, LocalDate end, boolean paid, Habitation habitation, User user) {
         this.name = name;

@@ -17,11 +17,15 @@
             <th>Ville</th>
         </tr>
         <tr>
-            <td>${habitation.idHabitation}</td>
+            <td>${habitation.habitationId}</td>
             <td>${habitation.bathrooms}</td>
             <td>${habitation.city}</td>
         </tr>
     </table>
+    <form action="/messagingFromHabitation" method="POST">
+        <input type="submit" name="seeMessaging" value="Contact the owner"/>
+        <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
+    </form>
 </div>
 </body>
 </html>

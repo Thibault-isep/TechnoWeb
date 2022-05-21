@@ -19,11 +19,11 @@ public class Rating {
     private int rate;
 
     @OneToOne
-    @JoinColumn(name = "User_Id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "Habitation_Id")
+    @JoinColumn(name = "habitation_id")
     private Habitation habitation;
 
     public Rating(){}

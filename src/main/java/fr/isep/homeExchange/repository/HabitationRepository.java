@@ -12,7 +12,7 @@ import java.util.List;
 public interface HabitationRepository extends JpaRepository<Habitation, Long> {
     List<Habitation> getHabitationByCity(String city);
 
-    Habitation getHabitationByIdHabitation(int idHabitation);
+    Habitation getHabitationByHabitationId(int habitationId);
 
     @Query("SELECT h FROM Habitation h WHERE h.user.userId = :x")
     List<Habitation> getHabitationByUserId(@Param("x")int id);

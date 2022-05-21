@@ -16,4 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     public List<Habitation> usersHabitation(@Param("x") int id);
 
     Optional<User> findUserByUsername(String username);
+
+    User findUserByUserId(int userId);
 }
