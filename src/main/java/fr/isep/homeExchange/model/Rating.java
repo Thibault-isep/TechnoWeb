@@ -34,6 +34,14 @@ public class Rating {
         this.user = user;
     }
 
+    public int getRatingId() {
+        return ratingId;
+    }
+
+    public void setRatingId(int ratingId) {
+        this.ratingId = ratingId;
+    }
+
     public int getRate() {
         return rate;
     }
@@ -50,19 +58,21 @@ public class Rating {
         this.user = user;
     }
 
+    @Override
+    public String toString() {
+        return "Rating{" +
+                "ratingId=" + ratingId +
+                ", rate=" + rate +
+                ", user=" + user +
+                ", habitation=" + habitation +
+                '}';
+    }
+
     public Habitation getHabitation() {
         return habitation;
     }
 
     public void setHabitation(Habitation habitation) {
         this.habitation = habitation;
-    }
-
-    public int getRatingId() {
-        return ratingId;
-    }
-
-    public void setRatingId(int ratingId) {
-        this.ratingId = ratingId;
     }
 }
