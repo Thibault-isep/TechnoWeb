@@ -12,10 +12,13 @@
 <h1>Register</h1>
 <form method="post">
     <label for="FName">FName</label>
-    <input name="FName" id="FName" type="text" placeholder="name">
+    <input name="FName" id="FName" type="text" placeholder="name" required>
     <br>
     <label for="LName">LName</label>
-    <input name="LName" id="LName" type="text" placeholder="lastname">
+    <input name="LName" id="LName" type="text" placeholder="lastname" required>
+    <br>
+    <label for="Password">LName</label>
+    <input name="Password" id="Password" type="text" placeholder="Password" required>
     <br>
     <input type="submit" value="envoyer">
 </form>

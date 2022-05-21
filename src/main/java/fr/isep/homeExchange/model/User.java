@@ -27,6 +27,12 @@ public class User {
     private String description;
     private String roles;
 
+    public User(String fname, String lname, String password) {
+        this.first_name = fname;
+        this.last_name = lname;
+        this.password = password;
+    }
+
     public User(String fname, String lname) {
         this.first_name = fname;
         this.last_name = lname;

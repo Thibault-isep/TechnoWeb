@@ -71,6 +71,9 @@ public class HabitationController {
 
     @GetMapping(value = "addHabitation")
     public String addHabitation(Model model, HttpSession session) {
+        if (session.getAttribute("userId") == null){
+            return "redirect:/";
+        }
         User user = getUserBySession(session);
         model = createUserModel(user, model);
         return "addHabitation";
@@ -81,7 +84,7 @@ public class HabitationController {
         User user = getUserBySession(session);
         model = createUserModel(user, model);
         habitationRepository.save(new Habitation(Type, Address, user));
-        return "index";
+        return "redirect:/infoscompte";
     }
 
     private User getUserBySession(HttpSession session) {

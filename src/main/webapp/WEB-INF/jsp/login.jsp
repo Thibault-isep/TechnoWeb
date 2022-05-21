@@ -42,6 +42,7 @@
     <div id="formulaire">
         <div>
             <h2>Connexion</h2>
+            <h1></h1>
         </div>
         <form th:action="@{/process_register}" th:object="${user}"
               method="post">

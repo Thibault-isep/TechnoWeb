@@ -11,9 +11,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.security.Key;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,14 +51,6 @@ public class UserController {
         return habitationRepository.getHabitationsByUserId(1);
     }
 
-    @PostMapping("/login-verif")
-    @ResponseBody
-    public String login(@RequestParam(name = "Fname") String Fname, @RequestParam(name = "LName") String LName) {
-        User user = new User(Fname, LName);
-        userRepository.save(user);
-        return Fname + LName;
-    }
-
     @GetMapping(value = "/user")
     public String user() {
         return "Welcome User !";
@@ -62,7 +58,7 @@ public class UserController {
 
 
     @RequestMapping("/")
-    public String home(HttpSession session, Model model) {
+    public String home(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) {
         if (session.getAttribute("userId") == null) {
             return "index";
         }
@@ -82,8 +78,10 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public String saveRegister(@RequestParam String FName, @RequestParam String LName, HttpSession httpSession) {
-        userRepository.save(new User(FName, LName));
+    public String saveRegister(@RequestParam String FName, @RequestParam String LName, @RequestParam String Password, HttpSession httpSession) {
+        String pass = encoder(Password);
+        System.out.println(pass);
+        userRepository.save(new User(FName, LName, pass));
         return "index";
     }
 
@@ -104,17 +102,17 @@ public class UserController {
         User user = userRepository.getUserByEmail(Email);
         session.setAttribute("userId", user.getUserId());
         model = createUserModel(user, model);
-        if (user.getPassword().equals(Password)) {
-            return "index";
+        if (user.getPassword().equals(encoder(Password))) {
+            return "redirect:/";
         }
         modelMap.put("errorMsg", "Please provide the correct username and password");
         return "login";
     }
 
-    @GetMapping("collectInfoCompte")
+    @GetMapping("infoscompte")
     public String collectInfosCompte(Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
-            return "index";
+            return "redirect:/";
         } else {
             User user = getUserBySession(httpSession);
             model = createUserModel(user, model);
@@ -140,17 +138,13 @@ public class UserController {
     private String updateUser(HttpSession session, Model model, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String username) {
         User user = getUserBySession(session);
         model = createUserModel(user, model);
-        System.out.println("test");
-        System.out.println("test");
-        System.out.println("test");
-        System.out.println("test");
-        System.out.println("test");
-        System.out.println("test");
+        List<Habitation> habits = habitationRepository.getHabitationsByUserId(user.getUserId());
+        model.addAttribute("habits", habits);
         user.setFirst_name(firstname);
         user.setLast_name(lastname);
         user.setUsername(username);
         userRepository.save(user);
-        return "infoscompte";
+        return "redirect:/infoscompte";
     }
 
     private User getUserBySession(HttpSession session) {
@@ -160,6 +154,11 @@ public class UserController {
 
     private Model createUserModel(User user, Model model) {
         return model.addAttribute("user", user);
+    }
+
+    public String encoder(String password) {
+        Base64.Encoder encoder = Base64.getEncoder();
+        return encoder.encodeToString(password.getBytes());
     }
 }
 
