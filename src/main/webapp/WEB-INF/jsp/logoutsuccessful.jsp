@@ -10,6 +10,5 @@
 </head>
 <body>
 <h1>Logout Successful</h1>
-<p>${sessionScope.user.username}</p>
 <a href="/">Menu</a>
 </body>

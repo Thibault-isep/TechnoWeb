@@ -58,6 +58,12 @@ public class Habitation {
         this.user = user;
     }
 
+    public Habitation(String type, String address, User user) {
+        this.type = type;
+        this.address = address;
+        this.user = user;
+    }
+
     public int getBed() {
         return bed;
     }

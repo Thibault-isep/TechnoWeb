@@ -9,10 +9,11 @@
     <link rel="stylesheet" href="">
 </head>
 <body>
-    <c: foreach var="user" items="user" >
-        <p>Bienvenue ! ${user.username}</p>
-    </c:>
-    <a href="collectInfoCompte">infos de compte</a>
+    <p>Bienvenue ! ${user.username}</p>
+    <c:if test="${user.username == null}">
+        <p>${sessionScope.userId}</p>
+        <a href="collectInfoCompte">infos de compte</a>
+    </c:if>
     <a href="login">login</a>
     <a href="logout">logout</a>
 </body>

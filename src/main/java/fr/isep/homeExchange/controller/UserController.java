@@ -72,14 +72,18 @@ public class UserController {
     }
 
     @GetMapping("register")
-    public String register() {
-        return "register";
+    public String register(HttpSession session, Model model) {
+        if (session.getAttribute("userId") == null) {
+            return "register";
+        }
+        User user = getUserBySession(session);
+        model = createUserModel(user, model);
+        return "index";
     }
 
     @PostMapping("register")
     public String saveRegister(@RequestParam String FName, @RequestParam String LName, HttpSession httpSession) {
         userRepository.save(new User(FName, LName));
-        System.out.println(httpSession.getAttribute("userId"));
         return "index";
     }
 
@@ -95,13 +99,11 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public String verifLogin(ModelMap modelMap, @RequestParam String Username, @RequestParam String Password, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String verifLogin(ModelMap modelMap, @RequestParam String Email, @RequestParam String Password, Model model, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
-        User user = userRepository.findAll().stream()
-                .filter(userstream -> Username.equals(userstream.getUsername()))
-                .findAny().get();
-        model = createUserModel(user, model);
+        User user = userRepository.getUserByEmail(Email);
         session.setAttribute("userId", user.getUserId());
+        model = createUserModel(user, model);
         if (user.getPassword().equals(Password)) {
             return "index";
         }
@@ -111,13 +113,11 @@ public class UserController {
 
     @GetMapping("collectInfoCompte")
     public String collectInfosCompte(Model model, HttpSession httpSession) {
-        System.out.println(httpSession.getAttribute("userId"));
         if (httpSession.getAttribute("userId") == null) {
             return "index";
         } else {
             User user = getUserBySession(httpSession);
             model = createUserModel(user, model);
-            System.out.println(user.getUsername());
             List<Habitation> habits = habitationRepository.getHabitationsByUserId(user.getUserId());
             model.addAttribute("habits", habits);
             return "infoscompte";
@@ -134,6 +134,23 @@ public class UserController {
         HttpSession session = request.getSession(true);
         session.invalidate();
         return "logoutsuccessful";
+    }
+
+    @RequestMapping("user/update")
+    private String updateUser(HttpSession session, Model model, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String username) {
+        User user = getUserBySession(session);
+        model = createUserModel(user, model);
+        System.out.println("test");
+        System.out.println("test");
+        System.out.println("test");
+        System.out.println("test");
+        System.out.println("test");
+        System.out.println("test");
+        user.setFirst_name(firstname);
+        user.setLast_name(lastname);
+        user.setUsername(username);
+        userRepository.save(user);
+        return "infoscompte";
     }
 
     private User getUserBySession(HttpSession session) {
