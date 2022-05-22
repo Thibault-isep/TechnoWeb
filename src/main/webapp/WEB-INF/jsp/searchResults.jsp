@@ -10,12 +10,9 @@
 </head>
 <body>
 <p id="test"></p>
-<form action="/habitation/search" method="post">
     <h1>Recherche :</h1>
     <input type="text" name="searchBar" size="40" id="searchBar" placeholder="Where do you want to go?" value="${userSearch}"/>
     <br>
-    <input type="submit" name="action" value="search"/>
-</form>
 <br>
 <br>
 <br>
@@ -102,8 +99,6 @@
             } else {
                 document.getElementById(habitation[i].gethabitationId()).style.display = '';
             }
-
         }
-
     });
 </script>
