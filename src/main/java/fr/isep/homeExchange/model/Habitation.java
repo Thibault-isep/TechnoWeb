@@ -14,9 +14,6 @@ public class Habitation {
     private int bed;
     private int rooms;
     private int bathrooms;
-    private boolean isGarden;
-    private boolean isGarage;
-    private boolean isWifi;
     private String description;
     private boolean available;
     private String address;
@@ -54,9 +51,6 @@ public class Habitation {
         this.bed = bed;
         this.rooms = rooms;
         this.bathrooms = bathrooms;
-        this.isGarden = isGarden;
-        this.isGarage = isGarage;
-        this.isWifi = isWifi;
         this.description = description;
         this.available = available;
         this.address = address;
@@ -128,30 +122,6 @@ public class Habitation {
         this.rooms = rooms;
     }
 
-    public boolean isGarden() {
-        return isGarden;
-    }
-
-    public void setGarden(boolean garden) {
-        isGarden = garden;
-    }
-
-    public boolean isGarage() {
-        return isGarage;
-    }
-
-    public void setGarage(boolean garage) {
-        isGarage = garage;
-    }
-
-    public boolean isWifi() {
-        return isWifi;
-    }
-
-    public void setWifi(boolean wifi) {
-        isWifi = wifi;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -216,9 +186,6 @@ public class Habitation {
                 ", bed=" + bed +
                 ", rooms=" + rooms +
                 ", bathrooms=" + bathrooms +
-                ", isGarden=" + isGarden +
-                ", isGarage=" + isGarage +
-                ", isWifi=" + isWifi +
                 ", description='" + description + '\'' +
                 ", available=" + available +
                 ", address='" + address + '\'' +

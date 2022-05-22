@@ -80,12 +80,8 @@ public class UserController {
         if (user.getPassword().equals(encoder(Password))) {
             session.setAttribute("userId", user.getUserId());
             model = createUserModel(user, model);
-            System.out.println("password correct");
             return "redirect:/";
         }
-        System.out.println("password incorrect");
-        System.out.println(encoder(Password));
-        System.out.println(user.getPassword());
         modelMap.put("errorMsg", "Please provide the correct username and password");
         return "login";
     }
@@ -111,7 +107,7 @@ public class UserController {
         return encoder.encodeToString(password.getBytes());
     }
 
-    @GetMapping("infoscompte")
+    @GetMapping("infosCompte")
     public String collectInfosCompte(Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/";
@@ -127,13 +123,7 @@ public class UserController {
             }
             model.addAttribute("equipmentsByHabitation", equipmentByHabitation);
             model.addAttribute("UsersHabitationsList", habits);
-            System.out.println(equipmentByHabitation.toString());
-            return "infoscompte";
+            return "infosCompte";
         }
-    }
-
-    @RequestMapping("infosCompte")
-    public String infos_compte(Model model, HttpSession httpSession, HttpServletRequest request, HttpServletResponse response) {
-        return ("infosCompte");
     }
 }

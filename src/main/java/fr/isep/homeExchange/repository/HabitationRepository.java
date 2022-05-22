@@ -10,12 +10,13 @@ import java.util.List;
 
 @Repository
 public interface HabitationRepository extends JpaRepository<Habitation, Long> {
-    List<Habitation> getHabitationByCity(String city);
-
     Habitation getHabitationByHabitationId(int habitationId);
 
     @Query("SELECT h FROM Habitation h WHERE h.user.userId = :x")
     List<Habitation> getHabitationByUserId(@Param("x")int id);
+
+    @Query("SELECT h FROM Habitation h")
+    List<Habitation> findAll();
 
     @Query("SELECT h FROM Habitation h WHERE h.user.userId = :x")
     List<Habitation> getHabitationsByUserId(@Param("x") int id);

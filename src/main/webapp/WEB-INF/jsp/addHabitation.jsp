@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="">
 </head>
 <body>
-<form method="post">
+<form method="post" action="">
     <label for="Type">Type d'habitation (Appartement, maison)</label>
     <input name="Type" id="Type" type="text" placeholder="Type" required>
     <br>
@@ -20,8 +20,12 @@
     <br>
     <c:forEach var="equipment" items="${equipment}">
         <label for="${equipment.name}">${equipment.name}</label>
-        <input name="equipments" id="${equipment.name}" type="checkbox" placeholder="${equipment.name}">
+        <select name="equipments"/>
+        <option value="NON">NON</option>
+        <option value="OUI">OUI</option>
+        </select>
     </c:forEach>
+
     <input type="submit" value="envoyer">
 </form>
 </body>
