@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+         pageEncoding="utf-8" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,19 +9,19 @@
     <title>Search Results</title>
 </head>
 <body>
+<p id="test"></p>
 <form action="/habitation/search" method="post">
     <h1>Recherche :</h1>
-    <input type="text" name="habitationSearch" size="20" default="Where do you want to go?"/>
+    <input type="text" name="searchBar" size="40" id="searchBar" placeholder="Where do you want to go?" value="${userSearch}"/>
     <br>
-    <label for="rooms">rooms</label>
-    <input type="range" id="rooms" name="rooms" min="1" max="7" value="7" step="1"
-           oninput="document.getElementById('AfficheRange').textContent=value"/>
-    <span id="AfficheRange">7</span>.
     <input type="submit" name="action" value="search"/>
 </form>
+<br>
+<br>
+<br>
 <div>
     <c:choose>
-        <c:when test="${result.size() == 0}">
+        <c:when test="${habitations.size() == 0}">
             No result found for you search
             <br/>
         </c:when>
@@ -31,14 +31,22 @@
                     <th>ID Habitation</th>
                     <th>Salle de bain</th>
                     <th>Ville</th>
+                    <th>Type</th>
+                    <th></th>
                 </tr>
-                <c:forEach items="${result}" var="h">
-                <tr>
-                    <td>${h.habitationId}</td>
-                    <td>${h.bathrooms}</td>
-                    <td>${h.city}</td>
-                    <td><form action="/habitation/${h.habitationId}" method="POST"><input type="submit" name="seeHabitation" value="See the habitation"/></form></td>
-                </tr>
+                <c:forEach items="${habitations}" var="h">
+                    <tr id="${h.habitationId}">
+                        <td>${h.habitationId}</td>
+                        <td>${h.bathrooms}</td>
+                        <td>${h.city}</td>
+                        <td>${h.type}</td>
+                        <td>
+                            <form action="/habitation/${h.habitationId}" method="POST"><input type="submit"
+                                                                                              name="seeHabitation"
+                                                                                              value="See the habitation"/>
+                            </form>
+                        </td>
+                    </tr>
                 </c:forEach>
             </table>
         </c:otherwise>
@@ -46,3 +54,56 @@
 </div>
 </body>
 </html>
+<script>
+    class habit {
+        getcity() {
+            return this.city;
+        }
+
+        setcity(value) {
+            this.city = value;
+        }
+        gettype() {
+            return this.type;
+        }
+
+        settype(value) {
+            this.type = value;
+        }
+
+        sethabitationId(value) {
+            this.habitationId = value;
+        }
+
+        gethabitationId() {
+            return this.habitationId;
+        }
+
+        constructor(type, city, habitationId) {
+            this.habitationId = habitationId;
+            this.type = type;
+            this.city = city;
+        }
+    }
+    const habitation = [];
+    <c:forEach items="${habitations}" var="h">
+    habitation.push(new habit("<c:out value="${h.city}"/>", "<c:out value="${h.type}"/>", "<c:out value="${h.habitationId}"/>"));
+    </c:forEach>
+    const searchBar = document.getElementById("searchBar");
+    searchBar.addEventListener('keyup', (e) => {
+        const target = e.target.value;
+        const filteredHabits = habitation.filter( habitation => {
+            return habitation.type.toLowerCase().includes(target.toLowerCase()) || habitation.city.toLowerCase().includes(target.toLowerCase());
+        });
+
+        for (let i = 0; i < habitation.length; i++) {
+            if (!filteredHabits.includes(habitation[i])) {
+                document.getElementById(habitation[i].gethabitationId()).style.display = 'none';
+            } else {
+                document.getElementById(habitation[i].gethabitationId()).style.display = '';
+            }
+
+        }
+
+    });
+</script>

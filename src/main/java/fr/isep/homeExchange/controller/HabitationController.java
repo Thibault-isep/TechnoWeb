@@ -36,31 +36,22 @@ public class HabitationController {
     }
 
     @GetMapping("/getHabitationsRating/{habId}")
-    public List<Rating> getHabitationsRating(@PathVariable ("habId") Integer habId){
+    public List<Rating> getHabitationsRating(@PathVariable("habId") Integer habId) {
         return ratingRepository.findAll().stream()
                 .filter(rating -> habId.equals(rating.getHabitation().getHabitationId()))
                 .collect(Collectors.toList());
     }
 
     @RequestMapping(value = "habitation/search")
-    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, @RequestParam int rooms, HttpSession session) {
-        List<Habitation> habitationsList = new ArrayList<>();
-        if (session.getAttribute("userId") == null) {
-            habitationsList = habitationRepository.searchHabitation(userSearch);
-        } else {
+    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, HttpSession session) {
+        List<Habitation> habitations = habitationRepository.findAll();
+        model.addAttribute("habitations", habitations);
+        model.addAttribute("userSearch", userSearch);
+        if (session.getAttribute("userId") != null) {
             User user = getUserBySession(session);
-            model = createUserModel(user, model);
-            habitationsList = habitationRepository.getHabitationsByCityLikeOrCityContainsAndRoomsBetweenAndUserIsNot(userSearch, "", 0, rooms, user);
+            model.addAttribute("user", user);
         }
-        model.addAttribute("result", habitationsList);
         return "searchResults";
-    }
-
-    @GetMapping(value = {"", "homepage"})
-    public String homePage(Model model) {
-        List<Habitation> habitationList = habitationRepository.findAll();
-        model.addAttribute("habitations", habitationList);
-        return "homepage";
     }
 
     @GetMapping(value = "profile")
@@ -123,7 +114,6 @@ public class HabitationController {
     private Model createUserModel(User user, Model model) {
         return model.addAttribute("user", user);
     }
-
 
 
 }
