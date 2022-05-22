@@ -89,13 +89,19 @@ public class HabitationController {
     }
 
     @PostMapping(value = "addHabitation")
-    public String saveHabitation(Model model, HttpSession session, @RequestParam String Type, @RequestParam String Address, @RequestParam(value = "equipments") List<String> equipments, HttpServletRequest request, HttpServletResponse response) {
+    public String saveHabitation(Model model, HttpSession session, @RequestParam String Type, @RequestParam String Address, HttpServletRequest request, HttpServletResponse response) {
+        String[] equipments;
+        equipments = request.getParameterValues("equipments");
         User user = getUserBySession(session);
         model = createUserModel(user, model);
-        Habitation newHabitation = new Habitation(Type, Address, user);
+
         List<Equipment> equipmentList = equipmentRepository.findAll();
-        for (int i = 0; i < equipments.size(); i++) {
-            System.out.println(i + equipments.get(i));
+
+        Habitation newHabitation = new Habitation(Type, Address, user);
+        for (int i = 0; i < equipments.length; i++) {
+            if (equipments[i].equals("OUI")) {
+                newHabitation.addEquipment(equipmentList.get(i));
+            }
         }
         habitationRepository.save(newHabitation);
         return "redirect:/infoscompte";
