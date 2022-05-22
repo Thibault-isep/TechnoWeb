@@ -25,7 +25,7 @@ public class HomeExchangeApplication {
 		EquipmentRepository equipmentRepository = configurableApplicationContext.getBean(EquipmentRepository.class);
 
 		User Barth = new User("Barth", "Est", "estignard.barthelemy@gmail.com", "BarthEst", encoder("Password123"), LocalDate.of(2000, 11,10), 0, "10 rue Jules Ferry", "Levallois", "92300", "0606060606", "I'm Barthelemy Estignard","ROLE_USER");
-		User Thibault = new User("Thibault", "Chanier", "Thibault.Chanier@gmail.com", "ThibChan", encoder("Pass2"), LocalDate.of(1911, 01, 02), 0, "24 rue de Vanves", "Issy-les-Moulineaux", "92130", "0707070707", "Too old for that stuff", "ROLE_ADMIN");
+		User Thibault = new User("Thibault", "Chanier", "Thibault.Chanier@gmail.com", "ThibChan", encoder("Pass12"), LocalDate.of(1911, 01, 02), 0, "24 rue de Vanves", "Issy-les-Moulineaux", "92130", "0707070707", "Too old for that stuff", "ROLE_ADMIN");
 		List<User> users = Arrays.asList(Barth, Thibault);
 		userRepository.saveAll(users);
 		Habitation hab1 = new Habitation("House", 2, 3, 1, true, true, true, "this is a test", true, "1 rue de la Paix", "Paris", "France", "75000", "test", "test", Barth);

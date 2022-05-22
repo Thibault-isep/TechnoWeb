@@ -35,23 +35,6 @@ public class UserController {
         this.equipmentRepository = equipmentRepository;
     }
 
-    //NON RELIE AU VIEW//
-    @GetMapping("/getUsers")
-    public List<User> getUsers() {return userRepository.findAll();}
-
-    @GetMapping("/getUsers/{user}")
-    public List<User> getUserById(@PathVariable("user") Integer userId) {
-        return userRepository.findAll().stream()
-                .filter(user -> userId.equals(user.getUserId()))
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/getUsersHab/{userId}")
-    public List<Habitation> getUsersHab(@PathVariable("userId") Integer userId) {
-        return habitationRepository.getHabitationByUserId(1);
-    }
-
-
     @RequestMapping("/")
     public String home(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) {
         if (session.getAttribute("userId") == null) {
@@ -107,16 +90,6 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("infos_compte")
-    public String infos_compte(Model model, HttpSession httpSession) {
-        if (httpSession.getAttribute("user") == null) {
-            return "index";
-        } else {
-            model.addAttribute("user",httpSession.getAttribute("user"));
-            return("infos_compte");
-        }
-    }
-
     @GetMapping("logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
@@ -159,8 +132,8 @@ public class UserController {
         }
     }
 
-    @RequestMapping("infoscompte")
+    @RequestMapping("infosCompte")
     public String infos_compte(Model model, HttpSession httpSession, HttpServletRequest request, HttpServletResponse response) {
-        return ("infoscompte");
+        return ("infosCompte");
     }
 }

@@ -21,46 +21,4 @@ public class RatingController {
     public RatingController(RatingRepository ratingRepository) {
         this.ratingRepository = ratingRepository;
     }
-
-    //NON RELIE AU VIEW//
-    @GetMapping("/getRatings")
-    public List<Rating> getRatings() {
-        return ratingRepository.findAll();
-    }
-
-    @GetMapping("/getUsersRatings/{userId}")
-    public List<Rating> getUserRatings(@PathVariable("userId") Integer userId) {
-        return ratingRepository.findAll().stream()
-                .filter(rating -> userId.equals(rating.getUser().getUserId()))
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/getHabitationsRatings/{habId}")
-    public List<Rating> getHabitationsRatings(@PathVariable("habId") Integer habId) {
-        return ratingRepository.findAll().stream()
-                .filter(rating -> habId.equals(rating.getHabitation().getHabitationId()))
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/getRates")
-    public String getRates() {
-        List<Integer> rates = ratingRepository.findAll().stream()
-                .map(Rating::getRate)
-                .collect(Collectors.toList());
-        List<User> users = ratingRepository.findAll().stream()
-                .map(Rating::getUser)
-                .collect(Collectors.toList());
-        List<String> usersFirstNames = users.stream()
-                .map(User::getFirst_name)
-                .collect(Collectors.toList());
-        List<String> usersLastNames = users.stream()
-                .map(User::getLast_name)
-                .collect(Collectors.toList());
-        List<String> usersNames = new ArrayList<>();
-        for (int i = 0; i < usersFirstNames.size(); i++) {
-            usersNames.add(usersFirstNames.get(i) + " " + usersLastNames.get(i) + " " + rates.get(i));
-        }
-        return usersNames.toString();
-    }
-    ////
 }
