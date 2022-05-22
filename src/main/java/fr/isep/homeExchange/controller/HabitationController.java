@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,8 +43,15 @@ public class HabitationController {
     }
 
     @RequestMapping(value = "habitation/search")
-    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, @RequestParam int rooms) {
-        List<Habitation> habitationsList = habitationRepository.getHabitationsByCityLikeOrCityContainsAndRoomsBetween(userSearch, "", 0, rooms);
+    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, @RequestParam int rooms, HttpSession session) {
+        List<Habitation> habitationsList = new ArrayList<>();
+        if (session.getAttribute("userId") == null) {
+            habitationsList = habitationRepository.searchHabitation(userSearch);
+        } else {
+            User user = getUserBySession(session);
+            model = createUserModel(user, model);
+            habitationsList = habitationRepository.getHabitationsByCityLikeOrCityContainsAndRoomsBetweenAndUserIsNot(userSearch, "", 0, rooms, user);
+        }
         model.addAttribute("result", habitationsList);
         return "searchResults";
     }

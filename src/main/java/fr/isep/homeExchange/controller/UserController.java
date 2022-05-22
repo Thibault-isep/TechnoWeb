@@ -76,7 +76,7 @@ public class UserController {
     public String saveRegister(@RequestParam String FName, @RequestParam String LName, @RequestParam String Password, HttpSession httpSession) {
         String pass = encoder(Password);
         userRepository.save(new User(FName, LName, pass));
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("login")
@@ -106,7 +106,7 @@ public class UserController {
     @GetMapping("infos_compte")
     public String infos_compte(Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("user") == null) {
-            return "index";
+            return "redirect:/";
         } else {
             model.addAttribute("user",httpSession.getAttribute("user"));
             return("infos_compte");
@@ -117,7 +117,7 @@ public class UserController {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
         session.invalidate();
-        return "index";
+        return "redirect:/";
     }
 
     private User getUserBySession(HttpSession session) {
