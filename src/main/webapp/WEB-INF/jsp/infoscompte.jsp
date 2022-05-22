@@ -29,7 +29,7 @@
             <th>Salle de bain</th>
             <th>Ville</th>
         </tr>
-        <c:forEach var="habits" items="${habits}">
+        <c:forEach var="habits" items="${habits}" varStatus="loop">
             <tr>
                 <th>${habits.type}</th>
                 <th>${habits.user.userId}</th>
@@ -37,6 +37,12 @@
                 <th>${habits.address}</th>
                 <th>${habits.rooms}</th>
                 <th>${habits.zip_code}</th>
+                <th>${loop.index}</th>
+                <c:forEach var="equipments" items="${equipmentsByHabitation[loop.index]}">
+                    <th>
+                    <p>${equipments.name}</p>
+                    </th>
+                </c:forEach>
             </tr>
         </c:forEach>
     </table>

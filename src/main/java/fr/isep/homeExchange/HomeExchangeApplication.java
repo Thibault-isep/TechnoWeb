@@ -1,13 +1,7 @@
 package fr.isep.homeExchange;
 
-import fr.isep.homeExchange.model.Habitation;
-import fr.isep.homeExchange.model.Rating;
-import fr.isep.homeExchange.model.Reservation;
-import fr.isep.homeExchange.model.User;
-import fr.isep.homeExchange.repository.HabitationRepository;
-import fr.isep.homeExchange.repository.RatingRepository;
-import fr.isep.homeExchange.repository.ReservationRepository;
-import fr.isep.homeExchange.repository.UserRepository;
+import fr.isep.homeExchange.model.*;
+import fr.isep.homeExchange.repository.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -26,6 +20,7 @@ public class HomeExchangeApplication {
 		HabitationRepository habitationRepository = configurableApplicationContext.getBean(HabitationRepository.class);
 		ReservationRepository reservationRepository = configurableApplicationContext.getBean(ReservationRepository.class);
 		RatingRepository ratingRepository = configurableApplicationContext.getBean(RatingRepository.class);
+		EquipmentRepository equipmentRepository = configurableApplicationContext.getBean(EquipmentRepository.class);
 
 		User Barth = new User("Barth", "Est", "estignard.barthelemy@gmail.com", "BarthEst", encoder("Pass"), LocalDate.of(2000, 11,10), 0, "10 rue Jules Ferry", "Levallois", "92300", "0606060606", "I'm Barthelemy Estignard","ROLE_USER");
 		User Thibault = new User("Thibault", "Chanier", "Thibault.Chanier@gmail.com", "ThibChan", encoder("Pass2"), LocalDate.of(1911, 01, 02), 0, "24 rue de Vanves", "Issy-les-Moulineaux", "92130", "0707070707", "Too old for that stuff", "ROLE_ADMIN");
@@ -43,7 +38,20 @@ public class HomeExchangeApplication {
 		Rating rate2 = new Rating(4, habitation2, Thibault);
 		List<Rating> ratings = Arrays.asList(rate1, rate2);
 		ratingRepository.saveAll(ratings);
+		Equipment netflix = new Equipment("Netflix", "Video");
+		Equipment garage = new Equipment("Garage", "Garer une voiture");
+		Equipment disneyplus = new Equipment("Disney+", "Video de disney");
+		List<Equipment> equipment = Arrays.asList(netflix, garage, disneyplus);
+		equipmentRepository.saveAll(equipment);
 
+		habitation1.addEquipment(netflix);
+		habitation1.addEquipment(garage);
+		habitation2.addEquipment(disneyplus);
+		habitation2.addEquipment(netflix);
+
+		habitations = Arrays.asList(habitation1, habitation2);
+
+		habitationRepository.saveAll(habitations);
 
 	}
 

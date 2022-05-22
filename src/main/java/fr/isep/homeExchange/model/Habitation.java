@@ -1,12 +1,8 @@
 package fr.isep.homeExchange.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -33,6 +29,18 @@ public class Habitation {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "equipments",
+            joinColumns = @JoinColumn(name = "habitationId"),
+            inverseJoinColumns = @JoinColumn(name = "equipmentId")
+    )
+    private List<Equipment> equipments = new ArrayList<>();
+
+    public void addEquipment(Equipment equipment) {
+        this.equipments.add(equipment);
+    }
 
     public Habitation(int size, String type, User user) {
         this.type = type;

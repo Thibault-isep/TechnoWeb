@@ -1,7 +1,9 @@
 package fr.isep.homeExchange.controller;
 
+import fr.isep.homeExchange.model.Equipment;
 import fr.isep.homeExchange.model.Habitation;
 import fr.isep.homeExchange.model.User;
+import fr.isep.homeExchange.repository.EquipmentRepository;
 import fr.isep.homeExchange.repository.HabitationRepository;
 import fr.isep.homeExchange.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,11 +29,13 @@ public class UserController {
 
     private UserRepository userRepository;
     private HabitationRepository habitationRepository;
+    private EquipmentRepository equipmentRepository;
 
     @Autowired
-    public UserController(UserRepository userRepository, HabitationRepository habitationRepository) {
+    public UserController(UserRepository userRepository, HabitationRepository habitationRepository, EquipmentRepository equipmentRepository) {
         this.userRepository = userRepository;
         this.habitationRepository = habitationRepository;
+        this.equipmentRepository = equipmentRepository;
     }
 
     //NON RELIE AU VIEW//
@@ -118,6 +123,14 @@ public class UserController {
             model = createUserModel(user, model);
             List<Habitation> habits = habitationRepository.getHabitationsByUserId(user.getUserId());
             model.addAttribute("habits", habits);
+            List<List<Equipment>> equipmentByHabitation = new ArrayList<>();
+            for (Habitation i:habits) {
+                List<Equipment> equipment = equipmentRepository.getEquipmentByHabitation(i);
+                equipmentByHabitation.add(equipment);
+            }
+            model.addAttribute("equipmentsByHabitation", equipmentByHabitation);
+            model.addAttribute("UsersHabitationsList", habits);
+            System.out.println(equipmentByHabitation.toString());
             return "infoscompte";
         }
     }
@@ -129,7 +142,7 @@ public class UserController {
 
     @GetMapping("logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
         session.invalidate();
         return "logoutsuccessful";
     }

@@ -9,14 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface HabitationRepository extends JpaRepository<Habitation, Long> {
+public interface HabitationRepository extends JpaRepository<Habitation, Integer> {
     List<Habitation> getHabitationByCity(String city);
 
     @Query("SELECT h FROM Habitation h WHERE h.user.userId = :x")
-    public List<Habitation> getHabitationsByUserId(@Param("x")int id);
+    public List<Habitation> getHabitationsByUserId(@Param("x") int id);
 
-    public List<Habitation> getHabitationsByUserUserId(int id);
-
-    @Query("SELECT h FROM Habitation h")
-    public List<Habitation> findAll();
+    public List<Habitation> getHabitationsByCityLikeOrCityContainsAndRoomsBetween(String city, String cityEmpty, int roomMin, int roomMax);
 }
