@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class Habitation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idHabitation;
+    private int habitationId;
     private String type;
     private int bed;
     private int rooms;
@@ -34,12 +34,7 @@ public class Habitation {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Habitation(int size, String type, User user) {
-        this.type = type;
-        this.user = user;
-    }
-
-    public Habitation(String type, int bed, int rooms, int bathrooms, boolean isGarden, boolean isGarage, boolean isWifi, String description, boolean available, String address, String city, String country, String zip_code, String services, String constraints) {
+    public Habitation(String type, int bed, int rooms, int bathrooms, boolean isGarden, boolean isGarage, boolean isWifi, String description, boolean available, String address, String city, String country, String zip_code, String services, String constraints, User user) {
         this.type = type;
         this.bed = bed;
         this.rooms = rooms;
@@ -55,18 +50,19 @@ public class Habitation {
         this.zip_code = zip_code;
         this.services = services;
         this.constraints = constraints;
+        this.user = user;
     }
 
     public Habitation() {
 
     }
 
-    public int getIdHabitation() {
-        return idHabitation;
+    public int getHabitationId() {
+        return habitationId;
     }
 
-    public void setIdHabitation(int id) {
-        this.idHabitation = id;
+    public void setHabitationId(int id) {
+        this.habitationId = id;
     }
 
     public String getType() {
@@ -104,7 +100,7 @@ public class Habitation {
     @Override
     public String toString() {
         return "Habitation{" +
-                "habitationId=" + idHabitation +
+                "habitationId=" + habitationId +
                 ", type='" + type + '\'' +
                 '}';
     }

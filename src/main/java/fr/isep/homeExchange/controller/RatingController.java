@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class RatingController {
     @GetMapping("/getHabitationsRatings/{habId}")
     public List<Rating> getHabitationsRatings(@PathVariable("habId") Integer habId) {
         return ratingRepository.findAll().stream()
-                .filter(rating -> habId.equals(rating.getHabitation().getIdHabitation()))
+                .filter(rating -> habId.equals(rating.getHabitation().getHabitationId()))
                 .collect(Collectors.toList());
     }
 

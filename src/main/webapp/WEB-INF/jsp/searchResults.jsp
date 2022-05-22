@@ -11,7 +11,7 @@
 <body>
 <div>
     <c:choose>
-        <c:when test="${result.size()==0}">
+        <c:when test="${result.size() == 0}">
             No result found for you search
             <br/>
         </c:when>
@@ -21,14 +21,15 @@
                     <th>ID Habitation</th>
                     <th>Salle de bain</th>
                     <th>Ville</th>
-                    <c:forEach items="${result}" var="h">
+                </tr>
+                <c:forEach items="${result}" var="h">
                 <tr>
-                    <td>${h.idHabitation}</td>
+                    <td>${h.habitationId}</td>
                     <td>${h.bathrooms}</td>
                     <td>${h.city}</td>
+                    <td><form action="/habitation/${h.habitationId}" method="POST"><input type="submit" name="seeHabitation" value="See the habitation"/></form></td>
                 </tr>
                 </c:forEach>
-                </tr>
             </table>
         </c:otherwise>
     </c:choose>
