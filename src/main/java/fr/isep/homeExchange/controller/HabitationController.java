@@ -48,13 +48,6 @@ public class HabitationController {
         return "searchResults";
     }
 
-    @GetMapping(value = {"", "homepage"})
-    public String homePage(Model model) {
-        List<Habitation> habitationList = habitationRepository.findAll();
-        model.addAttribute("habitations", habitationList);
-        return "homepage";
-    }
-
     @GetMapping(value = "profile")
     public String profile(Model model, @RequestParam(name = "userId") int userId) {
         List<Habitation> usersHabitationsList = habitationRepository.getHabitationByUserId(userId);
@@ -104,7 +97,7 @@ public class HabitationController {
             }
         }
         habitationRepository.save(newHabitation);
-        return "redirect:/infoscompte";
+        return "redirect:/infosCompte";
     }
 
     private User getUserBySession(HttpSession session) {
@@ -115,7 +108,4 @@ public class HabitationController {
     private Model createUserModel(User user, Model model) {
         return model.addAttribute("user", user);
     }
-
-
-
 }

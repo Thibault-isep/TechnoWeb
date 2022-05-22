@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,17 +18,5 @@ public class ReservationController {
     public ReservationController(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
     }
-
-    //NON RELIE AU VIEW//
-    @GetMapping("/getReservations")
-    public List<Reservation> getReservations() {return reservationRepository.findAll();}
-
-    @GetMapping("/getReservations/{user}")
-    public List<Reservation> getUsersReservations(@PathVariable ("user") Integer userId) {
-        return reservationRepository.findAll().stream()
-                .filter(reservation -> userId.equals(reservation.getUser().getUserId()))
-                .collect(Collectors.toList());
-    }
-    ////
 }
 
