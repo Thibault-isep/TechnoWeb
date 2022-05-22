@@ -8,6 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @SpringBootApplication
@@ -21,9 +22,10 @@ public class HomeExchangeApplication {
 		RatingRepository ratingRepository = configurableApplicationContext.getBean(RatingRepository.class);
 		ExchangeRepository exchangeRepository = configurableApplicationContext.getBean(ExchangeRepository.class);
 		MessageRepository messageRepository = configurableApplicationContext.getBean(MessageRepository.class);
+		EquipmentRepository equipmentRepository = configurableApplicationContext.getBean(EquipmentRepository.class);
 
-		User Barth = new User("Barth", "Est", "email", "BarthEst", "Pass", LocalDate.of(2000, 11,10), 0, "10 rue Jules Ferry", "Levallois", "92300", "0606060606", "I'm Barthelemy Estignard","ROLE_USER");
-		User Thibault = new User("Thibault", "Chanier", "Thibault.Chanier@gmail.com", "ThibChan", "Pass2", LocalDate.of(1911, 01, 02), 0, "24 rue de Vanves", "Issy-les-Moulineaux", "92130", "0707070707", "Too old for that stuff", "ROLE_ADMIN");
+		User Barth = new User("Barth", "Est", "estignard.barthelemy@gmail.com", "BarthEst", encoder("Password123"), LocalDate.of(2000, 11,10), 0, "10 rue Jules Ferry", "Levallois", "92300", "0606060606", "I'm Barthelemy Estignard","ROLE_USER");
+		User Thibault = new User("Thibault", "Chanier", "Thibault.Chanier@gmail.com", "ThibChan", encoder("Pass2"), LocalDate.of(1911, 01, 02), 0, "24 rue de Vanves", "Issy-les-Moulineaux", "92130", "0707070707", "Too old for that stuff", "ROLE_ADMIN");
 		List<User> users = Arrays.asList(Barth, Thibault);
 		userRepository.saveAll(users);
 		Habitation hab1 = new Habitation("House", 2, 3, 1, true, true, true, "this is a test", true, "1 rue de la Paix", "Paris", "France", "75000", "test", "test", Barth);
@@ -46,5 +48,25 @@ public class HomeExchangeApplication {
 		Message message3 = new Message("C'est bien", LocalDate.now(), exchange1, Thibault);
 		List<Message> messages = Arrays.asList(message1, message2, message3);
 		messageRepository.saveAll(messages);
+
+		Equipment netflix = new Equipment("Netflix", "Video");
+		Equipment garage = new Equipment("Garage", "Garer une voiture");
+		Equipment disneyplus = new Equipment("Disney+", "Video de disney");
+		List<Equipment> equipment = Arrays.asList(netflix, garage, disneyplus);
+		equipmentRepository.saveAll(equipment);
+
+		hab1.addEquipment(netflix);
+		hab1.addEquipment(garage);
+		hab2.addEquipment(disneyplus);
+		hab2.addEquipment(netflix);
+
+		habitations = Arrays.asList(hab1, hab2);
+
+		habitationRepository.saveAll(habitations);
  	}
+
+	public static String encoder(String password) {
+		Base64.Encoder encoder = Base64.getEncoder();
+		return encoder.encodeToString(password.getBytes());
+	}
 }
