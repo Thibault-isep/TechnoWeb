@@ -76,15 +76,24 @@
             return this.habitationId;
         }
 
-        constructor(type, city, habitationId) {
+        getUserId() {
+            return this.userId;
+        }
+
+        setUserId(value) {
+            this.userId = value;
+        }
+
+        constructor(type, city, habitationId, userId) {
             this.habitationId = habitationId;
             this.type = type;
             this.city = city;
+            this.userId = userId;
         }
     }
     const habitation = [];
     <c:forEach items="${habitations}" var="h">
-    habitation.push(new habit("<c:out value="${h.city}"/>", "<c:out value="${h.type}"/>", "<c:out value="${h.habitationId}"/>"));
+    habitation.push(new habit("<c:out value="${h.city}"/>", "<c:out value="${h.type}"/>", "<c:out value="${h.habitationId}"/>", "<c:out value="${h.user.userId}"/>"));
     </c:forEach>
     const searchBar = document.getElementById("searchBar");
     searchBar.addEventListener('keyup', (e) => {
@@ -98,7 +107,11 @@
                 document.getElementById(habitation[i].gethabitationId()).style.display = 'none';
             } else {
                 document.getElementById(habitation[i].gethabitationId()).style.display = '';
+                if ("<c:out value="${sessionScope.userId}"/>" == habitation[i].userId) {
+                    document.getElementById(habitation[i].gethabitationId()).style.display = 'none';
+                }
             }
         }
-    });
+    })
+    searchBar.dispatchEvent(new KeyboardEvent('keyup', {'key': 'a'}));
 </script>
