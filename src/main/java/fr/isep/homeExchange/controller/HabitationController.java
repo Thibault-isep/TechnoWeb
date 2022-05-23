@@ -103,7 +103,7 @@ public class HabitationController {
             }
         }
         habitationRepository.save(newHabitation);
-        return "redirect:/infoscompte";
+        return "redirect:/infosCompte";
     }
 
     private User getUserBySession(HttpSession session) {
@@ -114,6 +114,4 @@ public class HabitationController {
     private Model createUserModel(User user, Model model) {
         return model.addAttribute("user", user);
     }
-
-
 }

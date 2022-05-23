@@ -35,23 +35,6 @@ public class UserController {
         this.equipmentRepository = equipmentRepository;
     }
 
-    //NON RELIE AU VIEW//
-    @GetMapping("/getUsers")
-    public List<User> getUsers() {return userRepository.findAll();}
-
-    @GetMapping("/getUsers/{user}")
-    public List<User> getUserById(@PathVariable("user") Integer userId) {
-        return userRepository.findAll().stream()
-                .filter(user -> userId.equals(user.getUserId()))
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/getUsersHab/{userId}")
-    public List<Habitation> getUsersHab(@PathVariable("userId") Integer userId) {
-        return habitationRepository.getHabitationByUserId(1);
-    }
-
-
     @RequestMapping("/")
     public String home(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) {
         if (session.getAttribute("userId") == null) {
@@ -134,7 +117,7 @@ public class UserController {
         return encoder.encodeToString(password.getBytes());
     }
 
-    @GetMapping("infoscompte")
+    @GetMapping("infosCompte")
     public String collectInfosCompte(Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/";
@@ -150,7 +133,7 @@ public class UserController {
             }
             model.addAttribute("equipmentsByHabitation", equipmentByHabitation);
             model.addAttribute("UsersHabitationsList", habits);
-            return "infoscompte";
+            return "infosCompte";
         }
     }
 }

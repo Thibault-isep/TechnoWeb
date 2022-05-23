@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface EquipmentRepository extends JpaRepository<Equipment, Integer> {
-    public List<Equipment> getEquipmentByHabitation(Habitation habitation);
+    List<Equipment> getEquipmentByHabitation(Habitation habitation);
 }
