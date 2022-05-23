@@ -10,9 +10,10 @@
 </head>
 <body>
 <p id="test"></p>
-    <h1>Recherche :</h1>
-    <input type="text" name="searchBar" size="40" id="searchBar" placeholder="Where do you want to go?" value="${userSearch}"/>
-    <br>
+<h1>Recherche :</h1>
+<input type="text" name="searchBar" size="40" id="searchBar" placeholder="Where do you want to go?"
+       value="${userSearch}"/>
+<br>
 <br>
 <br>
 <br>
@@ -60,6 +61,7 @@
         setcity(value) {
             this.city = value;
         }
+
         gettype() {
             return this.type;
         }
@@ -91,6 +93,7 @@
             this.userId = userId;
         }
     }
+
     const habitation = [];
     <c:forEach items="${habitations}" var="h">
     habitation.push(new habit("<c:out value="${h.city}"/>", "<c:out value="${h.type}"/>", "<c:out value="${h.habitationId}"/>", "<c:out value="${h.user.userId}"/>"));
@@ -98,7 +101,7 @@
     const searchBar = document.getElementById("searchBar");
     searchBar.addEventListener('keyup', (e) => {
         const target = e.target.value;
-        const filteredHabits = habitation.filter( habitation => {
+        const filteredHabits = habitation.filter(habitation => {
             return habitation.type.toLowerCase().includes(target.toLowerCase()) || habitation.city.toLowerCase().includes(target.toLowerCase());
         });
 
@@ -114,4 +117,5 @@
         }
     })
     searchBar.dispatchEvent(new KeyboardEvent('keyup', {'key': 'a'}));
+    console.log('a');
 </script>

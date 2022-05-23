@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+         pageEncoding="utf-8" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,16 +14,16 @@
     <table style="width: 100%">
         <c:forEach items="${exchangeMessages}" var="message">
             <tr style="
-                <c:choose>
-                    <c:when test="${message.user.userId == otherUser.userId}">
-                            text-align: left;
-                    </c:when>
-                    <c:otherwise>
-                            text-align: right;
-                    </c:otherwise>
-                </c:choose>">
+            <c:choose>
+            <c:when test="${message.user.userId == otherUser.userId}">
+                    text-align: left;
+            </c:when>
+            <c:otherwise>
+                    text-align: right;
+            </c:otherwise>
+                    </c:choose>">
                 <th>
-                    ${message.content}
+                        ${message.content}
                 </th>
             </tr>
         </c:forEach>

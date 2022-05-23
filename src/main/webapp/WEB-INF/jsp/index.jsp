@@ -12,7 +12,7 @@
 <body>
 <p>Bienvenue ! ${user.username}</p>
 <c:if test="${!empty sessionScope.userId}">
-    <a href="infoscompte">infos de compte</a>
+    <a href="infosCompte">infos de compte</a>
 </c:if>
 <br>
 <c:if test="${empty sessionScope.userId}">
@@ -35,4 +35,4 @@
     <input type="submit" name="action" value="search"/>
 </form>
 
-</body> 
+</body>
