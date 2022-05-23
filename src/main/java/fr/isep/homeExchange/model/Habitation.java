@@ -10,13 +10,11 @@ public class Habitation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int habitationId;
+    private String name;
     private String type;
     private int bed;
     private int rooms;
     private int bathrooms;
-    private boolean isGarden;
-    private boolean isGarage;
-    private boolean isWifi;
     private String description;
     private boolean available;
     private String address;
@@ -49,14 +47,12 @@ public class Habitation {
         this.user = user;
     }
 
-    public Habitation(String type, int bed, int rooms, int bathrooms, boolean isGarden, boolean isGarage, boolean isWifi, String description, boolean available, String address, String city, String country, String zip_code, String services, String constraints, User user) {
+    public Habitation(String name, String type, int bed, int rooms, int bathrooms, boolean isGarden, boolean isGarage, boolean isWifi, String description, boolean available, String address, String city, String country, String zip_code, String services, String constraints, User user) {
+        this.name = name;
         this.type = type;
         this.bed = bed;
         this.rooms = rooms;
         this.bathrooms = bathrooms;
-        this.isGarden = isGarden;
-        this.isGarage = isGarage;
-        this.isWifi = isWifi;
         this.description = description;
         this.available = available;
         this.address = address;
@@ -78,6 +74,14 @@ public class Habitation {
 
     public void setHabitationId(int id) {
         this.habitationId = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
@@ -126,30 +130,6 @@ public class Habitation {
 
     public void setRooms(int rooms) {
         this.rooms = rooms;
-    }
-
-    public boolean isGarden() {
-        return isGarden;
-    }
-
-    public void setGarden(boolean garden) {
-        isGarden = garden;
-    }
-
-    public boolean isGarage() {
-        return isGarage;
-    }
-
-    public void setGarage(boolean garage) {
-        isGarage = garage;
-    }
-
-    public boolean isWifi() {
-        return isWifi;
-    }
-
-    public void setWifi(boolean wifi) {
-        isWifi = wifi;
     }
 
     public String getDescription() {
@@ -216,9 +196,6 @@ public class Habitation {
                 ", bed=" + bed +
                 ", rooms=" + rooms +
                 ", bathrooms=" + bathrooms +
-                ", isGarden=" + isGarden +
-                ", isGarage=" + isGarage +
-                ", isWifi=" + isWifi +
                 ", description='" + description + '\'' +
                 ", available=" + available +
                 ", address='" + address + '\'' +

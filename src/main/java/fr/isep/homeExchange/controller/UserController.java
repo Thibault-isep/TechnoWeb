@@ -35,23 +35,6 @@ public class UserController {
         this.equipmentRepository = equipmentRepository;
     }
 
-    //NON RELIE AU VIEW//
-    @GetMapping("/getUsers")
-    public List<User> getUsers() {return userRepository.findAll();}
-
-    @GetMapping("/getUsers/{user}")
-    public List<User> getUserById(@PathVariable("user") Integer userId) {
-        return userRepository.findAll().stream()
-                .filter(user -> userId.equals(user.getUserId()))
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/getUsersHab/{userId}")
-    public List<Habitation> getUsersHab(@PathVariable("userId") Integer userId) {
-        return habitationRepository.getHabitationByUserId(1);
-    }
-
-
     @RequestMapping("/")
     public String home(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) {
         if (session.getAttribute("userId") == null) {
@@ -76,7 +59,7 @@ public class UserController {
     public String saveRegister(@RequestParam String FName, @RequestParam String LName, @RequestParam String Password, HttpSession httpSession) {
         String pass = encoder(Password);
         userRepository.save(new User(FName, LName, pass));
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("login")
@@ -97,12 +80,8 @@ public class UserController {
         if (user.getPassword().equals(encoder(Password))) {
             session.setAttribute("userId", user.getUserId());
             model = createUserModel(user, model);
-            System.out.println("password correct");
             return "redirect:/";
         }
-        System.out.println("password incorrect");
-        System.out.println(encoder(Password));
-        System.out.println(user.getPassword());
         modelMap.put("errorMsg", "Please provide the correct username and password");
         return "login";
     }
@@ -110,7 +89,7 @@ public class UserController {
     @GetMapping("infos_compte")
     public String infos_compte(Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("user") == null) {
-            return "index";
+            return "redirect:/";
         } else {
             model.addAttribute("user",httpSession.getAttribute("user"));
             return("infos_compte");
@@ -121,7 +100,7 @@ public class UserController {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
         session.invalidate();
-        return "index";
+        return "redirect:/";
     }
 
     private User getUserBySession(HttpSession session) {
@@ -138,7 +117,7 @@ public class UserController {
         return encoder.encodeToString(password.getBytes());
     }
 
-    @GetMapping("infoscompte")
+    @GetMapping("infosCompte")
     public String collectInfosCompte(Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/";
@@ -154,13 +133,7 @@ public class UserController {
             }
             model.addAttribute("equipmentsByHabitation", equipmentByHabitation);
             model.addAttribute("UsersHabitationsList", habits);
-            System.out.println(equipmentByHabitation.toString());
-            return "infoscompte";
+            return "infosCompte";
         }
-    }
-
-    @RequestMapping("infoscompte")
-    public String infos_compte(Model model, HttpSession httpSession, HttpServletRequest request, HttpServletResponse response) {
-        return ("infoscompte");
     }
 }
