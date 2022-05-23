@@ -28,6 +28,7 @@
                     <td>${h.bathrooms}</td>
                     <td>${h.city}</td>
                     <td><form action="/habitation/${h.habitationId}" method="POST"><input type="submit" name="seeHabitation" value="See the habitation"/></form></td>
+                    <td><form action="/reservation/${h.habitationId}" method="POST"><input type="submit" name="takeReservation" value="Take reservation"/></form></td>
                 </tr>
                 </c:forEach>
             </table>

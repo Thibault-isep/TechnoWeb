@@ -15,6 +15,16 @@
     <a href="infoscompte">infos de compte</a>
 </c:if>
 <br>
+<c:if test="${!empty sessionScope.userId}">
+    <a href="myMessagings">Check my messages</a>
+</c:if>
+<br>
+<br>
+<c:if test="${!empty sessionScope.userId}">
+    <a href="myReservationsRequests">Check my reservations requests</a>
+</c:if>
+<br>
+<br>
 <c:if test="${empty sessionScope.userId}">
     <a href="login">login</a>
 </c:if>
