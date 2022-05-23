@@ -10,6 +10,7 @@ public class Habitation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int habitationId;
+    private String name;
     private String type;
     private int bed;
     private int rooms;
@@ -46,7 +47,8 @@ public class Habitation {
         this.user = user;
     }
 
-    public Habitation(String type, int bed, int rooms, int bathrooms, boolean isGarden, boolean isGarage, boolean isWifi, String description, boolean available, String address, String city, String country, String zip_code, String services, String constraints, User user) {
+    public Habitation(String name, String type, int bed, int rooms, int bathrooms, boolean isGarden, boolean isGarage, boolean isWifi, String description, boolean available, String address, String city, String country, String zip_code, String services, String constraints, User user) {
+        this.name = name;
         this.type = type;
         this.bed = bed;
         this.rooms = rooms;
@@ -72,6 +74,14 @@ public class Habitation {
 
     public void setHabitationId(int id) {
         this.habitationId = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {

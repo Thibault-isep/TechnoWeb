@@ -25,8 +25,8 @@
         </tr>
     </table>
     <form action="/messagingFromHabitation" method="POST">
-        <input type="submit" name="seeMessaging" value="Contact the owner"/>
         <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
+        <input type="submit" name="seeMessaging" value="Contact the owner"/>
     </form>
 </div>
 </body>
