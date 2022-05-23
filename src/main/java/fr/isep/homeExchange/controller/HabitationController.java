@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,16 +36,21 @@ public class HabitationController {
     }
 
     @GetMapping("/getHabitationsRating/{habId}")
-    public List<Rating> getHabitationsRating(@PathVariable ("habId") Integer habId){
+    public List<Rating> getHabitationsRating(@PathVariable("habId") Integer habId) {
         return ratingRepository.findAll().stream()
                 .filter(rating -> habId.equals(rating.getHabitation().getHabitationId()))
                 .collect(Collectors.toList());
     }
 
     @RequestMapping(value = "habitation/search")
-    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, @RequestParam int rooms) {
-        List<Habitation> habitationsList = habitationRepository.getHabitationsByCityLikeOrCityContainsAndRoomsBetween(userSearch, "", 0, rooms);
-        model.addAttribute("result", habitationsList);
+    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, HttpSession session) {
+        List<Habitation> habitations = habitationRepository.findAll();
+        model.addAttribute("habitations", habitations);
+        model.addAttribute("userSearch", userSearch);
+        if (session.getAttribute("userId") != null) {
+            User user = getUserBySession(session);
+            model.addAttribute("user", user);
+        }
         return "searchResults";
     }
 
