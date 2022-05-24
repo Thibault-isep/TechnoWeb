@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public class User {
     private String username;
     private String password;
     private LocalDate dob;
-    private int gender;
+    private String gender;
     private String address;
     private String city;
     private String zip_code;
@@ -39,7 +40,7 @@ public class User {
         this.last_name = last_name;
     }
 
-    public User(String first_name, String last_name, String email, String username, String password, LocalDate dob, int gender, String address, String city, String zip_code, String phone_number, String description, String roles) {
+    public User(String first_name, String last_name, String email, String username, String password, LocalDate dob, String gender, String address, String city, String zip_code, String phone_number, String description, String roles) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -55,6 +56,23 @@ public class User {
         this.roles = roles;
     }
 
+    public void updateUser(String username, String firstname, String lastname, String Description, String Address, String City, String Gender, String Phone_Number, String Email, String Zip_Code, String Dob) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(Dob, formatter);
+
+        this.setFirst_name(firstname);
+        this.setLast_name(lastname);
+        this.setUsername(username);
+        this.setDescription(Description);
+        this.setAddress(Address);
+        this.setCity(City);
+        this.setGender(Gender);
+        this.setPhone_number(Phone_Number);
+        this.setDob(date);
+        this.setEmail(Email);
+        this.setZip_code(Zip_Code);
+    }
 
     public String getLast_name() {
         return last_name;
@@ -88,11 +106,11 @@ public class User {
         this.dob = dob;
     }
 
-    public int getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
