@@ -47,7 +47,8 @@ public class Habitation {
         this.user = user;
     }
 
-    public Habitation(String type, int bed, int rooms, int bathrooms, String description, String address, String city, String country, String zip_code, String services, String constraints, User user) {
+    public Habitation(String name, String type, int bed, int rooms, int bathrooms, String description, String address, String city, String country, String zip_code, String services, String constraints, User user) {
+        this.name = name;
         this.type = type;
         this.bed = bed;
         this.rooms = rooms;

@@ -94,7 +94,7 @@ public class HabitationController {
     }
 
     @PostMapping(value = "addhabitation")
-    public String saveHabitation(Model model, HttpSession session, @RequestParam String Type, @RequestParam String Address, HttpServletRequest request, HttpServletResponse response, @RequestParam String Country, @RequestParam String Zip_Code, @RequestParam String City, @RequestParam int Rooms, @RequestParam int Bed, @RequestParam int Bathrooms, @RequestParam String Description, @RequestParam String Services, @RequestParam String Constraints) {
+    public String saveHabitation(Model model, HttpSession session, @RequestParam String Type, @RequestParam String Address, HttpServletRequest request, HttpServletResponse response, @RequestParam String Country, @RequestParam String Zip_Code, @RequestParam String City, @RequestParam int Rooms, @RequestParam int Bed, @RequestParam int Bathrooms, @RequestParam String Description, @RequestParam String Services, @RequestParam String Constraints, @RequestParam String Name) {
         String[] equipments;
         equipments = request.getParameterValues("equipments");
         User user = getUserBySession(session);
@@ -102,7 +102,7 @@ public class HabitationController {
 
         List<Equipment> equipmentList = equipmentRepository.findAll();
 
-        Habitation newHabitation = new Habitation(Type, Bed, Rooms, Bathrooms, Description, Address, City, Country, Zip_Code, Services, Constraints, user);
+        Habitation newHabitation = new Habitation(Name,Type, Bed, Rooms, Bathrooms, Description, Address, City, Country, Zip_Code, Services, Constraints, user);
         for (int i = 0; i < equipments.length; i++) {
             if (equipments[i].equals("OUI")) {
                 newHabitation.addEquipment(equipmentList.get(i));

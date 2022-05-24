@@ -28,8 +28,8 @@ public class HomeExchangeApplication {
         User Thibault = new User("Thibault", "Chanier", "thibchan@gmail.fr", "ThibChan", encoder("Pass12"), LocalDate.of(1911, 01, 02), "Woman", "24 rue de Vanves", "Issy-les-Moulineaux", "92130", "0707070707", "Too old for that stuff", "ROLE_ADMIN");
         List<User> users = Arrays.asList(Barth, Thibault);
         userRepository.saveAll(users);
-        Habitation hab1 = new Habitation("House", 2, 3, 1,"this is a test",  "1 rue de la Paix", "Paris", "France", "75000", "test", "test", Barth);
-        Habitation hab2 = new Habitation("Flat", 1, 1, 1, "this is a test2", "2 rue Foche", "Marseille", "France", "75000", "test", "test", Thibault);
+        Habitation hab1 = new Habitation("Habitation 1" ,"House", 2, 3, 1,"this is a test",  "1 rue de la Paix", "Paris", "France", "75000", "test", "test", Barth);
+        Habitation hab2 = new Habitation("Habitation 2","Flat", 1, 1, 1, "this is a test2", "2 rue Foche", "Marseille", "France", "75000", "test", "test", Thibault);
         List<Habitation> habitations = Arrays.asList(hab1, hab2);
         habitationRepository.saveAll(habitations);
         Reservation res1 = new Reservation("09/05 - hab1", LocalDate.of(2022, 05, 9), LocalDate.of(2022, 05, 12), true, hab1, Thibault);

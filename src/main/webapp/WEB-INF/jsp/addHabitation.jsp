@@ -21,6 +21,10 @@
     </select>
     <br>
 
+    <label for="Name">Nom de l'habitation</label>
+    <input name="Name" id="Name" type="text" placeholder="Name" required>
+    <br>
+
     <label for="Address">Adresse</label>
     <input name="Address" id="Address" type="text" placeholder="Address" required>
     <br>

@@ -66,7 +66,7 @@
     </form>
     <table>
         <tr>
-            <th>ID Habitation</th>
+            <th>Nom de l'habitation</th>
             <th>Type</th>
             <th>Nombre de lits</th>
             <th>Nombre de pièces</th>
@@ -84,7 +84,7 @@
         </tr>
         <c:forEach var="habits" items="${habits}" varStatus="loop">
             <tr>
-                <th>${habits.habitationId}</th>
+                <th>${habits.name}</th>
                 <th>${habits.type}</th>
                 <th>${habits.bed}</th>
                 <th>${habits.rooms}</th>
