@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table
@@ -33,14 +32,13 @@ public class Reservation {
     public Reservation(String name, LocalDate start, LocalDate end, boolean paid, Habitation habitation, User user) {
         this.name = name;
         this.start = start;
+        this.habitation = habitation;
         this.end = end;
         this.paid = paid;
-        this.habitation = habitation;
         this.user = user;
     }
 
-    public Reservation() {
-    }
+    public Reservation(){}
 
     public String getName() {
         return name;

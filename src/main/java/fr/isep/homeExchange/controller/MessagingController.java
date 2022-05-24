@@ -57,27 +57,16 @@ public class MessagingController {
         }
     }
 
-    @GetMapping(value = "/myMessagings")
-    public String getMyMessagings(Model model, HttpSession httpSession) {
-        if (httpSession.getAttribute("userId") == null) {
-            return "redirect:/login";
-        } else {
-            User user = getUserBySession(httpSession);
-            List<Exchange> exchanges = exchangeRepository.getExchangeByUser1OrUser2(user, user);
-            model.addAttribute("user", user);
-            model.addAttribute("listOfExchanges", exchanges);
-            return "myMessagings";
-        }
-    }
-
     @PostMapping(value ="/messaging/{exchangeId}/send")
     public String sendMessage(@PathVariable() int exchangeId, @RequestParam() String messageContent, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
         } else {
-            User user = getUserBySession(httpSession);
+            int userId = (int) httpSession.getAttribute("userId");
+            String content = messageContent;
             Exchange currentExchange = exchangeRepository.getExchangeByExchangeId(exchangeId);
-            Message message = new Message(messageContent, LocalDate.now(), currentExchange, user);
+            User user = userRepository.findUserByUserId(userId);
+            Message message = new Message(content, LocalDate.now(), currentExchange, user);
 
             messageRepository.save(message);
 

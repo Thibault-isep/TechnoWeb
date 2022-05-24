@@ -11,6 +11,7 @@ import fr.isep.homeExchange.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,21 +45,20 @@ public class HabitationController {
 
     @RequestMapping(value = "habitation/search")
     public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, HttpSession session) {
-        List<Habitation> habitations = habitationRepository.findAll();
+        List<Habitation> habitations = new ArrayList<>();
+        if (session.getAttribute("userId") == null) {
+            habitations = habitationRepository.findAll();
+        } else {
+            habitations = habitationRepository.searchHabitation((int) session.getAttribute("userId"));
+        }
         model.addAttribute("habitations", habitations);
         model.addAttribute("userSearch", userSearch);
+        List<Double> Means = new ArrayList<>();
         if (session.getAttribute("userId") != null) {
             User user = getUserBySession(session);
             model.addAttribute("user", user);
         }
         return "searchResults";
-    }
-
-    @GetMapping(value = "profile")
-    public String profile(Model model, @RequestParam(name = "userId") int userId) {
-        List<Habitation> usersHabitationsList = habitationRepository.getHabitationByUserId(userId);
-        model.addAttribute("UsersHabitationsList", usersHabitationsList);
-        return "profile";
     }
 
     @RequestMapping(value = "habitation/{habitationId}")
@@ -75,8 +75,8 @@ public class HabitationController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(value = "addHabitation")
-    public String addHabitation(Model model, HttpSession session) {
+    @GetMapping(value = "addhabitation")
+    public String addhabitation(Model model, HttpSession session) {
         if (session.getAttribute("userId") == null) {
             return "redirect:/";
         }
@@ -84,11 +84,11 @@ public class HabitationController {
         List<Equipment> equipment = equipmentRepository.findAll();
         model.addAttribute("equipment", equipment);
         model = createUserModel(user, model);
-        return "addHabitation";
+        return "addhabitation";
     }
 
-    @PostMapping(value = "addHabitation")
-    public String saveHabitation(Model model, HttpSession session, @RequestParam String Type, @RequestParam String Address, HttpServletRequest request, HttpServletResponse response) {
+    @PostMapping(value = "addhabitation")
+    public String saveHabitation(Model model, HttpSession session, @RequestParam String Type, @RequestParam String Address, HttpServletRequest request, HttpServletResponse response, @RequestParam String Country, @RequestParam String Zip_Code, @RequestParam String City, @RequestParam int Rooms, @RequestParam int Bed, @RequestParam int Bathrooms, @RequestParam String Description, @RequestParam String Services, @RequestParam String Constraints) {
         String[] equipments;
         equipments = request.getParameterValues("equipments");
         User user = getUserBySession(session);
@@ -96,14 +96,14 @@ public class HabitationController {
 
         List<Equipment> equipmentList = equipmentRepository.findAll();
 
-        Habitation newHabitation = new Habitation(Type, Address, user);
+            Habitation newHabitation = new Habitation(Type, Bed, Rooms, Bathrooms, Description, Address, City, Country, Zip_Code, Services, Constraints, user);
         for (int i = 0; i < equipments.length; i++) {
             if (equipments[i].equals("OUI")) {
                 newHabitation.addEquipment(equipmentList.get(i));
             }
         }
         habitationRepository.save(newHabitation);
-        return "redirect:/infosCompte";
+        return "redirect:/infoscompte";
     }
 
     private User getUserBySession(HttpSession session) {

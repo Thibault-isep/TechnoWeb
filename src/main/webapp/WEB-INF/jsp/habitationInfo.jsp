@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+         pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
@@ -25,8 +25,8 @@
         </tr>
     </table>
     <form action="/messagingFromHabitation" method="POST">
-        <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
         <input type="submit" name="seeMessaging" value="Contact the owner"/>
+        <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
     </form>
 </div>
 </body>
