@@ -4,7 +4,6 @@ import fr.isep.homeExchange.model.*;
 import fr.isep.homeExchange.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class HabitationController {
@@ -21,15 +19,15 @@ public class HabitationController {
     private UserRepository userRepository;
     private RatingRepository ratingRepository;
     private EquipmentRepository equipmentRepository;
-    private ReservationRepository reservationRepository;
+    private ReservationRequestRepository reservationRequestRepository;
 
     @Autowired
-    public HabitationController(HabitationRepository habitationRepository, RatingRepository ratingRepository, EquipmentRepository equipmentRepository, UserRepository userRepository, ReservationRepository reservationRepository) {
+    public HabitationController(HabitationRepository habitationRepository, RatingRepository ratingRepository, EquipmentRepository equipmentRepository, UserRepository userRepository, ReservationRequestRepository reservationRequestRepository) {
         this.habitationRepository = habitationRepository;
         this.userRepository = userRepository;
         this.ratingRepository = ratingRepository;
         this.equipmentRepository = equipmentRepository;
-        this.reservationRepository = reservationRepository;
+        this.reservationRequestRepository = reservationRequestRepository;
     }
 
     @RequestMapping(value = "habitation/search")
@@ -97,10 +95,10 @@ public class HabitationController {
             return "redirect:/login";
         } else {
             Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
-            List<Reservation> reservations = reservationRepository.getReservationByHabitation(habitation);
+            List<ReservationRequest> reservationRequests = reservationRequestRepository.getReservationRequestByHabitation(habitation);
             List<Rating> ratings = ratingRepository.getRatingsByHabitation(habitation);
             ratingRepository.deleteAll(ratings);
-            reservationRepository.deleteAll(reservations);
+            reservationRequestRepository.deleteAll(reservationRequests);
             habitationRepository.delete(habitation);
             return "redirect:/infoscompte";
         }

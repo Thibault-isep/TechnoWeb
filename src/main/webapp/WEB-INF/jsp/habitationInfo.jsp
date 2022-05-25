@@ -28,6 +28,10 @@
         <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
         <input type="submit" name="seeMessaging" value="Contact the owner"/>
     </form>
+    <form action="/reservationRequest/${habitation.habitationId}" method="POST">
+        <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
+        <input type="submit" name="makeReservationRequest" value="Make a reservation request"/>
+    </form>
     <c:forEach var="rating" items="${ratings}">
         <p>${rating.rate}</p>
         <p>${rating.description}</p>
