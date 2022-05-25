@@ -18,11 +18,11 @@
         </c:when>
         <c:otherwise>
             <table>
-                <c:forEach items="${listOfReservations}" var="reservationRequest">
+                <c:forEach items="${listOfReservationRequests}" var="reservationRequest">
                     <tr>
                         <td>${reservationRequest.name}</td>
                         <td><form action="/reservationRequest/${reservationRequest.reservationRequestId}/modify" method="GET">
-                            <input type="submit" name="modifiyRegistration" value="Modify the reservationRequest request"/>
+                            <input type="submit" name="modifiyRegistration" value="Modify the reservation request"/>
                         </form></td>
                         <td><form action="/reservationRequest/${reservationRequest.reservationRequestId}/delete" method="GET">
                             <input type="submit" name="deleteRegistration" value="Delete the registration request"/>

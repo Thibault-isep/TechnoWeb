@@ -66,7 +66,7 @@ public class ReservationController {
         } else {
             User user = getUserBySession(httpSession);
             List<ReservationRequest> reservationRequests = reservationRequestRepository.getReservationRequestByUser(user);
-            model.addAttribute("listOfReservations", reservationRequests);
+            model.addAttribute("listOfReservationRequests", reservationRequests);
             return "myReservationsRequests";
         }
     }
@@ -77,17 +77,17 @@ public class ReservationController {
             return "redirect:/login";
         } else {
             ReservationRequest reservationRequest = reservationRequestRepository.getReservationRequestByReservationRequestId(reservationRequestId);
-            model.addAttribute("reservation", reservationRequest);
+            model.addAttribute("reservationRequest", reservationRequest);
             return "modifyReservationRequest";
         }
     }
 
     @PostMapping(value = "/reservationRequest/{reservationRequestId}/modify/send")
-    public String sendModificationReservation(@PathVariable() int reservationId, @RequestParam() String userDateOfStart, @RequestParam() String userDateOfEnd, HttpSession httpSession) {
+    public String sendModificationReservation(@PathVariable() int reservationRequestId, @RequestParam() String userDateOfStart, @RequestParam() String userDateOfEnd, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
         } else {
-            ReservationRequest reservationRequest = reservationRequestRepository.getReservationRequestByReservationRequestId(reservationId);
+            ReservationRequest reservationRequest = reservationRequestRepository.getReservationRequestByReservationRequestId(reservationRequestId);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate dateOfStart = LocalDate.parse(userDateOfStart, formatter);
             LocalDate dateOfEnd = LocalDate.parse(userDateOfEnd, formatter);
