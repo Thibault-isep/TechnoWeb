@@ -35,10 +35,10 @@
 <h1>Recherche :</h1>
 <input type="text" name="searchBar" size="40" id="searchBar" placeholder="Where do you want to go?"
        value="${userSearch}" />
-<label for="Beds">Lits</label>
-<input type="range" id="Beds" name="rooms" min="1" max="7" value="7" step="1"
+<label for="Beds">Lits minimum</label>
+<input type="range" id="Beds" name="rooms" min="1" max="7" value="1" step="1"
        oninput="document.getElementById('AfficheRange').textContent=value"/>
-<span id="AfficheRange">7</span>.
+<span id="AfficheRange">1</span>.
 <br>
 <br>
 <br>
@@ -71,7 +71,7 @@
                                     <p>Entire ${h.type} in ${city}</p>
                                     <h3>${h.description}</h3>
                                     <p>${h.bed} Bedrooms / ${h.bathrooms} Bathroom /
-                                        / Kitchen</p>
+                                        / Kitchen / ${Means[loop.index]}</p>
 
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
         for (i = 0; i < habitation.length; i++) {
             city = habitation[i].city;
             bed = habitation[i].bed;
-            if (city.toLowerCase().indexOf(cityFilter) < 0 || bed.toLowerCase().indexOf(bedFilter) < 0) {
+            if (city.toLowerCase().indexOf(cityFilter) < 0 || bed < bedFilter) {
                 document.getElementById(habitation[i].habitationId).style.display = "none";
             } else {
                 document.getElementById(habitation[i].habitationId).style.display = "";
