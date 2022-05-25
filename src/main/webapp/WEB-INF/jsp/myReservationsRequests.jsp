@@ -21,10 +21,10 @@
                 <c:forEach items="${listOfReservations}" var="reservationRequest">
                     <tr>
                         <td>${reservationRequest.name}</td>
-                        <td><form action="/reservationRequest/${reservationRequest.reservationId}/modify" method="GET">
+                        <td><form action="/reservationRequest/${reservationRequest.reservationRequestId}/modify" method="GET">
                             <input type="submit" name="modifiyRegistration" value="Modify the reservationRequest request"/>
                         </form></td>
-                        <td><form action="/reservationRequest/${reservationRequest.reservationId}/delete" method="GET">
+                        <td><form action="/reservationRequest/${reservationRequest.reservationRequestId}/delete" method="GET">
                             <input type="submit" name="deleteRegistration" value="Delete the registration request"/>
                         </form></td>
                     </tr>

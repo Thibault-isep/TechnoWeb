@@ -32,57 +32,7 @@ public class ReservationController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping(value = "/myReservationsRequests")
-    public String getMyReservationRequests(Model model, HttpSession httpSession) {
-        if (httpSession.getAttribute("userId") == null) {
-            return "redirect:/login";
-        } else {
-            User user = getUserBySession(httpSession);
-            List<ReservationRequest> reservationRequests = reservationRequestRepository.getReservationByUser(user);
-            model.addAttribute("listOfReservations", reservationRequests);
-            return "myReservationsRequests";
-        }
-    }
-
-    @GetMapping(value = "/reservation/{reservationId}/modify")
-    public String modifyReservation(@PathVariable int reservationId, Model model, HttpSession httpSession) {
-        if (httpSession.getAttribute("userId") == null) {
-            return "redirect:/login";
-        } else {
-            ReservationRequest reservationRequest = reservationRequestRepository.getReservationByReservationId(reservationId);
-            model.addAttribute("reservation", reservationRequest);
-            return "modifyReservationRequest";
-        }
-    }
-
-    @PostMapping(value = "/reservation/{reservationId}/modify/send")
-    public String sendModificationReservation(@PathVariable() int reservationId, @RequestParam() String userDateOfStart, @RequestParam() String userDateOfEnd, HttpSession httpSession) {
-        if (httpSession.getAttribute("userId") == null) {
-            return "redirect:/login";
-        } else {
-            ReservationRequest reservationRequest = reservationRequestRepository.getReservationByReservationId(reservationId);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate dateOfStart = LocalDate.parse(userDateOfStart, formatter);
-            LocalDate dateOfEnd = LocalDate.parse(userDateOfEnd, formatter);
-            reservationRequest.setStart(dateOfStart);
-            reservationRequest.setEnd(dateOfEnd);
-            reservationRequestRepository.save(reservationRequest);
-            return "redirect:/myReservationsRequests";
-        }
-    }
-
-    @GetMapping(value = "/reservation/{reservationId}/delete")
-    public String deleteReservationRequest(@PathVariable() int reservationId, HttpSession httpSession) {
-        if (httpSession.getAttribute("userId") == null) {
-            return "redirect:/login";
-        } else {
-            ReservationRequest reservationRequest = reservationRequestRepository.getReservationByReservationId(reservationId);
-            reservationRequestRepository.delete(reservationRequest);
-            return "redirect:/myReservationsRequests";
-        }
-    }
-
-    @PostMapping(value = "/reservation/{habitationId}")
+    @PostMapping(value = "/reservationRequest/{habitationId}")
     public String takeReservation(@PathVariable int habitationId, Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
@@ -93,7 +43,7 @@ public class ReservationController {
         }
     }
 
-    @PostMapping(value = "/reservation/{habitationId}/send")
+    @PostMapping(value = "/reservationRequest/{habitationId}/send")
     public String sendRegistration(@PathVariable int habitationId, @RequestParam() String userDateOfStart, @RequestParam() String userDateOfEnd, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
@@ -103,9 +53,59 @@ public class ReservationController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate dateOfStart = LocalDate.parse(userDateOfStart, formatter);
             LocalDate dateOfEnd = LocalDate.parse(userDateOfEnd, formatter);
-            ReservationRequest reservationRequest = new ReservationRequest(LocalDate.now().toString() + " - " + habitation.getName(), dateOfStart, dateOfEnd, false, habitation, user);
+            ReservationRequest reservationRequest = new ReservationRequest(LocalDate.now().toString() + " - " + habitation.getName(), dateOfStart, dateOfEnd, habitation, user);
             reservationRequestRepository.save(reservationRequest);
             return "redirect:/";
+        }
+    }
+
+    @GetMapping(value = "/myReservationsRequests")
+    public String getMyReservationRequests(Model model, HttpSession httpSession) {
+        if (httpSession.getAttribute("userId") == null) {
+            return "redirect:/login";
+        } else {
+            User user = getUserBySession(httpSession);
+            List<ReservationRequest> reservationRequests = reservationRequestRepository.getReservationRequestByUser(user);
+            model.addAttribute("listOfReservations", reservationRequests);
+            return "myReservationsRequests";
+        }
+    }
+
+    @GetMapping(value = "/reservationRequest/{reservationRequestId}/modify")
+    public String modifyReservationRequest(@PathVariable int reservationRequestId, Model model, HttpSession httpSession) {
+        if (httpSession.getAttribute("userId") == null) {
+            return "redirect:/login";
+        } else {
+            ReservationRequest reservationRequest = reservationRequestRepository.getReservationRequestByReservationRequestId(reservationRequestId);
+            model.addAttribute("reservation", reservationRequest);
+            return "modifyReservationRequest";
+        }
+    }
+
+    @PostMapping(value = "/reservationRequest/{reservationRequestId}/modify/send")
+    public String sendModificationReservation(@PathVariable() int reservationId, @RequestParam() String userDateOfStart, @RequestParam() String userDateOfEnd, HttpSession httpSession) {
+        if (httpSession.getAttribute("userId") == null) {
+            return "redirect:/login";
+        } else {
+            ReservationRequest reservationRequest = reservationRequestRepository.getReservationRequestByReservationRequestId(reservationId);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate dateOfStart = LocalDate.parse(userDateOfStart, formatter);
+            LocalDate dateOfEnd = LocalDate.parse(userDateOfEnd, formatter);
+            reservationRequest.setStart(dateOfStart);
+            reservationRequest.setEnd(dateOfEnd);
+            reservationRequestRepository.save(reservationRequest);
+            return "redirect:/myReservationsRequests";
+        }
+    }
+
+    @GetMapping(value = "/reservationRequest/{reservationRequestId}/delete")
+    public String deleteReservationRequest(@PathVariable() int reservationRequestId, HttpSession httpSession) {
+        if (httpSession.getAttribute("userId") == null) {
+            return "redirect:/login";
+        } else {
+            ReservationRequest reservationRequest = reservationRequestRepository.getReservationRequestByReservationRequestId(reservationRequestId);
+            reservationRequestRepository.delete(reservationRequest);
+            return "redirect:/myReservationsRequests";
         }
     }
 

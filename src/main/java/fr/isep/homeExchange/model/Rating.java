@@ -17,6 +17,7 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ratingId;
     private int rate;
+    private String description;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -28,10 +29,11 @@ public class Rating {
 
     public Rating(){}
 
-    public Rating(int rate, Habitation habitation, User user) {
+    public Rating(int rate, Habitation habitation, User user, String description) {
         this.rate = rate;
         this.habitation = habitation;
         this.user = user;
+        this.description = description;
     }
 
     public int getRate() {
@@ -64,5 +66,13 @@ public class Rating {
 
     public void setRatingId(int ratingId) {
         this.ratingId = ratingId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

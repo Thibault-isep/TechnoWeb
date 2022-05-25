@@ -1,5 +1,6 @@
 package fr.isep.homeExchange.repository;
 
+import fr.isep.homeExchange.model.Habitation;
 import fr.isep.homeExchange.model.ReservationRequest;
 import fr.isep.homeExchange.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,7 +10,9 @@ import java.util.List;
 
 @Repository
 public interface ReservationRequestRepository extends JpaRepository<ReservationRequest, Integer> {
-    List<ReservationRequest> getReservationByUser(User user);
+    List<ReservationRequest> getReservationRequestByUser(User user);
 
-    ReservationRequest getReservationByReservationId(int reservationId);
+    ReservationRequest getReservationRequestByReservationRequestId(int reservationRequestId);
+
+    List<ReservationRequest> getReservationRequestByHabitation(Habitation habitation);
 }

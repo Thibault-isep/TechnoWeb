@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class ReservationRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int reservationId;
+    private int reservationRequestId;
     private String name;
     private LocalDate start;
     private LocalDate end;
@@ -29,11 +29,10 @@ public class ReservationRequest {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public ReservationRequest(String name, LocalDate start, LocalDate end, boolean paid, Habitation habitation, User user) {
+    public ReservationRequest(String name, LocalDate start, LocalDate end, Habitation habitation, User user) {
         this.name = name;
         this.start = start;
         this.end = end;
-        this.paid = paid;
         this.habitation = habitation;
         this.user = user;
     }
@@ -89,19 +88,11 @@ public class ReservationRequest {
         this.habitation = habitation;
     }
 
-    public boolean isActive() {
-        return active;
+    public int getReservationRequestId() {
+        return reservationRequestId;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public int getReservationId() {
-        return reservationId;
-    }
-
-    public void setReservationId(int reservationId) {
-        this.reservationId = reservationId;
+    public void setReservationRequestId(int reservationId) {
+        this.reservationRequestId = reservationId;
     }
 }

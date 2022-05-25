@@ -22,6 +22,6 @@
             <td><input type="date" name="userDateOfEnd" value="2018-07-22" min="2018-01-01" max="2018-12-31"></td>
         </tr>
     </table>
-    <input type="submit" value="ask owner for a reservationRequest">
+    <input type="submit" value="ask owner for a reservation">
 </form>
 </body>

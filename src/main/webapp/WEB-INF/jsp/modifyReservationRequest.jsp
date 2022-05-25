@@ -11,7 +11,7 @@
 </head>
 <h1>Modify the reservation request for ${reservationRequest.habitation.name}</h1>
 <body>
-<form method="POST" action="/reservationRequest/${reservationRequest.reservationId}/modify/send">
+<form method="POST" action="/reservationRequest/${reservationRequest.reservationRequestId}/modify/send">
     <table>
         <tr>
             <th>Date of start</th>
@@ -22,6 +22,6 @@
             <td><input type="date" name="userDateOfEnd" value="${reservationRequest.end}" min="2018-01-01" max="2018-12-31"></td>
         </tr>
     </table>
-    <input type="submit" value="Modify my reservationRequest request">
+    <input type="submit" value="Modify my reservation request">
 </form>
 </body>
