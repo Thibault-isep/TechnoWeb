@@ -36,8 +36,8 @@ public class HomeExchangeApplication {
         Reservation res2 = new Reservation("09/05 - hab2", LocalDate.of(2022, 05, 9), LocalDate.of(2022, 05, 12), true, hab2, Barth);
         List<Reservation> reservations = Arrays.asList(res1, res2);
         reservationRepository.saveAll(reservations);
-        Rating rate1 = new Rating(5, hab1, Barth);
-        Rating rate2 = new Rating(4, hab2, Thibault);
+        Rating rate1 = new Rating(5, hab1, Barth,"Belle terrasse");
+        Rating rate2 = new Rating(4, hab2, Thibault, "Maison très propre et agréable");
         List<Rating> ratings = Arrays.asList(rate1, rate2);
         ratingRepository.saveAll(ratings);
 

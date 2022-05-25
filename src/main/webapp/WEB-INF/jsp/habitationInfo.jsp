@@ -28,6 +28,11 @@
         <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
         <input type="submit" name="seeMessaging" value="Contact the owner"/>
     </form>
+    <c:forEach var="rating" items="${ratings}">
+        <p>${rating.rate}</p>
+        <p>${rating.description}</p>
+        <p>by : ${rating.user.username}</p>
+    </c:forEach>
 </div>
 </body>
 </html>
