@@ -1,15 +1,10 @@
 package fr.isep.homeExchange.controller;
 
-import fr.isep.homeExchange.model.Equipment;
-import fr.isep.homeExchange.model.Habitation;
-import fr.isep.homeExchange.model.Rating;
-import fr.isep.homeExchange.model.User;
-import fr.isep.homeExchange.repository.EquipmentRepository;
-import fr.isep.homeExchange.repository.HabitationRepository;
-import fr.isep.homeExchange.repository.RatingRepository;
-import fr.isep.homeExchange.repository.UserRepository;
+import fr.isep.homeExchange.model.*;
+import fr.isep.homeExchange.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,13 +21,15 @@ public class HabitationController {
     private UserRepository userRepository;
     private RatingRepository ratingRepository;
     private EquipmentRepository equipmentRepository;
+    private ReservationRepository reservationRepository;
 
     @Autowired
-    public HabitationController(HabitationRepository habitationRepository, RatingRepository ratingRepository, EquipmentRepository equipmentRepository, UserRepository userRepository) {
+    public HabitationController(HabitationRepository habitationRepository, RatingRepository ratingRepository, EquipmentRepository equipmentRepository, UserRepository userRepository, ReservationRepository reservationRepository) {
         this.habitationRepository = habitationRepository;
         this.userRepository = userRepository;
         this.ratingRepository = ratingRepository;
         this.equipmentRepository = equipmentRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @RequestMapping(value = "habitation/search")
@@ -86,11 +83,19 @@ public class HabitationController {
         return "myHabitationInfo";
     }
 
-    @GetMapping("/getHabitationsByUser/{user}")
-    public List<Habitation> getHabitationsByUserUserId(@PathVariable("user") Integer userId) {
-        return habitationRepository.findAll().stream()
-                .filter(habitation -> userId.equals(habitation.getUser().getUserId()))
-                .collect(Collectors.toList());
+    @GetMapping(value = "/myhabitations/{habitationId}/delete")
+    public String deleteReservationRequest(@PathVariable() int habitationId, HttpSession httpSession) {
+        if (httpSession.getAttribute("userId") == null) {
+            return "redirect:/login";
+        } else {
+            Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
+            List<Reservation> reservations = reservationRepository.getReservationByHabitation(habitation);
+            List<Rating> ratings = ratingRepository.getRatingsByHabitation(habitation);
+            ratingRepository.deleteAll(ratings);
+            reservationRepository.deleteAll(reservations);
+            habitationRepository.delete(habitation);
+            return "redirect:/infoscompte";
+        }
     }
 
     @GetMapping(value = "addhabitation")
