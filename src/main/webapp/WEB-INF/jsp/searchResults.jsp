@@ -33,12 +33,17 @@
 </nav>
 <p id="test"></p>
 <h1>Recherche :</h1>
-<input type="text" name="searchBar" size="40" id="searchBar" placeholder="Where do you want to go?" value="${userSearch}"/>
+<input type="text" name="searchBar" size="40" id="searchBar" placeholder="Where do you want to go?"
+       value="${userSearch}" />
+<label for="Beds">Lits</label>
+<input type="range" id="Beds" name="rooms" min="1" max="7" value="7" step="1"
+       oninput="document.getElementById('AfficheRange').textContent=value"/>
+<span id="AfficheRange">7</span>.
 <br>
 <br>
 <br>
 <br>
-<h1 id="empty" style ="display: none">Empty</h1>
+<h1 id="empty" style="display: none">Empty</h1>
 
 <div class="container">
     <div class="list-container">
@@ -91,6 +96,7 @@
         setcity(value) {
             this.city = value;
         }
+
         gettype() {
             return this.type;
         }
@@ -115,40 +121,46 @@
             return this.userId;
         }
 
-        constructor(type, city, habitationId, userId, bedrooms) {
+        setbed(value) {
+            this.bed = value;
+        }
+
+        getbed() {
+            return this.bed;
+        }
+
+        constructor(type, city, habitationId, userId, bed) {
             this.habitationId = habitationId;
             this.type = type;
             this.city = city;
             this.userId = userId;
-            this.bedrooms = bedrooms;
+            this.bed = bed;
         }
     }
-    const habitation = [];
-    <c:forEach items="${habitations}" var="h">
-    habitation.push(new habit("<c:out value="${h.city}"/>", "<c:out value="${h.type}"/>", "<c:out value="${h.habitationId}"/>", "<c:out value="${h.user.userId}"/>", "<c:out value="${h.user.userId}"/>"));
-    </c:forEach>
-    const searchBar = document.getElementById("searchBar");
-    searchBar.addEventListener('keyup', (e) => {
-        const target = e.target.value;
-        const filteredHabits = habitation.filter( habitation => {
-            return habitation.type.toLowerCase().includes(target.toLowerCase()) || habitation.city.toLowerCase().includes(target.toLowerCase());
-        });
-        if (filteredHabits.length == 0) {
-            document.getElementById("empty").style.display = '';
-        } else {
-            document.getElementById("empty").style.display = 'none';
-        }
 
-        for (let i = 0; i < habitation.length; i++) {
-            if (!filteredHabits.includes(habitation[i])) {
-                document.getElementById(habitation[i].gethabitationId()).style.display = 'none';
 
+
+    function myFunction() {
+        const habitation = [];
+        <c:forEach items="${habitations}" var="h">
+        habitation.push(new habit("<c:out value="${h.type}"/>", "<c:out value="${h.city}"/>", "<c:out value="${h.habitationId}"/>", "<c:out value="${h.user.userId}"/>", "<c:out value="${h.bed}"/>"));
+        </c:forEach>
+        cityInput = document.getElementById("searchBar");
+        cityFilter = cityInput.value.toLowerCase();
+
+        bedInput = document.getElementById("Beds");
+        bedFilter = bedInput.value.toLowerCase();
+
+        for (i = 0; i < habitation.length; i++) {
+            city = habitation[i].city;
+            bed = habitation[i].bed;
+            if (city.toLowerCase().indexOf(cityFilter) < 0 || bed.toLowerCase().indexOf(bedFilter) < 0) {
+                document.getElementById(habitation[i].habitationId).style.display = "none";
             } else {
-                document.getElementById(habitation[i].gethabitationId()).style.display = '';
+                document.getElementById(habitation[i].habitationId).style.display = "";
             }
         }
-    })
-    searchBar.dispatchEvent(new KeyboardEvent('keyup', {
-        'key': 'a'
-    }));
+    }
+
+    setInterval(myFunction, 100);
 </script>
