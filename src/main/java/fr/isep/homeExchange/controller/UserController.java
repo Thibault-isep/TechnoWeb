@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class UserController {

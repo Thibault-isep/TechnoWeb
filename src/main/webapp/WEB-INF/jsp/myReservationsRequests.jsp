@@ -6,10 +6,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My reservations requests</title>
+    <title>My reservation requests</title>
 </head>
 <body>
-<h1>List of my reservations resquests</h1>
+<h1>List of my reservation requests</h1>
 <div>
     <c:choose>
         <c:when test="${listOfExchanges.size() == 0}">
@@ -18,13 +18,13 @@
         </c:when>
         <c:otherwise>
             <table>
-                <c:forEach items="${listOfReservations}" var="reservation">
+                <c:forEach items="${listOfReservations}" var="reservationRequest">
                     <tr>
-                        <td>${reservation.name}</td>
-                        <td><form action="/reservation/${reservation.reservationId}/modify" method="GET">
-                            <input type="submit" name="modifiyRegistration" value="Modify the reservation request"/>
+                        <td>${reservationRequest.name}</td>
+                        <td><form action="/reservationRequest/${reservationRequest.reservationId}/modify" method="GET">
+                            <input type="submit" name="modifiyRegistration" value="Modify the reservationRequest request"/>
                         </form></td>
-                        <td><form action="/reservation/${reservation.reservationId}/delete" method="GET">
+                        <td><form action="/reservationRequest/${reservationRequest.reservationId}/delete" method="GET">
                             <input type="submit" name="deleteRegistration" value="Delete the registration request"/>
                         </form></td>
                     </tr>

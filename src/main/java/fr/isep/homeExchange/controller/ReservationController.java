@@ -1,10 +1,10 @@
 package fr.isep.homeExchange.controller;
 
 import fr.isep.homeExchange.model.Habitation;
-import fr.isep.homeExchange.model.Reservation;
+import fr.isep.homeExchange.model.ReservationRequest;
 import fr.isep.homeExchange.model.User;
 import fr.isep.homeExchange.repository.HabitationRepository;
-import fr.isep.homeExchange.repository.ReservationRepository;
+import fr.isep.homeExchange.repository.ReservationRequestRepository;
 import fr.isep.homeExchange.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +21,13 @@ import java.util.List;
 
 @Controller
 public class ReservationController {
-    private final ReservationRepository reservationRepository;
+    private final ReservationRequestRepository reservationRequestRepository;
     private final HabitationRepository habitationRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public ReservationController(ReservationRepository reservationRepository, HabitationRepository habitationRepository, UserRepository userRepository) {
-        this.reservationRepository = reservationRepository;
+    public ReservationController(ReservationRequestRepository reservationRequestRepository, HabitationRepository habitationRepository, UserRepository userRepository) {
+        this.reservationRequestRepository = reservationRequestRepository;
         this.habitationRepository = habitationRepository;
         this.userRepository = userRepository;
     }
@@ -38,8 +38,8 @@ public class ReservationController {
             return "redirect:/login";
         } else {
             User user = getUserBySession(httpSession);
-            List<Reservation> reservations = reservationRepository.getReservationByUser(user);
-            model.addAttribute("listOfReservations", reservations);
+            List<ReservationRequest> reservationRequests = reservationRequestRepository.getReservationByUser(user);
+            model.addAttribute("listOfReservations", reservationRequests);
             return "myReservationsRequests";
         }
     }
@@ -49,8 +49,8 @@ public class ReservationController {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
         } else {
-            Reservation reservation = reservationRepository.getReservationByReservationId(reservationId);
-            model.addAttribute("reservation", reservation);
+            ReservationRequest reservationRequest = reservationRequestRepository.getReservationByReservationId(reservationId);
+            model.addAttribute("reservation", reservationRequest);
             return "modifyReservationRequest";
         }
     }
@@ -60,13 +60,13 @@ public class ReservationController {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
         } else {
-            Reservation reservation = reservationRepository.getReservationByReservationId(reservationId);
+            ReservationRequest reservationRequest = reservationRequestRepository.getReservationByReservationId(reservationId);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate dateOfStart = LocalDate.parse(userDateOfStart, formatter);
             LocalDate dateOfEnd = LocalDate.parse(userDateOfEnd, formatter);
-            reservation.setStart(dateOfStart);
-            reservation.setEnd(dateOfEnd);
-            reservationRepository.save(reservation);
+            reservationRequest.setStart(dateOfStart);
+            reservationRequest.setEnd(dateOfEnd);
+            reservationRequestRepository.save(reservationRequest);
             return "redirect:/myReservationsRequests";
         }
     }
@@ -76,8 +76,8 @@ public class ReservationController {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
         } else {
-            Reservation reservation = reservationRepository.getReservationByReservationId(reservationId);
-            reservationRepository.delete(reservation);
+            ReservationRequest reservationRequest = reservationRequestRepository.getReservationByReservationId(reservationId);
+            reservationRequestRepository.delete(reservationRequest);
             return "redirect:/myReservationsRequests";
         }
     }
@@ -103,8 +103,8 @@ public class ReservationController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate dateOfStart = LocalDate.parse(userDateOfStart, formatter);
             LocalDate dateOfEnd = LocalDate.parse(userDateOfEnd, formatter);
-            Reservation reservation = new Reservation(LocalDate.now().toString() + " - " + habitation.getName(), dateOfStart, dateOfEnd, false, habitation, user);
-            reservationRepository.save(reservation);
+            ReservationRequest reservationRequest = new ReservationRequest(LocalDate.now().toString() + " - " + habitation.getName(), dateOfStart, dateOfEnd, false, habitation, user);
+            reservationRequestRepository.save(reservationRequest);
             return "redirect:/";
         }
     }

@@ -25,7 +25,7 @@
 <br>
 <br>
 <c:if test="${!empty sessionScope.userId}">
-    <a href="myReservationsRequests">Check my reservations requests</a>
+    <a href="myReservationsRequests">Check my reservation requests</a>
 </c:if>
 <br>
 <c:if test="${empty sessionScope.userId}">
