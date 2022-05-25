@@ -66,6 +66,8 @@ public class HabitationController {
     @RequestMapping(value = "habitation/{habitationId}")
     public String habitationInfo(Model model, @PathVariable("habitationId") int habitationId) {
         Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
+        List<Rating> ratings = ratingRepository.getRatingsByHabitation(habitation);
+        model.addAttribute("ratings", ratings);
         model.addAttribute("habitation", habitation);
         return "habitationInfo";
     }
