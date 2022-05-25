@@ -34,19 +34,25 @@ public class HabitationController {
 
     @RequestMapping(value = "habitation/search")
     public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, HttpSession session) {
-        List<Habitation> habitations = new ArrayList<>();
+        List<Habitation> habitations;
         if (session.getAttribute("userId") == null) {
             habitations = habitationRepository.findAll();
         } else {
             habitations = habitationRepository.searchHabitation((int) session.getAttribute("userId"));
+            User user = getUserBySession(session);
+            model.addAttribute("user", user);
         }
         model.addAttribute("habitations", habitations);
         model.addAttribute("userSearch", userSearch);
         List<Double> Means = new ArrayList<>();
-        if (session.getAttribute("userId") != null) {
-            User user = getUserBySession(session);
-            model.addAttribute("user", user);
+        for (Habitation h: habitations) {
+            List<Rating> hRates = ratingRepository.getRatingsByHabitation(h);
+            Means.add(hRates.stream()
+                    .mapToDouble(hrate -> hrate.getRate())
+                    .average()
+                    .orElse(0.0));
         }
+        model.addAttribute("Means", Means);
         return "searchResults";
     }
 
