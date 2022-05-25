@@ -1,5 +1,7 @@
 package fr.isep.homeExchange.model;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,9 +65,27 @@ public class Habitation {
         this.user = user;
     }
 
-    public Habitation() {
-
+    public Habitation(){}
+    
+    public void updateHabitation(String Type, String Name, String Address, String Country, String Zip_Code, String City, int Rooms, int Bed, int Bathrooms, String Description, String Services, String Constraints){
+        this.type= Type;
+        this.name = Name;
+        this.address = Address;
+        this.country = Country;
+        this.zip_code = Zip_Code;
+        this.city = City;
+        this.rooms = Rooms;
+        this.bed = Bed;
+        this.bathrooms = Bathrooms;
+        this.description = Description;
+        this.services = Services;
+        this.constraints = Constraints;
     }
+
+    public void clearEquipments() {
+        this.equipments = new ArrayList<>();
+    }
+
 
     public int getHabitationId() {
         return habitationId;

@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Homepage</title>
+    <title>${user.username} page de profil</title>
     <link rel="stylesheet" href="">
 </head>
 <body>
@@ -81,6 +81,7 @@
             <c:forEach var="equipment" items="${equipments}">
                 <th>${equipment.name}</th>
             </c:forEach>
+            <th></th>
         </tr>
         <c:forEach var="habits" items="${habits}" varStatus="loop">
             <tr>
@@ -101,9 +102,11 @@
                         <c:forEach var="equipments" items="${equipmentsByHabitation[loop.index]}">
                             <p><c:if test="${equipment.name == equipments.name}">TRUE</c:if></p>
                         </c:forEach>
-
                     </th>
                 </c:forEach>
+                <form action="myhabitations/${habits.habitationId}" method="post">
+                    <th><input type="submit" value="Modifier"></th>
+                </form>
             </tr>
         </c:forEach>
     </table>

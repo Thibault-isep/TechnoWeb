@@ -115,16 +115,17 @@
             return this.userId;
         }
 
-        constructor(type, city, habitationId, userId) {
+        constructor(type, city, habitationId, userId, bedrooms) {
             this.habitationId = habitationId;
             this.type = type;
             this.city = city;
             this.userId = userId;
+            this.bedrooms = bedrooms;
         }
     }
     const habitation = [];
     <c:forEach items="${habitations}" var="h">
-    habitation.push(new habit("<c:out value="${h.city}"/>", "<c:out value="${h.type}"/>", "<c:out value="${h.habitationId}"/>", "<c:out value="${h.user.userId}"/>"));
+    habitation.push(new habit("<c:out value="${h.city}"/>", "<c:out value="${h.type}"/>", "<c:out value="${h.habitationId}"/>", "<c:out value="${h.user.userId}"/>", "<c:out value="${h.user.userId}"/>"));
     </c:forEach>
     const searchBar = document.getElementById("searchBar");
     searchBar.addEventListener('keyup', (e) => {
