@@ -81,6 +81,9 @@
 
         <input type="submit" value="envoyer">
     </form>
+    <form action="/myhabitations/${habitation.habitationId}/delete" method="GET">
+        <input type="submit" name="deleteHabitation" value="Delete the habitation"/>
+    </form>
 </div>
 </body>
 </html>
