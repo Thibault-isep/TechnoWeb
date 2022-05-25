@@ -35,18 +35,17 @@ public class HabitationController {
         this.equipmentRepository = equipmentRepository;
     }
 
-    @GetMapping("/getHabitationsRating/{habId}")
-    public List<Rating> getHabitationsRating(@PathVariable("habId") Integer habId) {
-        return ratingRepository.findAll().stream()
-                .filter(rating -> habId.equals(rating.getHabitation().getHabitationId()))
-                .collect(Collectors.toList());
-    }
-
     @RequestMapping(value = "habitation/search")
     public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, HttpSession session) {
-        List<Habitation> habitations = habitationRepository.findAll();
+        List<Habitation> habitations = new ArrayList<>();
+        if (session.getAttribute("userId") == null) {
+            habitations = habitationRepository.findAll();
+        } else {
+            habitations = habitationRepository.searchHabitation((int) session.getAttribute("userId"));
+        }
         model.addAttribute("habitations", habitations);
         model.addAttribute("userSearch", userSearch);
+        List<Double> Means = new ArrayList<>();
         if (session.getAttribute("userId") != null) {
             User user = getUserBySession(session);
             model.addAttribute("user", user);
@@ -68,6 +67,25 @@ public class HabitationController {
         return "habitationInfo";
     }
 
+    @RequestMapping(value = "myhabitations/{habitationId}")
+    public String myHabitationInfo(Model model, @PathVariable("habitationId") int habitationId, HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+            return "redirect:/";
+        }
+        User user = getUserBySession(session);
+        model = createUserModel(user, model);
+        Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
+        if (habitation.getUser().getUserId() != user.getUserId()) {
+            return "redirect:/infoscompte";
+        }
+        List<Equipment> equipments = equipmentRepository.findAll();
+        List<Equipment> habitationsEquipment = equipmentRepository.getEquipmentByHabitation(habitation);
+        model.addAttribute("equipment", equipments);
+        model.addAttribute("habitationsequipment", habitationsEquipment);
+        model.addAttribute("habitation", habitation);
+        return "myHabitationInfo";
+    }
+
     @GetMapping("/getHabitationsByUser/{user}")
     public List<Habitation> getHabitationsByUserUserId(@PathVariable("user") Integer userId) {
         return habitationRepository.findAll().stream()
@@ -75,7 +93,7 @@ public class HabitationController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(value = "addHabitation")
+    @GetMapping(value = "addhabitation")
     public String addHabitation(Model model, HttpSession session) {
         if (session.getAttribute("userId") == null) {
             return "redirect:/";
@@ -87,8 +105,8 @@ public class HabitationController {
         return "addHabitation";
     }
 
-    @PostMapping(value = "addHabitation")
-    public String saveHabitation(Model model, HttpSession session, @RequestParam String Type, @RequestParam String Address, HttpServletRequest request, HttpServletResponse response) {
+    @PostMapping(value = "addhabitation")
+    public String saveHabitation(Model model, HttpSession session, @RequestParam String Type, @RequestParam String Address, HttpServletRequest request, HttpServletResponse response, @RequestParam String Country, @RequestParam String Zip_Code, @RequestParam String City, @RequestParam int Rooms, @RequestParam int Bed, @RequestParam int Bathrooms, @RequestParam String Description, @RequestParam String Services, @RequestParam String Constraints, @RequestParam String Name) {
         String[] equipments;
         equipments = request.getParameterValues("equipments");
         User user = getUserBySession(session);
@@ -96,14 +114,34 @@ public class HabitationController {
 
         List<Equipment> equipmentList = equipmentRepository.findAll();
 
-        Habitation newHabitation = new Habitation(Type, Address, user);
+        Habitation newHabitation = new Habitation(Name,Type, Bed, Rooms, Bathrooms, Description, Address, City, Country, Zip_Code, Services, Constraints, user);
         for (int i = 0; i < equipments.length; i++) {
             if (equipments[i].equals("OUI")) {
                 newHabitation.addEquipment(equipmentList.get(i));
             }
         }
         habitationRepository.save(newHabitation);
-        return "redirect:/infosCompte";
+        return "redirect:/infoscompte";
+    }
+
+    @RequestMapping("updatehabitation")
+    public String updateHabitation(Model model, HttpServletRequest request, HttpSession session, @RequestParam String Type, @RequestParam String Name, @RequestParam String Address, @RequestParam String Country, @RequestParam String Zip_Code, @RequestParam String City, @RequestParam int Rooms, @RequestParam int Bed, @RequestParam int Bathrooms, @RequestParam String Description, @RequestParam String Services, @RequestParam String Constraints, @RequestParam int habitationId){
+        if (session.getAttribute("userId") == null) {
+            return "redirect:/";
+        }
+        List<Equipment> equipmentList = equipmentRepository.findAll();
+        Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
+        habitation.clearEquipments();
+        habitation.updateHabitation(Type, Name, Address, Country, Zip_Code, City, Rooms, Bed, Bathrooms, Description, Services, Constraints);
+        String[] equipments;
+        equipments = request.getParameterValues("equipments");
+        for (int i = 0; i < equipments.length; i++) {
+            if (equipments[i].equals("OUI")) {
+                habitation.addEquipment(equipmentList.get(i));
+            }
+        }
+        habitationRepository.save(habitation);
+        return "redirect:/infoscompte";
     }
 
     private User getUserBySession(HttpSession session) {

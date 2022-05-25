@@ -46,4 +46,12 @@ public class Equipment {
     public void setIdEquipment(int idEquipment) {
         this.idEquipment = idEquipment;
     }
+
+    public List<Habitation> getHabitation() {
+        return habitation;
+    }
+
+    public void setHabitation(List<Habitation> habitation) {
+        this.habitation = habitation;
+    }
 }
