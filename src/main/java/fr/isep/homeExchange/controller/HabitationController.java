@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,14 +22,16 @@ public class HabitationController {
     private RatingRepository ratingRepository;
     private EquipmentRepository equipmentRepository;
     private ReservationRequestRepository reservationRequestRepository;
+    private ReservationPeriodRepository reservationPeriodRepository;
 
     @Autowired
-    public HabitationController(HabitationRepository habitationRepository, RatingRepository ratingRepository, EquipmentRepository equipmentRepository, UserRepository userRepository, ReservationRequestRepository reservationRequestRepository) {
+    public HabitationController(HabitationRepository habitationRepository, RatingRepository ratingRepository, EquipmentRepository equipmentRepository, UserRepository userRepository, ReservationRequestRepository reservationRequestRepository, ReservationPeriodRepository reservationPeriodRepository) {
         this.habitationRepository = habitationRepository;
         this.userRepository = userRepository;
         this.ratingRepository = ratingRepository;
         this.equipmentRepository = equipmentRepository;
         this.reservationRequestRepository = reservationRequestRepository;
+        this.reservationPeriodRepository = reservationPeriodRepository;
     }
 
     @RequestMapping(value = "habitation/search")
@@ -70,6 +74,15 @@ public class HabitationController {
         return "habitationInfo";
     }
 
+    @RequestMapping(value = "habitation/{habitationId}/exchange")
+    public String habitationInfoExchange(Model model, @PathVariable("habitationId") int habitationId) {
+        Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
+        List<Rating> ratings = ratingRepository.getRatingsByHabitation(habitation);
+        model.addAttribute("ratings", ratings);
+        model.addAttribute("habitation", habitation);
+        return "habitationInfosExchange";
+    }
+
     @RequestMapping(value = "myhabitations/{habitationId}")
     public String myHabitationInfo(Model model, @PathVariable("habitationId") int habitationId, HttpSession session) {
         if (session.getAttribute("userId") == null) {
@@ -83,8 +96,10 @@ public class HabitationController {
         }
         List<Equipment> equipments = equipmentRepository.findAll();
         List<Equipment> habitationsEquipment = equipmentRepository.getEquipmentByHabitation(habitation);
+        List<ReservationPeriod> reservationPeriods = reservationPeriodRepository.getReservationPeriodByHabitation(habitation);
         model.addAttribute("equipment", equipments);
         model.addAttribute("habitationsequipment", habitationsEquipment);
+        model.addAttribute("reservationPeriods", reservationPeriods);
         model.addAttribute("habitation", habitation);
         return "myHabitationInfo";
     }
@@ -96,9 +111,11 @@ public class HabitationController {
         } else {
             Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
             List<ReservationRequest> reservationRequests = reservationRequestRepository.getReservationRequestByHabitation(habitation);
+            List<ReservationPeriod> reservationPeriods = reservationPeriodRepository.getReservationPeriodByHabitation(habitation);
             List<Rating> ratings = ratingRepository.getRatingsByHabitation(habitation);
-            ratingRepository.deleteAll(ratings);
             reservationRequestRepository.deleteAll(reservationRequests);
+            reservationPeriodRepository.deleteAll(reservationPeriods);
+            ratingRepository.deleteAll(ratings);
             habitationRepository.delete(habitation);
             return "redirect:/infoscompte";
         }
@@ -132,6 +149,21 @@ public class HabitationController {
             }
         }
         habitationRepository.save(newHabitation);
+
+        String [] datesOfStart = request.getParameterValues("dateOfStart");
+        String [] datesOfEnd = request.getParameterValues("dateOfEnd");
+        if(datesOfStart != null) {
+            for (int i = 0; i < datesOfStart.length; i++) {
+                String dateOfStartString = datesOfStart[i];
+                String dateOfEndString = datesOfEnd[i];
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate dateOfStart = LocalDate.parse(dateOfStartString, formatter);
+                LocalDate dateOfEnd = LocalDate.parse(dateOfEndString, formatter);
+                ReservationPeriod reservationPeriod = new ReservationPeriod(dateOfStart, dateOfEnd, false, newHabitation);
+                reservationPeriodRepository.save(reservationPeriod);
+            }
+        }
+
         return "redirect:/infoscompte";
     }
 
@@ -152,6 +184,41 @@ public class HabitationController {
             }
         }
         habitationRepository.save(habitation);
+
+        String [] reservationPeriodIds = request.getParameterValues("reservationPeriodId");
+        String [] datesOfStart = request.getParameterValues("dateOfStart");
+        String [] datesOfEnd = request.getParameterValues("dateOfEnd");
+
+        if(reservationPeriodIds != null) {
+            for (int i = 0; i < reservationPeriodIds.length; i++) {
+                int reservationPeriodId = Integer.parseInt(reservationPeriodIds[i]);
+                String dateOfStartString = datesOfStart[i];
+                String dateOfEndString = datesOfEnd[i];
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate dateOfStart = LocalDate.parse(dateOfStartString, formatter);
+                LocalDate dateOfEnd = LocalDate.parse(dateOfEndString, formatter);
+                ReservationPeriod reservationPeriod = reservationPeriodRepository.getReservationPeriodByReservationPeriodId(reservationPeriodId);
+                reservationPeriod.setStart(dateOfStart);
+                reservationPeriod.setEnd(dateOfEnd);
+                reservationPeriodRepository.save(reservationPeriod);
+            }
+        }
+
+        String [] newDatesOfStart = request.getParameterValues("newDateOfStart");
+        String [] newDatesOfEnd = request.getParameterValues("newDateOfEnd");
+
+        if(newDatesOfStart != null) {
+            for (int i = 0; i < newDatesOfStart.length; i++) {
+                String newDateOfStartString = newDatesOfStart[i];
+                String newDateOfEndString = newDatesOfEnd[i];
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate newDateOfStart = LocalDate.parse(newDateOfStartString, formatter);
+                LocalDate newDateOfEnd = LocalDate.parse(newDateOfEndString, formatter);
+                ReservationPeriod newReservationPeriod = new ReservationPeriod(newDateOfStart, newDateOfEnd, false, habitation);
+                reservationPeriodRepository.save(newReservationPeriod);
+            }
+        }
+
         return "redirect:/infoscompte";
     }
 

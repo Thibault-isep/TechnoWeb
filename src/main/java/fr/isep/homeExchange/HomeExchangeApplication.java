@@ -19,6 +19,7 @@ public class HomeExchangeApplication {
         UserRepository userRepository = configurableApplicationContext.getBean(UserRepository.class);
         HabitationRepository habitationRepository = configurableApplicationContext.getBean(HabitationRepository.class);
         ReservationRequestRepository reservationRequestRepository = configurableApplicationContext.getBean(ReservationRequestRepository.class);
+        ReservationPeriodRepository reservationPeriodRepository = configurableApplicationContext.getBean(ReservationPeriodRepository.class);
         RatingRepository ratingRepository = configurableApplicationContext.getBean(RatingRepository.class);
         ExchangeRepository exchangeRepository = configurableApplicationContext.getBean(ExchangeRepository.class);
         MessageRepository messageRepository = configurableApplicationContext.getBean(MessageRepository.class);
@@ -29,17 +30,21 @@ public class HomeExchangeApplication {
         List<User> users = Arrays.asList(Barth, Thibault);
         userRepository.saveAll(users);
 
-        Habitation hab1 = new Habitation("Habitation 1" ,"House", 2, 3, 1,"this is a test",  "1 rue de la Paix", "Paris", "France", "75000", "test", "test", Barth);
-        Habitation hab2 = new Habitation("Habitation 2","Flat", 1, 1, 1, "this is a test2", "2 rue Foche", "Marseille", "France", "75000", "test", "test", Thibault);
-        List<Habitation> habitations = Arrays.asList(hab1, hab2);
+        Habitation hab1 = new Habitation("House in Paris" ,"House", 2, 3, 1,"this is a test",  "1 rue de la Paix", "Paris", "France", "75000", "test", "test", Barth);
+        Habitation hab2 = new Habitation("Flat in Marseilles","Flat", 1, 1, 1, "this is a test2", "2 rue Foche", "Marseille", "France", "75000", "test", "test", Thibault);
+        Habitation hab3 = new Habitation("Flat in Dz","Flat", 1, 1, 1, "this is a test3", "2 rue Foche", "Dz", "France", "75000", "test", "test", Thibault);
+        List<Habitation> habitations = Arrays.asList(hab1, hab2, hab3);
         habitationRepository.saveAll(habitations);
-        ReservationRequest res1 = new ReservationRequest("09/05 - hab1", LocalDate.of(2022, 05, 9), LocalDate.of(2022, 05, 12), hab1, Thibault);
-        ReservationRequest res2 = new ReservationRequest("09/05 - hab2", LocalDate.of(2022, 05, 9), LocalDate.of(2022, 05, 12), hab2, Barth);
+        ReservationRequest res1 = new ReservationRequest("09/05 - hab1", LocalDate.of(2022, 05, 9), LocalDate.of(2022, 05, 12), 0, hab1, hab2, Thibault);
+        ReservationRequest res2 = new ReservationRequest("09/05 - hab2", LocalDate.of(2022, 05, 9), LocalDate.of(2022, 05, 12), 0, hab2, hab1, Barth);
         List<ReservationRequest> reservations = Arrays.asList(res1, res2);
         reservationRequestRepository.saveAll(reservations);
+        ReservationPeriod resP1 = new ReservationPeriod(LocalDate.of(2022, 05, 9), LocalDate.of(2022, 05, 12), false, hab2);
+        ReservationPeriod resP2 = new ReservationPeriod(LocalDate.of(2022, 07, 9), LocalDate.of(2022, 07, 12), false, hab2);
+        List<ReservationPeriod> reservationPeriods = Arrays.asList(resP1, resP2);
+        reservationPeriodRepository.saveAll(reservationPeriods);
         Rating rate1 = new Rating(5, hab1, Barth,"Belle terrasse");
         Rating rate2 = new Rating(4, hab2, Thibault, "Maison très propre et agréable");
-
         List<Rating> ratings = Arrays.asList(rate1, rate2);
         ratingRepository.saveAll(ratings);
 

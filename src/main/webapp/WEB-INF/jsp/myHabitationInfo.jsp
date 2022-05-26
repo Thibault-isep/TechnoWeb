@@ -78,7 +78,25 @@
             </select>
             <br>
         </c:forEach>
-
+        <br>
+        <c:forEach var="reservationPeriod" items="${reservationPeriods}">
+            <table>
+                <tr>
+                    <th>Date of start</th>
+                    <th>Date of end</th>
+                </tr>
+                <tr>
+                    <td><input type="hidden" value="${reservationPeriod.reservationPeriodId}" name="reservationPeriodId"></td>
+                    <td><input type="date" value="${reservationPeriod.start}" name="dateOfStart"></td>
+                    <td><input type="date" value="${reservationPeriod.end}" name="dateOfEnd"></td>
+                </tr>
+            </table>
+        </c:forEach>
+        <br>
+        <label>Add reservation periods</label>
+        <input type="button" value="Add a new period reservation" onclick="addReservationPeriod()"/>
+        <div id="periodReservationContainer"></div>
+        <br>
         <input type="submit" value="envoyer">
     </form>
     <form action="/myhabitations/${habitation.habitationId}/delete" method="GET">
@@ -87,3 +105,12 @@
 </div>
 </body>
 </html>
+
+<script>
+    function addReservationPeriod() {
+        var divDefineReservationPeriod = document.createElement('div');
+        divDefineReservationPeriod.innerHTML = '<br><td><input type="date" name="newDateOfStart"></td><td><input type="date" name="newDateOfEnd"></td>';
+        console.log(divDefineReservationPeriod);
+        document.getElementById('periodReservationContainer').append(divDefineReservationPeriod);
+    }
+</script>

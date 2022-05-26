@@ -64,6 +64,22 @@
         </select>
     </c:forEach>
 
+    <br>
+    <br>
+    <label>Define reservation periods</label>
+    <input type="button" value="Add a new period reservation" onclick="addReservationPeriod()"/>
+    <div id="periodReservationContainer"></div>
+    <br>
     <input type="submit" value="envoyer">
 </form>
 </body>
+
+<script>
+    function addReservationPeriod() {
+        var divDefineReservationPeriod = document.createElement('div');
+        divDefineReservationPeriod.innerHTML = '<br><table><tr><th>Date of start</th><th>Date of end</th></tr><tr><td><input type="date" name="dateOfStart"></td><td><input type="date" name="dateOfEnd"></td></tr></table>';
+        console.log(divDefineReservationPeriod);
+        document.getElementById('periodReservationContainer').append(divDefineReservationPeriod);
+    }
+</script>
+

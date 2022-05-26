@@ -15,4 +15,6 @@ public interface ReservationRequestRepository extends JpaRepository<ReservationR
     ReservationRequest getReservationRequestByReservationRequestId(int reservationRequestId);
 
     List<ReservationRequest> getReservationRequestByHabitation(Habitation habitation);
+
+    List<ReservationRequest> getReservationRequestByHabitationHabitationIdAndValidateNot(int habitationId, int validate);
 }

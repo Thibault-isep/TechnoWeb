@@ -17,6 +17,7 @@ public class ReservationPeriod {
     private int reservationPeriodId;
     private LocalDate start;
     private LocalDate end;
+    private boolean validate;
 
     @ManyToOne
     @JoinColumn(name = "habitation_id")
@@ -25,9 +26,10 @@ public class ReservationPeriod {
     public ReservationPeriod() {
     }
 
-    public ReservationPeriod(LocalDate start, LocalDate end, Habitation habitation) {
+    public ReservationPeriod(LocalDate start, LocalDate end, boolean validate, Habitation habitation) {
         this.start = start;
         this.end = end;
+        this.validate = validate;
         this.habitation = habitation;
     }
 
@@ -53,6 +55,14 @@ public class ReservationPeriod {
 
     public void setEnd(LocalDate end) {
         this.end = end;
+    }
+
+    public boolean isValidate() {
+        return validate;
+    }
+
+    public void setValidate(boolean validate) {
+        this.validate = validate;
     }
 
     public Habitation getHabitation() {

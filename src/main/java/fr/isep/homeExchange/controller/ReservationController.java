@@ -4,6 +4,7 @@ import fr.isep.homeExchange.model.Habitation;
 import fr.isep.homeExchange.model.ReservationRequest;
 import fr.isep.homeExchange.model.User;
 import fr.isep.homeExchange.repository.HabitationRepository;
+import fr.isep.homeExchange.repository.ReservationPeriodRepository;
 import fr.isep.homeExchange.repository.ReservationRequestRepository;
 import fr.isep.homeExchange.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,14 @@ import java.util.List;
 @Controller
 public class ReservationController {
     private final ReservationRequestRepository reservationRequestRepository;
+    private final ReservationPeriodRepository reservationPeriodRepository;
     private final HabitationRepository habitationRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public ReservationController(ReservationRequestRepository reservationRequestRepository, HabitationRepository habitationRepository, UserRepository userRepository) {
+    public ReservationController(ReservationRequestRepository reservationRequestRepository, ReservationPeriodRepository reservationPeriodRepository, HabitationRepository habitationRepository, UserRepository userRepository) {
         this.reservationRequestRepository = reservationRequestRepository;
+        this.reservationPeriodRepository = reservationPeriodRepository;
         this.habitationRepository = habitationRepository;
         this.userRepository = userRepository;
     }
@@ -37,23 +40,27 @@ public class ReservationController {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
         } else {
-            Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
-            model.addAttribute("habitation", habitation);
+            int userId = (int) httpSession.getAttribute("userId");
+            Habitation habitationToRequest = habitationRepository.getHabitationByHabitationId(habitationId);
+            List<Habitation> habitationsToExchange = habitationRepository.getHabitationByUserId(userId);
+            model.addAttribute("habitationToRequest", habitationToRequest);
+            model.addAttribute("habitationsToExchange", habitationsToExchange);
             return "takeReservation";
         }
     }
 
     @PostMapping(value = "/reservationRequest/{habitationId}/send")
-    public String sendRegistration(@PathVariable int habitationId, @RequestParam() String userDateOfStart, @RequestParam() String userDateOfEnd, HttpSession httpSession) {
+    public String sendRegistration(@PathVariable int habitationId, @RequestParam() String userDateOfStart, @RequestParam() String userDateOfEnd, @RequestParam int habitationToExchangeId, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
         } else {
             User user = getUserBySession(httpSession);
             Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
+            Habitation habitationToExchange = habitationRepository.getHabitationByHabitationId(habitationToExchangeId);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate dateOfStart = LocalDate.parse(userDateOfStart, formatter);
             LocalDate dateOfEnd = LocalDate.parse(userDateOfEnd, formatter);
-            ReservationRequest reservationRequest = new ReservationRequest(LocalDate.now().toString() + " - " + habitation.getName(), dateOfStart, dateOfEnd, habitation, user);
+            ReservationRequest reservationRequest = new ReservationRequest(LocalDate.now().toString() + " - " + habitation.getName(), dateOfStart, dateOfEnd, 0, habitation, habitationToExchange, user);
             reservationRequestRepository.save(reservationRequest);
             return "redirect:/";
         }
@@ -76,14 +83,17 @@ public class ReservationController {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
         } else {
+            int userId = (int) httpSession.getAttribute("userId");
             ReservationRequest reservationRequest = reservationRequestRepository.getReservationRequestByReservationRequestId(reservationRequestId);
+            List<Habitation> habitations = habitationRepository.getHabitationsByUserId(userId);
             model.addAttribute("reservationRequest", reservationRequest);
+            model.addAttribute("habitations", habitations);
             return "modifyReservationRequest";
         }
     }
 
     @PostMapping(value = "/reservationRequest/{reservationRequestId}/modify/send")
-    public String sendModificationReservation(@PathVariable() int reservationRequestId, @RequestParam() String userDateOfStart, @RequestParam() String userDateOfEnd, HttpSession httpSession) {
+    public String sendModificationReservation(@PathVariable() int reservationRequestId, @RequestParam() String userDateOfStart, @RequestParam() String userDateOfEnd, @RequestParam() int habitationToExchangeId, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
         } else {
@@ -91,8 +101,10 @@ public class ReservationController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate dateOfStart = LocalDate.parse(userDateOfStart, formatter);
             LocalDate dateOfEnd = LocalDate.parse(userDateOfEnd, formatter);
+            Habitation habitationToExchange = habitationRepository.getHabitationByHabitationId(habitationToExchangeId);
             reservationRequest.setStart(dateOfStart);
             reservationRequest.setEnd(dateOfEnd);
+            reservationRequest.setHabitationToExchange(habitationToExchange);
             reservationRequestRepository.save(reservationRequest);
             return "redirect:/myReservationsRequests";
         }
@@ -106,6 +118,43 @@ public class ReservationController {
             ReservationRequest reservationRequest = reservationRequestRepository.getReservationRequestByReservationRequestId(reservationRequestId);
             reservationRequestRepository.delete(reservationRequest);
             return "redirect:/myReservationsRequests";
+        }
+    }
+
+    @GetMapping(value = "/reservationRequest/{habitationId}/fromUsers")
+    public String getReservationRequestsFromUsers(@PathVariable() int habitationId, Model model, HttpSession httpSession) {
+        if (httpSession.getAttribute("userId") == null) {
+            return "redirect:/login";
+        } else {
+            List<ReservationRequest> reservationRequests = reservationRequestRepository.getReservationRequestByHabitationHabitationIdAndValidateNot(habitationId, -1);
+            model.addAttribute("listOfReservationRequests", reservationRequests);
+            return "reservationRequestsFromUsers";
+        }
+    }
+
+    @GetMapping(value = "/reservationRequest/{reservationRequestId}/accept")
+    public String acceptReservationRequest(@PathVariable() int reservationRequestId, HttpSession httpSession) {
+        if (httpSession.getAttribute("userId") == null) {
+            return "redirect:/login";
+        } else {
+            ReservationRequest reservationRequest = reservationRequestRepository.getReservationRequestByReservationRequestId(reservationRequestId);
+            int reservationId = reservationRequest.getReservationRequestId();
+            reservationRequest.setValidate(1);
+            reservationRequestRepository.save(reservationRequest);
+            return "redirect:/reservationRequest/" + reservationId + "/fromUsers";
+        }
+    }
+
+    @GetMapping(value = "/reservationRequest/{reservationRequestId}/refuse")
+    public String refuseReservationRequest(@PathVariable() int reservationRequestId, HttpSession httpSession) {
+        if (httpSession.getAttribute("userId") == null) {
+            return "redirect:/login";
+        } else {
+            ReservationRequest reservationRequest = reservationRequestRepository.getReservationRequestByReservationRequestId(reservationRequestId);
+            reservationRequest.setValidate(-1);
+            int reservationId = reservationRequest.getReservationRequestId();
+            reservationRequestRepository.save(reservationRequest);
+            return "redirect:/reservationRequest/" + reservationId + "/fromUsers";
         }
     }
 

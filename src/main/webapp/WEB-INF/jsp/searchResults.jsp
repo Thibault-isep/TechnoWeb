@@ -138,8 +138,6 @@
         }
     }
 
-
-
     function myFunction() {
         const habitation = [];
         <c:forEach items="${habitations}" var="h">
