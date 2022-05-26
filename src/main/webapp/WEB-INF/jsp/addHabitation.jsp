@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../css/addHabitation.css">
 </head>
 <body>
-<div class="header" style="background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('../images/todd-kent-178j8tJrNlc-unsplash.jpg');">
+<div class="header" style="background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('../images/add.jpg');">
     <nav class="white">
         <a href="/"><h2 class="logo">HomeExchange</h2></a>
         <ul class="nav-links">
@@ -26,7 +26,7 @@
                     <p>${user.username}</p>
                     <label for="profile2"><i class="fa-solid fa-bars"></i></label>
                     <ul>
-                        <li><a href="/messaging"><i class="fa-solid fa-message"></i>Messages</a></li>
+                        <li><a href="/myMessagings"><i class="fa-solid fa-message"></i>Messages</a></li>
                         <li><a href=/infoscompte><i class="fa-solid fa-user"></i>Account</a></li>
                         <li><a href="#"><i class="fa-solid fa-gear"></i>Settings</a></li>
                         <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
