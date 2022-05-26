@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/home.css">
     <script type="text/javascript">
         const img = document.querySelector('.profile .img');
-        const menu = document.querySelector('.profile_dropdown);
+        const menu = document.querySelector('.profile_dropdown');
         img.addEventListener('click', function() {
             menu.classList.toggle('open');
         })

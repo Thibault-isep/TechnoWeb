@@ -92,7 +92,9 @@
                                     <p>Entire ${h.type} in ${city}</p>
                                     <h3>${h.description}</h3>
                                     <p>${h.bed} Bedrooms / ${h.bathrooms} Bathroom /
-                                        ${Equipments[loop.index]}/ Kitchen / ${Means[loop.index]}</p>
+                                        <c:forEach items="${Equipments}" var="equipment">
+                                        ${equipment.name} /
+                                        </c:forEach> Kitchen / ${Means[loop.index]}</p>
 
                                 </div>
                             </div>
