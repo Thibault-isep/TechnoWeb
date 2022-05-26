@@ -51,9 +51,9 @@ public class HabitationController {
                     .orElse(0.0));
         }
         model.addAttribute("Means", Means);
-        List<Equipment> Equipments = new ArrayList<>();
+        List<List<Equipment>> Equipments = new ArrayList<>();
         for (Habitation h: habitations){
-            Equipments = equipmentRepository.getEquipmentByHabitation(h);
+            Equipments.add(equipmentRepository.getEquipmentByHabitation(h));
         }
         model.addAttribute("Equipments",Equipments);
         model.addAttribute("MaxBeds", habitationRepository.getMaxHabitation());
