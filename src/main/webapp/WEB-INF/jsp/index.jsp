@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/home.css">
     <script type="text/javascript">
         const img = document.querySelector('.profile .img');
-        const menu = document.querySelector('.profile_dropdown');
+        const menu = document.querySelector('.profile_dropdown);
         img.addEventListener('click', function() {
             menu.classList.toggle('open');
         })
@@ -21,47 +21,25 @@
 </head>
 <body>
 <div class="header" style="background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('images/header.png');">
-    <nav>
-        <h2 class="logo"><a href='/'>HomeExchange</a></h2>
+    <nav class="white">
+        <h2 class="logo">HomeExchange</h2>
         <ul class="nav-links">
-            <li><a href="#">Accommodations</a></li>
+            <li><a href="/habitation/search">Accommodations</a></li>
             <li><a href="#">Become a Host</a></li>
         </ul>
         <c:choose>
             <c:when test="${user.userId != null}">
-                <div class="profile">
-                    <p class="img" style="color:white;">${user.username}</p>
-                    <div class="profile_dropdown" style="display: none">
-                        <div class="icon">
-                            <span><i class="far fa-envelope"></i></span>
-                            <p>Messages</p>
-                        </div>
-                        <div class="icon">
-                            <span><i class="fas fa-map-marker-alt"></i></span>
-                            <p>Location</p>
-                        </div>
-                        <div class="icon">
-                            <span><i class="far fa-star"></i></span>
-                            <p>Favorites</p>
-                        </div>
-                        <div class="icon">
-                            <span><i class="fas fa-plus-circle"></i></span>
-                            <p>Add People</p>
-                        </div>
-                        <div class="icon">
-                            <span><i class="fas fa-cog"></i></span>
-                            <p>Settings</p>
-                        </div>
-                        <div class="icon">
-                            <span><i class="fas fa-download"></i></span>
-                            <p>Downloads</p>
-                        </div>
-                        <div class="icon">
-                            <span><i class="fas fa-sign-out-alt"></i></span>
-                            <p>Log Out</p>
-                        </div>
-                    </div>
-                </div>
+                <label for="profile2" class="profile-dropdown">
+                    <input type="checkbox" id="profile2">
+                    <p>${user.username}</p>
+                    <label for="profile2"><i class="fa-solid fa-bars"></i></label>
+                    <ul>
+                        <li><a href="/messaging"><i class="fa-solid fa-message"></i>Messages</a></li>
+                        <li><a href=/infosCompte><i class="fa-solid fa-user"></i>Account</a></li>
+                        <li><a href="#"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                        <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
+                    </ul>
+                </label>
             </c:when>
             <c:otherwise>
                 <ul class="nav-links">

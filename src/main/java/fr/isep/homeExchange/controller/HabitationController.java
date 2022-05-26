@@ -51,6 +51,12 @@ public class HabitationController {
                     .orElse(0.0));
         }
         model.addAttribute("Means", Means);
+        List<Equipment> Equipments = new ArrayList<>();
+        for (Habitation h: habitations){
+            Equipments = equipmentRepository.getEquipmentByHabitation(h);
+        }
+        model.addAttribute("Equipments",Equipments);
+        model.addAttribute("MaxBeds", habitationRepository.getMaxHabitation());
         return "searchResults";
     }
 
@@ -62,9 +68,16 @@ public class HabitationController {
     }
 
     @RequestMapping(value = "habitation/{habitationId}")
-    public String habitationInfo(Model model, @PathVariable("habitationId") int habitationId) {
+    public String habitationInfo(Model model, @PathVariable("habitationId") int habitationId, HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+        } else {
+            User user = getUserBySession(session);
+            model.addAttribute("user", user);
+        }
         Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
         List<Rating> ratings = ratingRepository.getRatingsByHabitation(habitation);
+        List<Equipment> equipmentList = equipmentRepository.getEquipmentByHabitation(habitation);
+        model.addAttribute("equipments", equipmentList);
         model.addAttribute("ratings", ratings);
         model.addAttribute("habitation", habitation);
         return "habitationInfo";

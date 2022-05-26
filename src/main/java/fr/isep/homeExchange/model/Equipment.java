@@ -54,4 +54,6 @@ public class Equipment {
     public void setHabitation(List<Habitation> habitation) {
         this.habitation = habitation;
     }
+
+
 }
