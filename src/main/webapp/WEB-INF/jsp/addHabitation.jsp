@@ -121,6 +121,11 @@
                 </c:forEach>
             </div>
         </div>
+
+        <label>Define reservation periods</label>
+        <input type="button" value="Add a new period reservation" onclick="addReservationPeriod()"/>
+        <div id="periodReservationContainer"></div>
+
         <div class="description">
             <label for="Description">Description</label><br>
             <input name="Description" id="Description" type="text" placeholder="Description" required class="descriptionInput" style="height: 200px;">
@@ -130,9 +135,14 @@
         </div>
     </form>
 </div>
-
-
-
-
-
 </body>
+
+<script>
+    function addReservationPeriod() {
+        var divDefineReservationPeriod = document.createElement('div');
+        divDefineReservationPeriod.innerHTML = '<br><table><tr><th>Date of start</th><th>Date of end</th></tr><tr><td><input type="date" name="dateOfStart"></td><td><input type="date" name="dateOfEnd"></td></tr></table>';
+        console.log(divDefineReservationPeriod);
+        document.getElementById('periodReservationContainer').append(divDefineReservationPeriod);
+    }
+</script>
+

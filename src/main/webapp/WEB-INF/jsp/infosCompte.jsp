@@ -107,11 +107,15 @@
                 <form action="myhabitations/${habits.habitationId}" method="post">
                     <th><input type="submit" value="Modifier"></th>
                 </form>
+                <form action="reservationRequest/${habits.habitationId}/fromUsers" method="get">
+                    <th><input type="submit" value="View users reservations requests on my habitation"></th>
+                </form>
             </tr>
         </c:forEach>
     </table>
 </c:if>
 <a href="addhabitation">Ajouter une habitation</a>
+<a href="myMessagings">View my messagings</a>
 <a href="/">Menu</a>
 
 </body>

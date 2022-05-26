@@ -21,7 +21,6 @@ public interface HabitationRepository extends JpaRepository<Habitation, Long> {
     @Query("SELECT h FROM Habitation h WHERE h.user.userId = :x")
     List<Habitation> getHabitationsByUserId(@Param("x") int id);
 
-
     @Query("SELECT h FROM Habitation h WHERE h.user.userId <> :x")
     List<Habitation> searchHabitation(@Param("x") int id);
 

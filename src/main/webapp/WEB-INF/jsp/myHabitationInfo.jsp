@@ -136,21 +136,45 @@
             <label for="Description">Description</label><br>
             <input name="Description" id="Description" type="text" placeholder="Description" required class="descriptionInput" value="${habitation.description}" style="height: 200px;">
         </div>
+
+        <c:forEach var="reservationPeriod" items="${reservationPeriods}">
+            <table>
+                <tr>
+                    <th>Date of start</th>
+                    <th>Date of end</th>
+                </tr>
+                <tr>
+                    <input type="hidden" value="${reservationPeriod.reservationPeriodId}" name="reservationPeriodId">
+                    <td><input type="date" value="${reservationPeriod.start}" name="dateOfStart"></td>
+                    <td><input type="date" value="${reservationPeriod.end}" name="dateOfEnd"></td>
+                </tr>
+            </table>
+        </c:forEach>
+        <label>Add reservation periods</label>
+        <input type="button" value="Add a new period reservation" onclick="addReservationPeriod()"/>
+        <div id="periodReservationContainer"></div>
+
         <div style="display: flex; justify-content: center; margin-top: 2px;">
             <input type="submit" value="Edit" style="padding: 10px 50px; color: white; background: #008489;border: none;border-radius: 10px;">
         </div>
     </form>
 
-
-        <form action="/myhabitations/${habitation.habitationId}/delete" method="GET">
-            <div class="container">
-                <h5>Delete</h5>
-                <input type="submit" name="deleteHabitation" value="Delete the habitation" style="padding: 10px 50px; color: white; background: #008489;border: none;border-radius: 10px;"/>
-            </div>
-        </form>
-
-
+    <form action="/myhabitations/${habitation.habitationId}/delete" method="GET">
+        <div class="container">
+            <h5>Delete</h5>
+            <input type="submit" name="deleteHabitation" value="Delete the habitation" style="padding: 10px 50px; color: white; background: #008489;border: none;border-radius: 10px;"/>
+        </div>
+    </form>
 </div>
 
 </body>
 </html>
+
+<script>
+    function addReservationPeriod() {
+        var divDefineReservationPeriod = document.createElement('div');
+        divDefineReservationPeriod.innerHTML = '<br><td><input type="date" name="newDateOfStart"></td><td><input type="date" name="newDateOfEnd"></td>';
+        console.log(divDefineReservationPeriod);
+        document.getElementById('periodReservationContainer').append(divDefineReservationPeriod);
+    }
+</script>
