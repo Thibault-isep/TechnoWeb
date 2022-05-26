@@ -63,14 +63,25 @@
             Kitchen</p>
     </div>
     <hr class="line">
-    <form class="reservation" action="/reservationRequest/${habitation.habitationId}" method="POST">
-        <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
-        <input type="submit" name="makeReservationRequest" value="Make a reservation request"/>
-    </form>
-    <form action="/messagingFromHabitation" method="POST">
-        <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
-        <input type="submit" name="seeMessaging" value="Contact the owner"/>
-    </form>
+    <div style="display: flex;justify-content: space-between;align-items: center;">
+        <div class="host">
+            <img src="../images/thib.jpg">
+            <div>
+                <h2>Hosted by ${habitation.user.first_name}</h2>
+                <p>${habitation.user.description}</p>
+                <form action="/messagingFromHabitation" method="POST">
+                    <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
+                    <input class="reservation" style="border: none;background: #008489;color: white;cursor: pointer;" type="submit" name="seeMessaging" value="Contact the owner"/>
+                </form>
+            </div>
+        </div>
+        <div>
+            <form class="reservation" action="/reservationRequest/${habitation.habitationId}" method="POST">
+                <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
+                <input type="submit" style="cursor: pointer;" name="makeReservationRequest" value="Make a reservation request"/>
+            </form>
+        </div>
+    </div>
     <hr class="line">
     <div>
         <h2 class="sub-title">Comments</h2>
@@ -95,14 +106,7 @@
                 src="https://www.google.com/maps/embed/v1/place?q=${habitation.city}, France&amp;key=AIzaSyDOwVaIg70MQVTpE86Ykwo1zzz7BOLwwuk">
         </iframe>
     </div>
-    <hr class="line">
-    <div class="host">
-        <img src="../images/thib.jpg">
-        <div>
-            <h2>Hosted by ${habitation.user.first_name}</h2>
-            <p>${habitation.user.description}</p>
-        </div>
-    </div>
+
 </div>
 </body>
 </html>
