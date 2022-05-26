@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8"%>
+         pageEncoding="utf-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!DOCTYPE html>
@@ -58,7 +58,11 @@
 
     <div class="small-details">
         <h2>Entire ${habitation.type} in ${habitation.city}</h2>
-        <p>${habitation.bed} Bedrooms / ${habitation.bathrooms} Bathroom /  / Kitchen</p>
+        <p>${habitation.bed} Bedrooms / ${habitation.bathrooms} Bathroom /
+            <c:forEach items="${equipments}" var="equipment">
+                ${equipment.name} /
+            </c:forEach>
+            Kitchen</p>
     </div>
     <hr class="line">
     <form class="reservation" action="/reservationRequest/${habitation.habitationId}" method="POST">
