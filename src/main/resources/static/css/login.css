@@ -1,32 +1,56 @@
-#formulaire{
+.formulaire-login{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:75%;
+    height:100%;
+    border-radius:50px;
+    margin: auto;
+}
+
+.left-img{
+    width:25%;
+    height:700px;
+    background-repeat:no-repeat;
+    border-top-left-radius: 33px;
+    border-bottom-left-radius: 33px;
+}
+
+.right-form{
+    display:flex;
+    align-items:center;
+    flex-direction:column;
+    width:75%;
+    height: 700px;
     background-color: #008489;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    text-align: center;
-    overflow: hidden;
-    vertical-align: center;
-    float: right;
-    width: 35%;
-    padding-top: 10%;
+    border-top-right-radius: 33px;
+    border-bottom-right-radius: 33px;
 }
 
 
 
-#imageLeft{
-    overflow: hidden;
-    height: 60%;
-    display: table-cell;
-    text-align: center;
-    float: left;
-    padding-left: 12%;
+.input-container {
+    padding-bottom: 1em;
 }
-
-.formImage{
+.left-inner-addon {
+    position: relative;
     display: flex;
-    text-align: center;
-    margin-right: auto; margin-top: 20px; border-radius: 20px;
+}
+.left-inner-addon input {
+    padding-left: 35px !important;
+}
+.left-inner-addon i {
+    position: absolute;
+    padding: 12px 12px;
+    pointer-events: none;
 }
 
-.button{
-    margin-top: 5%;
+.form-items{
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-item{
+    display: flex;
+    flex-direction: column;
 }
