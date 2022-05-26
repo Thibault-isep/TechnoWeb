@@ -50,10 +50,8 @@
     </div>
     <div class="gallery">
         <div class="gallery-img-1"><img src="../images/house.jpg"></div>
-        <div><img src="../images/house.jpg"></div>
-        <div><img src="../images/house.jpg"></div>
-        <div><img src="../images/house.jpg"></div>
-        <div><img src="../images/house.jpg"></div>
+        <c:forEach items="${photos}" var="photo">
+        <div><img src="${photo}"></div></c:forEach>
     </div>
 
     <div class="small-details">

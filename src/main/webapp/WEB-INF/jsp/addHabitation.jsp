@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="">
 </head>
 <body>
-<form method="post" action="">
+<form method="post" action="" enctype="multipart/form-data">
     <label for="Type">Type d'habitation</label>
     <select id="Type" name="Type"/>
     <option value="Appartement">Appartement</option>
@@ -56,6 +56,9 @@
     <input name="Constraints" id="Constraints" type="text" placeholder="Constraints" required>
     <br>
 
+    <label for="Photos">Photos</label>
+    <input type="file" id="Photos" name="Photos" required accept="image/png, image/jpeg" multiple>
+    <br>
     <c:forEach var="equipment" items="${equipment}">
         <label for="${equipment.name}">${equipment.name}</label>
         <select name="equipments"/>
@@ -63,6 +66,7 @@
         <option value="OUI">OUI</option>
         </select>
     </c:forEach>
+
 
     <input type="submit" value="envoyer">
 </form>

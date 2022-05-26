@@ -35,7 +35,7 @@
                     <label for="profile2"><i class="fa-solid fa-bars"></i></label>
                     <ul>
                         <li><a href="/messaging"><i class="fa-solid fa-message"></i>Messages</a></li>
-                        <li><a href=/infosCompte><i class="fa-solid fa-user"></i>Account</a></li>
+                        <li><a href=/infoscompte><i class="fa-solid fa-user"></i>Account</a></li>
                         <li><a href="#"><i class="fa-solid fa-gear"></i>Settings</a></li>
                         <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                     </ul>
