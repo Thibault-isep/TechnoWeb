@@ -1,20 +1,26 @@
 package fr.isep.homeExchange;
 
+import fr.isep.homeExchange.controller.HabitationController;
 import fr.isep.homeExchange.model.*;
 import fr.isep.homeExchange.repository.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
 @SpringBootApplication
+@ComponentScan({"fr.isep.homeExchange", "fr.isep.homeExchange.controller"})
 public class HomeExchangeApplication {
 
     public static void main(String[] args) {
+        new File(HabitationController.uploadDirectory).mkdir();
         ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(HomeExchangeApplication.class, args);
         UserRepository userRepository = configurableApplicationContext.getBean(UserRepository.class);
         HabitationRepository habitationRepository = configurableApplicationContext.getBean(HabitationRepository.class);

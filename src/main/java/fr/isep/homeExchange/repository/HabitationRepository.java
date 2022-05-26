@@ -23,4 +23,7 @@ public interface HabitationRepository extends JpaRepository<Habitation, Long> {
 
     @Query("SELECT h FROM Habitation h WHERE h.user.userId <> :x")
     List<Habitation> searchHabitation(@Param("x") int id);
+
+    @Query("SELECT MAX(h.bed) FROM Habitation h")
+    Integer getMaxHabitation();
 }

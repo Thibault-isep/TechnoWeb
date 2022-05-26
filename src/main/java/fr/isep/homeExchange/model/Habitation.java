@@ -23,6 +23,8 @@ public class Habitation {
     private String zip_code;
     private String services;
     private String constraints;
+    @ElementCollection
+    private List<String> photos = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -36,6 +38,9 @@ public class Habitation {
     )
     private List<Equipment> equipments = new ArrayList<>();
 
+    public void addPhoto(String photoPath) {
+        this.photos.add(photoPath);
+    }
 
     public void addEquipment(Equipment equipment) {
         this.equipments.add(equipment);
@@ -63,10 +68,11 @@ public class Habitation {
         this.user = user;
     }
 
-    public Habitation(){}
-    
-    public void updateHabitation(String Type, String Name, String Address, String Country, String Zip_Code, String City, int Rooms, int Bed, int Bathrooms, String Description, String Services, String Constraints){
-        this.type= Type;
+    public Habitation() {
+    }
+
+    public void updateHabitation(String Type, String Name, String Address, String Country, String Zip_Code, String City, int Rooms, int Bed, int Bathrooms, String Description, String Services, String Constraints) {
+        this.type = Type;
         this.name = Name;
         this.address = Address;
         this.country = Country;
@@ -223,5 +229,13 @@ public class Habitation {
                 ", constraints='" + constraints + '\'' +
                 ", user=" + user +
                 '}';
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
     }
 }

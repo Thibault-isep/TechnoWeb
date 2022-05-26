@@ -6,17 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class HabitationController {
+    public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/resources/static/images";
     private HabitationRepository habitationRepository;
     private UserRepository userRepository;
     private RatingRepository ratingRepository;
@@ -55,6 +61,12 @@ public class HabitationController {
                     .orElse(0.0));
         }
         model.addAttribute("Means", Means);
+        List<List<Equipment>> Equipments = new ArrayList<>();
+        for (Habitation h: habitations){
+            Equipments.add(equipmentRepository.getEquipmentByHabitation(h));
+        }
+        model.addAttribute("Equipments",Equipments);
+        model.addAttribute("MaxBeds", habitationRepository.getMaxHabitation());
         return "searchResults";
     }
 
@@ -66,9 +78,17 @@ public class HabitationController {
     }
 
     @RequestMapping(value = "habitation/{habitationId}")
-    public String habitationInfo(Model model, @PathVariable("habitationId") int habitationId) {
+    public String habitationInfo(Model model, @PathVariable("habitationId") int habitationId, HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+        } else {
+            User user = getUserBySession(session);
+            model.addAttribute("user", user);
+        }
         Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
         List<Rating> ratings = ratingRepository.getRatingsByHabitation(habitation);
+        List<Equipment> equipmentList = equipmentRepository.getEquipmentByHabitation(habitation);
+        model.addAttribute("photos", habitation.getPhotos());
+        model.addAttribute("equipments", equipmentList);
         model.addAttribute("ratings", ratings);
         model.addAttribute("habitation", habitation);
         return "habitationInfo";
@@ -134,20 +154,30 @@ public class HabitationController {
     }
 
     @PostMapping(value = "addhabitation")
-    public String saveHabitation(Model model, HttpSession session, @RequestParam String Type, @RequestParam String Address, HttpServletRequest request, HttpServletResponse response, @RequestParam String Country, @RequestParam String Zip_Code, @RequestParam String City, @RequestParam int Rooms, @RequestParam int Bed, @RequestParam int Bathrooms, @RequestParam String Description, @RequestParam String Services, @RequestParam String Constraints, @RequestParam String Name) {
+    public String saveHabitation(Model model, HttpSession session, @RequestParam String Type, @RequestParam String Address, HttpServletRequest request, HttpServletResponse response, @RequestParam String Country, @RequestParam String Zip_Code, @RequestParam String City, @RequestParam int Rooms, @RequestParam int Bed, @RequestParam int Bathrooms, @RequestParam String Description, @RequestParam String Services, @RequestParam String Constraints, @RequestParam String Name, @RequestParam MultipartFile[] Photos) throws IOException {
         String[] equipments;
         equipments = request.getParameterValues("equipments");
         User user = getUserBySession(session);
         model = createUserModel(user, model);
-
         List<Equipment> equipmentList = equipmentRepository.findAll();
-
         Habitation newHabitation = new Habitation(Name,Type, Bed, Rooms, Bathrooms, Description, Address, City, Country, Zip_Code, Services, Constraints, user);
         for (int i = 0; i < equipments.length; i++) {
             if (equipments[i].equals("OUI")) {
                 newHabitation.addEquipment(equipmentList.get(i));
             }
         }
+        StringBuilder fileNames = new StringBuilder();
+        for(MultipartFile photo:Photos) {
+            Path fileNameAndPath = Paths.get(uploadDirectory, photo.getOriginalFilename());
+            fileNames.append(photo.getOriginalFilename());
+            try {
+                Files.write(fileNameAndPath, photo.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            newHabitation.addPhoto("../images/" + photo.getOriginalFilename());
+        }
+        System.out.println(newHabitation.getPhotos().toString());
         habitationRepository.save(newHabitation);
 
         String [] datesOfStart = request.getParameterValues("dateOfStart");
