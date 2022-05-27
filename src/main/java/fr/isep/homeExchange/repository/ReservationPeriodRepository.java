@@ -12,7 +12,7 @@ public interface ReservationPeriodRepository extends JpaRepository<ReservationPe
 
     ReservationPeriod getReservationPeriodByReservationPeriodId(int reservationPeriodId);
 
-    List<ReservationPeriod> getReservationPeriodByHabitation(Habitation habitation);
+    List<ReservationPeriod> getReservationPeriodsByHabitation(Habitation habitation);
 
     List<ReservationPeriod> getReservationPeriodByStartIsLessThanEqualAndValidateIs(LocalDate dateOfStart, boolean validate);
 

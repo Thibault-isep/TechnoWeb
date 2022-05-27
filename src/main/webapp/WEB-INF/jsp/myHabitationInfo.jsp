@@ -43,7 +43,7 @@
             </c:otherwise>
         </c:choose>
     </nav>
-    <form action="/updatehabitation" method="POST">
+    <form action="/updatehabitation" method="POST" enctype="multipart/form-data">
         <input type="hidden" value="${habitation.habitationId}" name="habitationId">
         <div class="container" id="part1">
             <h1 style="padding-top: 1%;">Edit your habitation</h1>
@@ -170,6 +170,14 @@
             <input type="submit" value="Edit" style="padding: 10px 50px; color: white; background: #008489;border: none;border-radius: 10px;">
         </div>
     </form>
+    <div class="gallery">
+        <c:forEach items="${photos}" var="photo" varStatus="loop">
+            <div class="gallery-img-${loop.index + 1}">
+                <img src="${photos[loop.index]}">
+                <a href="/myhabitation/${habitation.habitationId}/deleteimage/${loop.index}">Delete this image</a>
+            </div>
+        </c:forEach>
+    </div>
 
     <form action="/myhabitations/${habitation.habitationId}/delete" method="GET">
         <div class="container">

@@ -142,7 +142,8 @@ public class HabitationController {
         }
         List<Equipment> equipments = equipmentRepository.findAll();
         List<Equipment> habitationsEquipment = equipmentRepository.getEquipmentByHabitation(habitation);
-        List<ReservationPeriod> reservationPeriods = reservationPeriodRepository.getReservationPeriodByHabitation(habitation);
+        List<ReservationPeriod> reservationPeriods = reservationPeriodRepository.getReservationPeriodsByHabitation(habitation);
+        model.addAttribute("photos", habitation.getPhotos());
         model.addAttribute("equipment", equipments);
         model.addAttribute("habitationsequipment", habitationsEquipment);
         model.addAttribute("reservationPeriods", reservationPeriods);
@@ -156,15 +157,25 @@ public class HabitationController {
             return "redirect:/login";
         } else {
             Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
-            List<ReservationRequest> reservationRequests = reservationRequestRepository.getReservationRequestByHabitation(habitation);
-            List<ReservationPeriod> reservationPeriods = reservationPeriodRepository.getReservationPeriodByHabitation(habitation);
+            List<ReservationRequest> reservationRequests = reservationRequestRepository.getReservationRequestsByHabitation(habitation);
+            List<ReservationRequest> reservationRequests1 = reservationRequestRepository.getReservationRequestByHabitationToExchange(habitation);
+            List<ReservationPeriod> reservationPeriods = reservationPeriodRepository.getReservationPeriodsByHabitation(habitation);
             List<Rating> ratings = ratingRepository.getRatingsByHabitation(habitation);
             reservationRequestRepository.deleteAll(reservationRequests);
+            reservationRequestRepository.deleteAll(reservationRequests1);
             reservationPeriodRepository.deleteAll(reservationPeriods);
             ratingRepository.deleteAll(ratings);
             habitationRepository.delete(habitation);
             return "redirect:/infoscompte";
         }
+    }
+
+    @RequestMapping("myhabitation/{habitationId}/deleteimage/{image}")
+    public String deleteImageHabitation(@PathVariable int habitationId, @PathVariable int image, HttpSession session) {
+        Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
+        habitation.deletePhoto(image);
+        habitationRepository.save(habitation);
+        return "redirect:/infoscompte";
     }
 
     @GetMapping(value = "addhabitation")
@@ -222,7 +233,7 @@ public class HabitationController {
     }
 
     @RequestMapping("updatehabitation")
-    public String updateHabitation(Model model, HttpServletRequest request, HttpSession session, @RequestParam String Type, @RequestParam String Name, @RequestParam String Address, @RequestParam String Country, @RequestParam String Zip_Code, @RequestParam String City, @RequestParam int Rooms, @RequestParam int Bed, @RequestParam int Bathrooms, @RequestParam String Description, @RequestParam String Services, @RequestParam String Constraints, @RequestParam int habitationId){
+    public String updateHabitation(Model model, HttpServletRequest request, HttpSession session, @RequestParam String Type, @RequestParam String Name, @RequestParam String Address, @RequestParam String Country, @RequestParam String Zip_Code, @RequestParam String City, @RequestParam int Rooms, @RequestParam int Bed, @RequestParam int Bathrooms, @RequestParam String Description, @RequestParam String Services, @RequestParam String Constraints, @RequestParam int habitationId, @RequestParam MultipartFile[] Photos) throws IOException {
         if (session.getAttribute("userId") == null) {
             return "redirect:/";
         }
@@ -237,6 +248,17 @@ public class HabitationController {
                 habitation.addEquipment(equipmentList.get(i));
             }
         }
+        for(MultipartFile photo:Photos) {
+            String path = photo.getOriginalFilename().replace(" ", "-");
+            Path fileNameAndPath = Paths.get(uploadDirectory, path);
+            try {
+                Files.write(fileNameAndPath, photo.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            habitation.addPhoto("../images/" + path);
+        }
+
         habitationRepository.save(habitation);
 
         String [] reservationPeriodIds = request.getParameterValues("reservationPeriodId");

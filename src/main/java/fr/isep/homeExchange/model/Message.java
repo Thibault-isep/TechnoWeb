@@ -61,4 +61,12 @@ public class Message {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public int getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(int messageId) {
+        this.messageId = messageId;
+    }
 }
