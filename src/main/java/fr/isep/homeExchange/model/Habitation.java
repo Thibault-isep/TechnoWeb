@@ -52,6 +52,23 @@ public class Habitation {
         this.user = user;
     }
 
+    public Habitation(String name, String type, int bed, int rooms, int bathrooms, String description, String address, String city, String country, String zip_code, String services, String constraints, User user, List<String> photos) {
+        this.name = name;
+        this.type = type;
+        this.bed = bed;
+        this.rooms = rooms;
+        this.bathrooms = bathrooms;
+        this.description = description;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.zip_code = zip_code;
+        this.services = services;
+        this.constraints = constraints;
+        this.user = user;
+        this.photos = photos;
+    }
+
     public Habitation(String name, String type, int bed, int rooms, int bathrooms, String description, String address, String city, String country, String zip_code, String services, String constraints, User user) {
         this.name = name;
         this.type = type;

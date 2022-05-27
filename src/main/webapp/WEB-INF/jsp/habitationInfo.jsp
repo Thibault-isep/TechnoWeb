@@ -43,15 +43,15 @@
 </nav>
 <div class="house-details">
     <div class="house-title">
-        <h1>${habitation.description}</h1>
+        <h1>${habitation.name}</h1>
         <div class="row">
             <p>Location: ${habitation.city}</p>
         </div>
     </div>
     <div class="gallery">
         <div class="gallery-img-1"><img src="../images/house.jpg"></div>
-        <c:forEach items="${photos}" var="photo">
-        <div><img src="${photo}"></div></c:forEach>
+        <c:forEach items="${photos}" var="photo" varStatus="loop">
+        <div><img class="gallery-img-${loop.index + 2}" src="${photo}"></div></c:forEach>
     </div>
 
     <div class="small-details">

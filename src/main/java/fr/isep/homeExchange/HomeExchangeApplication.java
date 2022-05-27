@@ -7,10 +7,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
@@ -35,8 +35,9 @@ public class HomeExchangeApplication {
         List<User> users = Arrays.asList(Barth, Thibault);
         userRepository.saveAll(users);
 
-        Habitation hab1 = new Habitation("Habitation 1" ,"House", 2, 3, 1,"this is a test",  "1 rue de la Paix", "Paris", "France", "75000", "test", "test", Barth);
-        Habitation hab2 = new Habitation("Habitation 2","Flat", 1, 1, 1, "this is a test2", "2 rue Foche", "Marseille", "France", "75000", "test", "test", Thibault);
+        List<String> Photos = new ArrayList<String>(Arrays.asList("../images/house.jpg", "../images/house.jpg", "../images/house.jpg", "../images/house.jpg"));
+        Habitation hab1 = new Habitation("Habitation 1", "House", 2, 3, 1, "this is a test", "1 rue de la Paix", "Paris", "France", "75000", "test", "test", Barth, Photos);
+        Habitation hab2 = new Habitation("Habitation 2","Flat", 1, 1, 1, "this is a test2", "2 rue Foche", "Marseille", "France", "75000", "test", "test", Thibault, Photos);
         List<Habitation> habitations = Arrays.asList(hab1, hab2);
         habitationRepository.saveAll(habitations);
         ReservationRequest res1 = new ReservationRequest("09/05 - hab1", LocalDate.of(2022, 05, 9), LocalDate.of(2022, 05, 12), hab1, Thibault);
