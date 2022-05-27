@@ -166,18 +166,16 @@ public class HabitationController {
                 newHabitation.addEquipment(equipmentList.get(i));
             }
         }
-        StringBuilder fileNames = new StringBuilder();
         for(MultipartFile photo:Photos) {
-            Path fileNameAndPath = Paths.get(uploadDirectory, photo.getOriginalFilename());
-            fileNames.append(photo.getOriginalFilename());
+            String path = photo.getOriginalFilename().replace(" ", "-");
+            Path fileNameAndPath = Paths.get(uploadDirectory, path);
             try {
                 Files.write(fileNameAndPath, photo.getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            newHabitation.addPhoto("../images/" + photo.getOriginalFilename());
+            newHabitation.addPhoto("../images/" + path);
         }
-        System.out.println(newHabitation.getPhotos().toString());
         habitationRepository.save(newHabitation);
 
         String [] datesOfStart = request.getParameterValues("dateOfStart");
