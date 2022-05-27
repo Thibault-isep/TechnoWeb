@@ -6,7 +6,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Messaging</title>
+    <title>Message | HomeExchange</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="../css/chat.css">
     <link rel="stylesheet" href="../css/home.css">
 </head>
@@ -26,7 +27,10 @@
                 <ul>
                     <li><a href="/myMessagings"><i class="fa-solid fa-message"></i>Messages</a></li>
                     <li><a href=/infoscompte><i class="fa-solid fa-user"></i>Account</a></li>
-                    <li><a href="#"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                    <c:if test="${user.roles == 'ROLE_ADMIN'}">
+                        <li><a href="/admin"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                    </c:if>
+                    <li><a href="/myReservationsRequests"><i class="fa-solid fa-calendar"></i>Reservations</a></li>
                     <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                 </ul>
             </label>
@@ -42,6 +46,7 @@
 <div class="wrapper" style="margin-top: 40px">
     <section class="chat-area">
         <header>
+            <a href="/myMessagings" class="back-icon"><i class="fas fa-arrow-left"></i></a>
             <div class="details">
                 <span>${otherUser.first_name} ${otherUser.last_name}</span>
             </div>

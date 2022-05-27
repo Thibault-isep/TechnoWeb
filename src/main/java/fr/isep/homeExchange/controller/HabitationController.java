@@ -42,7 +42,12 @@ public class HabitationController {
     }
 
     @RequestMapping(value = "habitation/search")
-    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, @RequestParam String dateOfStartString, @RequestParam String dateOfEndString, HttpSession session) {
+    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, @RequestParam(defaultValue = "") String dateOfStartString, @RequestParam(defaultValue = "") String dateOfEndString, HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+        } else {
+            User user = getUserBySession(session);
+            model.addAttribute("user", user);
+        }
         List<Habitation> habitations = new ArrayList<>();
         List<ReservationPeriod> reservationPeriods;
         if(!dateOfStartString.equals("") || !dateOfEndString.equals("")) {
@@ -121,7 +126,12 @@ public class HabitationController {
     }
 
     @RequestMapping(value = "habitation/{habitationId}/exchange")
-    public String habitationInfoExchange(Model model, @PathVariable("habitationId") int habitationId) {
+    public String habitationInfoExchange(Model model, @PathVariable("habitationId") int habitationId, HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+        } else {
+            User user = getUserBySession(session);
+            model.addAttribute("user", user);
+        }
         Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
         List<Rating> ratings = ratingRepository.getRatingsByHabitation(habitation);
         model.addAttribute("ratings", ratings);

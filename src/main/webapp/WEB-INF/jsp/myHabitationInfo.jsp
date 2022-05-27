@@ -10,7 +10,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${habitation.name} informations</title>
+    <title>Edit ${habitation.name} Informations | HomeExchange</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="../css/addHabitation.css">
 </head>
 <body>
@@ -30,7 +31,10 @@
                     <ul>
                         <li><a href="/myMessagings"><i class="fa-solid fa-message"></i>Messages</a></li>
                         <li><a href=/infoscompte><i class="fa-solid fa-user"></i>Account</a></li>
-                        <li><a href="#"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                        <c:if test="${user.roles == 'ROLE_ADMIN'}">
+                            <li><a href="/admin"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                        </c:if>
+                        <li><a href="/myReservationsRequests"><i class="fa-solid fa-calendar"></i>Reservations</a></li>
                         <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                     </ul>
                 </label>
@@ -136,36 +140,39 @@
             <label for="Description">Description</label><br>
             <input name="Description" id="Description" type="text" placeholder="Description" required class="descriptionInput" value="${habitation.description}" style="height: 200px;">
         </div>
-
-        <c:forEach var="reservationPeriod" items="${reservationPeriods}">
-            <table>
-                <tr>
-                    <th>Date of start</th>
-                    <th>Date of end</th>
-                </tr>
-                <c:choose>
-                    <c:when test="${reservationPeriod.validate == true}">
-                        <tr>
-                            <input type="hidden" value="${reservationPeriod.reservationPeriodId}" name="reservationPeriodId">
-                            <td><input type="date" value="${reservationPeriod.start}" name="dateOfStart" readonly="readonly"></td>
-                            <td><input type="date" value="${reservationPeriod.end}" name="dateOfEnd" readonly="readonly"></td>
-                            <td>This period is on reservation</td>
-                        </tr>
-                    </c:when>
-                    <c:otherwise>
-                        <tr>
-                            <input type="hidden" value="${reservationPeriod.reservationPeriodId}" name="reservationPeriodId">
-                            <td><input type="date" value="${reservationPeriod.start}" name="dateOfStart"></td>
-                            <td><input type="date" value="${reservationPeriod.end}" name="dateOfEnd"></td>
-                        </tr>
-                    </c:otherwise>
-                </c:choose>
-            </table>
-        </c:forEach>
-        <label>Add reservation periods</label>
-        <input type="button" value="Add a new period reservation" onclick="addReservationPeriod()"/>
-        <div id="periodReservationContainer"></div>
-
+        <div class="container">
+            <c:forEach var="reservationPeriod" items="${reservationPeriods}">
+                <input type="hidden" value="${reservationPeriod.reservationPeriodId}" name="reservationPeriodId">
+            <div class="search-bar" style="display: flex;flex-direction: row; justify-content: space-around">
+                <div class="other-input" style="display: flex;flex-direction: column;">
+                    <label>Date of start</label>
+                    <c:choose>
+                        <c:when test="${reservationPeriod.validate == true}">
+                            <input type="date" value="${reservationPeriod.start}" name="dateOfStart" readonly="readonly">
+                        </c:when>
+                        <c:otherwise>
+                            <input type="date" value="${reservationPeriod.start}" name="dateOfStart">
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <div class="other-input" style="display: flex;flex-direction: column;">
+                    <label>Date of end</label>
+                    <c:choose>
+                        <c:when test="${reservationPeriod.validate == true}">
+                            <input type="date" value="${reservationPeriod.end}" name="dateOfEnd" readonly="readonly">
+                        </c:when>
+                        <c:otherwise>
+                            <input type="date" value="${reservationPeriod.end}" name="dateOfEnd">
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+            </c:forEach>
+            <div id="periodReservationContainer"></div>
+            <div style="display: flex; justify-content: center; margin-top: 2px;">
+                <input type="button" value="Add a new period reservation" onclick="addReservationPeriod()"/>
+            </div>
+        </div>
         <div style="display: flex; justify-content: center; margin-top: 2px;">
             <input type="submit" value="Edit" style="padding: 10px 50px; color: white; background: #008489;border: none;border-radius: 10px;">
         </div>
@@ -179,12 +186,7 @@
         </c:forEach>
     </div>
 
-    <form action="/myhabitations/${habitation.habitationId}/delete" method="GET">
-        <div class="container">
-            <h5>Delete</h5>
-            <input type="submit" name="deleteHabitation" value="Delete the habitation" style="padding: 10px 50px; color: white; background: #008489;border: none;border-radius: 10px;"/>
-        </div>
-    </form>
+
 </div>
 
 </body>
@@ -193,7 +195,7 @@
 <script>
     function addReservationPeriod() {
         var divDefineReservationPeriod = document.createElement('div');
-        divDefineReservationPeriod.innerHTML = '<br><td><input type="date" name="newDateOfStart"></td><td><input type="date" name="newDateOfEnd"></td>';
+        divDefineReservationPeriod.innerHTML = '<div class="search-bar" style="display: flex;flex-direction: row; justify-content: space-around"><div class="other-input" style="display: flex;flex-direction: column;"> <label>Date of start</label><input type="date" name="newDateOfStart"></div><div class="other-input" style="display: flex;flex-direction: column;"><label>Date of end</label><input type="date" name="newDateOfEnd"></td>';
         console.log(divDefineReservationPeriod);
         document.getElementById('periodReservationContainer').append(divDefineReservationPeriod);
     }

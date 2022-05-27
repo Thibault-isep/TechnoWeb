@@ -49,7 +49,7 @@ public class MessagingController {
             List<Message> exchangeMessages = messageRepository.getMessageByExchangeExchangeId(exchangeId);
             User conditionUser = exchangeRepository.getExchangeByExchangeId(exchangeId).getUser1();
             User otherUser = conditionUser == user ? exchangeRepository.getExchangeByExchangeId(exchangeId).getUser2() : conditionUser;
-
+            model.addAttribute("user", user);
             model.addAttribute("exchangeMessages", exchangeMessages);
             model.addAttribute("otherUser", otherUser);
             model.addAttribute("exchangeId", exchangeId);

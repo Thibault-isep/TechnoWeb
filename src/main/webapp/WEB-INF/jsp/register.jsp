@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Sign Up</title>
+    <title>Register | HomeExchange</title>
     <link rel="stylesheet" href="css/login.css" />
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
