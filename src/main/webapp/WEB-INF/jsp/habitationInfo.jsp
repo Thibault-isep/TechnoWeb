@@ -76,8 +76,8 @@
             </div>
         </div>
         <div>
-            <form class="reservation" action="/reservationRequest/${habitation.habitationId}" method="POST">
-                <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
+            <p>Available from ${reservationPeriod.start} to ${reservationPeriod.end}</p>
+            <form class="reservation" action="/reservationRequest/${habitation.habitationId}/${reservationPeriod.reservationPeriodId}" method="POST">
                 <input type="submit" style="cursor: pointer;" name="makeReservationRequest" value="Make a reservation request"/>
             </form>
         </div>

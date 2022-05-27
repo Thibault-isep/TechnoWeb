@@ -143,11 +143,23 @@
                     <th>Date of start</th>
                     <th>Date of end</th>
                 </tr>
-                <tr>
-                    <input type="hidden" value="${reservationPeriod.reservationPeriodId}" name="reservationPeriodId">
-                    <td><input type="date" value="${reservationPeriod.start}" name="dateOfStart"></td>
-                    <td><input type="date" value="${reservationPeriod.end}" name="dateOfEnd"></td>
-                </tr>
+                <c:choose>
+                    <c:when test="${reservationPeriod.validate == true}">
+                        <tr>
+                            <input type="hidden" value="${reservationPeriod.reservationPeriodId}" name="reservationPeriodId">
+                            <td><input type="date" value="${reservationPeriod.start}" name="dateOfStart" readonly="readonly"></td>
+                            <td><input type="date" value="${reservationPeriod.end}" name="dateOfEnd" readonly="readonly"></td>
+                            <td>This period is on reservation</td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <tr>
+                            <input type="hidden" value="${reservationPeriod.reservationPeriodId}" name="reservationPeriodId">
+                            <td><input type="date" value="${reservationPeriod.start}" name="dateOfStart"></td>
+                            <td><input type="date" value="${reservationPeriod.end}" name="dateOfEnd"></td>
+                        </tr>
+                    </c:otherwise>
+                </c:choose>
             </table>
         </c:forEach>
         <label>Add reservation periods</label>

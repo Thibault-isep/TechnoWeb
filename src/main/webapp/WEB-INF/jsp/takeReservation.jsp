@@ -11,7 +11,7 @@
 </head>
 <h1>Take reservation for the habitation ${habitationToRequest.name}</h1>
 <body>
-<form method="POST" action="/reservationRequest/${habitationToRequest.habitationId}/send">
+<form method="POST" action="/reservationRequest/${habitationToRequest.habitationId}/${reservationPeriod.reservationPeriodId}/send">
     <table>
         <tr>
             <th>Date of start</th>
