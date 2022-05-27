@@ -147,8 +147,6 @@ public class UserController {
     private String updateUser(HttpSession session, Model model, @RequestParam String username, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String Dob, @RequestParam String Email, @RequestParam String Gender, @RequestParam String Address, @RequestParam String City, @RequestParam String Description, @RequestParam String Phone_Number, @RequestParam String Zip_Code) {
         User user = getUserBySession(session);
         model = createUserModel(user, model);
-        List<Habitation> habits = habitationRepository.getHabitationsByUserId(user.getUserId());
-        model.addAttribute("habits", habits);
 
         user.updateUser(username, firstname, lastname, Description, Address, City, Gender, Phone_Number, Email, Zip_Code, Dob);
 

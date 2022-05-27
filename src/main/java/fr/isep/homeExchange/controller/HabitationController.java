@@ -152,7 +152,7 @@ public class HabitationController {
     }
 
     @GetMapping(value = "/myhabitations/{habitationId}/delete")
-    public String deleteReservationRequest(@PathVariable() int habitationId, HttpSession httpSession) {
+    public String deleteHabitation(@PathVariable() int habitationId, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
         } else {

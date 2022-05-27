@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../../css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <title>Habitation</title>
 </head>
@@ -49,9 +49,9 @@
         </div>
     </div>
     <div class="gallery">
-        <div class="gallery-img-1"><img src="../images/house.jpg"></div>
+        <div class="gallery-img-1"><img src="../../images/house.jpg"></div>
         <c:forEach items="${photos}" var="photo" varStatus="loop">
-        <div><img class="gallery-img-${loop.index + 2}" src="${photo}"></div></c:forEach>
+        <div><img class="gallery-img-${loop.index + 2}" src="../${photo}"></div></c:forEach>
     </div>
 
     <div class="small-details">
@@ -65,7 +65,7 @@
     <hr class="line">
     <div style="display: flex;justify-content: space-between;align-items: center;">
         <div class="host">
-            <img src="../images/thib.jpg">
+            <img src="../../images/thib.jpg">
             <div>
                 <h2>Hosted by ${habitation.user.first_name}</h2>
                 <p>${habitation.user.description}</p>
