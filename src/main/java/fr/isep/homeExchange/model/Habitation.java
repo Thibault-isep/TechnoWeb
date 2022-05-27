@@ -42,6 +42,10 @@ public class Habitation {
         this.photos.add(photoPath);
     }
 
+    public void deletePhoto(int Photo) {
+        this.photos.remove(Photo);
+    }
+
     public void addEquipment(Equipment equipment) {
         this.equipments.add(equipment);
     }

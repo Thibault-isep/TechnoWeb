@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="../css/addHabitation.css">
 </head>
 <body>
-<div class="header" style="background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('../images/edit.jpg');">
+<div class="header"
+     style="background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('../images/edit.jpg');">
     <nav class="white">
         <a href="/"><h2 class="logo">HomeExchange</h2></a>
         <ul class="nav-links">
@@ -43,7 +44,7 @@
             </c:otherwise>
         </c:choose>
     </nav>
-    <form action="/updatehabitation" method="POST">
+    <form action="/updatehabitation" method="POST" enctype="multipart/form-data">
         <input type="hidden" value="${habitation.habitationId}" name="habitationId">
         <div class="container" id="part1">
             <h1 style="padding-top: 1%;">Edit your habitation</h1>
@@ -63,11 +64,13 @@
                 </div>
                 <div class="other-input">
                     <label for="Address">Adresse</label>
-                    <input name="Address" id="Address" type="text" placeholder="Address"  value="${habitation.address}" required>
+                    <input name="Address" id="Address" type="text" placeholder="Address" value="${habitation.address}"
+                           required>
                 </div>
                 <div class="other-input">
                     <label for="Country">Pays</label>
-                    <input name="Country" id="Country" type="text" placeholder="Country" value="${habitation.country}" required>
+                    <input name="Country" id="Country" type="text" placeholder="Country" value="${habitation.country}"
+                           required>
                 </div>
             </div>
         </div>
@@ -75,7 +78,8 @@
             <div class="search-bar" style="display: flex;flex-direction: row; justify-content: space-around">
                 <div class="other-input">
                     <label for="Zip_Code">Code postal</label>
-                    <input name="Zip_Code" id="Zip_Code" type="text" placeholder="Zip_Code" value="${habitation.zip_code}" required>
+                    <input name="Zip_Code" id="Zip_Code" type="text" placeholder="Zip_Code"
+                           value="${habitation.zip_code}" required>
                 </div>
                 <div class="other-input">
                     <label for="City">Ville</label>
@@ -83,7 +87,8 @@
                 </div>
                 <div class="other-input">
                     <label for="Rooms">Nombre de pièces</label>
-                    <input name="Rooms" id="Rooms" type="number" placeholder="Rooms" value="${habitation.rooms}" required>
+                    <input name="Rooms" id="Rooms" type="number" placeholder="Rooms" value="${habitation.rooms}"
+                           required>
                 </div>
                 <div class="other-input" style="display: flex;flex-direction: column;">
                     <label for="Bed">Lits</label>
@@ -95,18 +100,21 @@
             <div class="search-bar" style="display: flex;flex-direction: row; justify-content: space-around">
                 <div class="other-input">
                     <label for="Bathrooms">Salle de bain</label>
-                    <input name="Bathrooms" id="Bathrooms" type="number" placeholder="Bathrooms" value="${habitation.bathrooms}" required>
+                    <input name="Bathrooms" id="Bathrooms" type="number" placeholder="Bathrooms"
+                           value="${habitation.bathrooms}" required>
                 </div>
                 <div class="other-input">
                     <label for="Services">Services</label>
-                    <input name="Services" id="Services" type="text" placeholder="Services" value="${habitation.services}" required>
+                    <input name="Services" id="Services" type="text" placeholder="Services"
+                           value="${habitation.services}" required>
                 </div>
                 <div class="other-input">
                     <label for="Constraints">Contraintes</label>
-                    <input name="Constraints" id="Constraints" type="text" placeholder="Constraints" value="${habitation.constraints}" required>
+                    <input name="Constraints" id="Constraints" type="text" placeholder="Constraints"
+                           value="${habitation.constraints}" required>
                 </div>
                 <div class="other-input" style="display: flex;flex-direction: column;">
-                    <label for="Photos">Photos</label>
+                    <label for="Photos">Ajouter des photos</label>
                     <input type="file" id="Photos" name="Photos" required accept="image/png, image/jpeg" multiple>
                 </div>
             </div>
@@ -117,16 +125,16 @@
                     <div class="other-input" style="display: flex;flex-direction: column;">
                         <label for="${equipment.name}">${equipment.name}</label>
                         <select name="equipments"/>
-                            <c:choose>
-                                <c:when test="${fn:contains(habitationsequipment, equipment)}">
-                                    <option value="OUI">OUI</option>
-                                    <option value="NON">NON</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="NON">NON</option>
-                                    <option value="OUI">OUI</option>
-                                </c:otherwise>
-                            </c:choose>
+                        <c:choose>
+                            <c:when test="${fn:contains(habitationsequipment, equipment)}">
+                                <option value="OUI">OUI</option>
+                                <option value="NON">NON</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="NON">NON</option>
+                                <option value="OUI">OUI</option>
+                            </c:otherwise>
+                        </c:choose>
                         </select>
                     </div>
                 </c:forEach>
@@ -134,7 +142,8 @@
         </div>
         <div class="description">
             <label for="Description">Description</label><br>
-            <input name="Description" id="Description" type="text" placeholder="Description" required class="descriptionInput" value="${habitation.description}" style="height: 200px;">
+            <input name="Description" id="Description" type="text" placeholder="Description" required
+                   class="descriptionInput" value="${habitation.description}" style="height: 200px;">
         </div>
 
         <c:forEach var="reservationPeriod" items="${reservationPeriods}">
@@ -155,14 +164,24 @@
         <div id="periodReservationContainer"></div>
 
         <div style="display: flex; justify-content: center; margin-top: 2px;">
-            <input type="submit" value="Edit" style="padding: 10px 50px; color: white; background: #008489;border: none;border-radius: 10px;">
+            <input type="submit" value="Edit"
+                   style="padding: 10px 50px; color: white; background: #008489;border: none;border-radius: 10px;">
         </div>
     </form>
+    <div class="gallery">
+        <c:forEach items="${photos}" var="photo" varStatus="loop">
+            <div class="gallery-img-${loop.index + 1}">
+                <img src="${photos[loop.index]}">
+                <a href="/myhabitation/${habitation.habitationId}/deleteimage/${loop.index}">Delete this image</a>
+            </div>
+        </c:forEach>
+    </div>
 
     <form action="/myhabitations/${habitation.habitationId}/delete" method="GET">
         <div class="container">
             <h5>Delete</h5>
-            <input type="submit" name="deleteHabitation" value="Delete the habitation" style="padding: 10px 50px; color: white; background: #008489;border: none;border-radius: 10px;"/>
+            <input type="submit" name="deleteHabitation" value="Delete the habitation"
+                   style="padding: 10px 50px; color: white; background: #008489;border: none;border-radius: 10px;"/>
         </div>
     </form>
 </div>

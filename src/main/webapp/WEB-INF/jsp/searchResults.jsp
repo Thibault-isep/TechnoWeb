@@ -86,7 +86,7 @@
                         <a href="/habitation/${h.habitationId}" style="text-decoration: none;">
                             <div class="house" id="${h.habitationId}">
                                 <div class="house-img">
-                                    <img src="../images/house.jpg">
+                                    <img src="${h.photos[0]}">
                                 </div>
                                 <div class="house-info">
                                     <p>Entire ${h.type} in ${city}</p>

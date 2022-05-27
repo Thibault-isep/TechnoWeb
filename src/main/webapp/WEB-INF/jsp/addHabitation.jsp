@@ -104,7 +104,7 @@
                 </div>
                 <div class="other-input" style="display: flex;flex-direction: column;">
                     <label for="Photos">Photos</label>
-                    <input type="file" id="Photos" name="Photos" required accept="image/png, image/jpeg" multiple>
+                    <input type="file" id="Photos" name="Photos" required accept="image/*" multiple>
                 </div>
             </div>
         </div>

@@ -49,9 +49,11 @@
         </div>
     </div>
     <div class="gallery">
-        <div class="gallery-img-1"><img src="../images/house.jpg"></div>
         <c:forEach items="${photos}" var="photo" varStatus="loop">
-        <div><img class="gallery-img-${loop.index + 2}" src="${photo}"></div></c:forEach>
+            <div class="gallery-img-${loop.index + 1}">
+                <img src="${photos[loop.index]}">
+            </div>
+        </c:forEach>
     </div>
 
     <div class="small-details">
