@@ -57,13 +57,13 @@
                     <label>Location</label>
                     <input type="text" name="habitationSearch" placeholder="Where do you want to go?">
                 </div>
-                <div class="other-input">
+                <div class="date-of-start-input">
                     <label>Check In</label>
-                    <input type="date" placeholder="Add Date">
+                    <input type="date" name="dateOfStartString" placeholder="Add Date">
                 </div>
-                <div class="other-input">
+                <div class="date-of-end-input">
                     <label>Check Out</label>
-                    <input type="date" placeholder="Add Date">
+                    <input type="date" name="dateOfEndString" placeholder="Add Date">
                 </div>
                 <div class="other-input">
                     <label>Travelers</label>

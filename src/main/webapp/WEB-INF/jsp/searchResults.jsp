@@ -83,19 +83,20 @@
                 <c:otherwise>
                     <p id="error"></p>
                     <c:forEach items="${habitations}" var="h" varStatus="loop">
-                        <a href="/habitation/${h.habitationId}" style="text-decoration: none;">
+                        <a href="/habitation/${h.habitationId}/${reservationPeriods[loop.index].reservationPeriodId}" style="text-decoration: none;">
                             <div class="house" id="${h.habitationId}">
                                 <div class="house-img">
                                     <img src="../images/house.jpg">
                                 </div>
                                 <div class="house-info">
-                                    <p>Entire ${h.type} in ${city}</p>
+                                    <p>Entire ${h.type} in ${h.city}</p>
                                     <h3>${h.description}</h3>
                                     <p>${h.bed} Bedrooms / ${h.bathrooms} Bathroom /
                                         <c:forEach items="${Equipments[loop.index]}" var="equipment">
                                         ${equipment.name} /
                                         </c:forEach> Kitchen / ${Means[loop.index]}</p>
-
+                                    <br>
+                                    <p>Available from ${reservationPeriods[loop.index].start} to ${reservationPeriods[loop.index].end}</p>
                                 </div>
                             </div>
                         </a>

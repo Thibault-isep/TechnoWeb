@@ -21,6 +21,10 @@ public class ReservationRequest {
     private LocalDate end;
     private int validate;
 
+    @OneToOne
+    @JoinColumn(name = "reservation_period_id")
+    private ReservationPeriod reservationPeriod;
+
     @ManyToOne
     @JoinColumn(name = "habitation_id")
     private Habitation habitation;
@@ -33,11 +37,12 @@ public class ReservationRequest {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public ReservationRequest(String name, LocalDate start, LocalDate end, int validate, Habitation habitation, Habitation habitationToExchange, User user) {
+    public ReservationRequest(String name, LocalDate start, LocalDate end, int validate, ReservationPeriod reservationPeriod,Habitation habitation, Habitation habitationToExchange, User user) {
         this.name = name;
         this.start = start;
         this.end = end;
         this.validate = validate;
+        this.reservationPeriod = reservationPeriod;
         this.habitation = habitation;
         this.habitationToExchange = habitationToExchange;
         this.user = user;
@@ -84,6 +89,14 @@ public class ReservationRequest {
 
     public void setValidate(int validate) {
         this.validate = validate;
+    }
+
+    public ReservationPeriod getReservationPeriod() {
+        return reservationPeriod;
+    }
+
+    public void setReservationPeriod(ReservationPeriod reservationPeriod) {
+        this.reservationPeriod = reservationPeriod;
     }
 
     public Habitation getHabitation() {

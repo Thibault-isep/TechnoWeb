@@ -3,6 +3,7 @@ package fr.isep.homeExchange.controller;
 import fr.isep.homeExchange.model.*;
 import fr.isep.homeExchange.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,15 +42,37 @@ public class HabitationController {
     }
 
     @RequestMapping(value = "habitation/search")
-    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, HttpSession session) {
-        List<Habitation> habitations;
-        if (session.getAttribute("userId") == null) {
-            habitations = habitationRepository.findAll();
+    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, @RequestParam String dateOfStartString, @RequestParam String dateOfEndString, HttpSession session) {
+        List<Habitation> habitations = new ArrayList<>();
+        List<ReservationPeriod> reservationPeriods;
+        if(!dateOfStartString.equals("") || !dateOfEndString.equals("")) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            if (!dateOfStartString.equals("") && dateOfEndString.equals("")) {
+                LocalDate dateOfStart = LocalDate.parse(dateOfStartString, formatter);
+                reservationPeriods = reservationPeriodRepository.getReservationPeriodByStartIsLessThanEqualAndValidateIs(dateOfStart, false);
+            } else if (dateOfStartString.equals("")) {
+                LocalDate dateOfEnd = LocalDate.parse(dateOfEndString, formatter);
+                reservationPeriods = reservationPeriodRepository.getReservationPeriodByEndIsGreaterThanEqualAndValidateIs(dateOfEnd, false);
+            } else {
+                LocalDate dateOfStart = LocalDate.parse(dateOfStartString, formatter);
+                LocalDate dateOfEnd = LocalDate.parse(dateOfEndString, formatter);
+                reservationPeriods = reservationPeriodRepository.getReservationPeriodByStartIsLessThanEqualAndEndIsGreaterThanEqualAndValidateIs(dateOfStart, dateOfEnd, false);
+            }
         } else {
-            habitations = habitationRepository.searchHabitation((int) session.getAttribute("userId"));
-            User user = getUserBySession(session);
-            model.addAttribute("user", user);
+            reservationPeriods = reservationPeriodRepository.getReservationPeriodByValidateIs(false);
         }
+        for (ReservationPeriod reservationPeriod : reservationPeriods) {
+            Habitation habitation;
+            if(session.getAttribute("userId") != null) {
+                habitation = habitationRepository.getHabitationByHabitationIdAndUserUserIdNot(reservationPeriod.getHabitation().getHabitationId(), (int) session.getAttribute("userId"));
+            } else {
+                habitation = habitationRepository.getHabitationByHabitationId(reservationPeriod.getHabitation().getHabitationId());
+            }
+            if(habitation != null) {
+                habitations.add(habitation);
+            }
+        }
+        model.addAttribute("reservationPeriods", reservationPeriods);
         model.addAttribute("habitations", habitations);
         model.addAttribute("userSearch", userSearch);
         List<Double> Means = new ArrayList<>();
@@ -77,8 +100,8 @@ public class HabitationController {
         return "profile";
     }
 
-    @RequestMapping(value = "habitation/{habitationId}")
-    public String habitationInfo(Model model, @PathVariable("habitationId") int habitationId, HttpSession session) {
+    @RequestMapping(value = "habitation/{habitationId}/{reservationPeriodId}")
+    public String habitationInfo(Model model, @PathVariable("habitationId") int habitationId, @PathVariable("reservationPeriodId") int reservationPeriodId, HttpSession session) {
         if (session.getAttribute("userId") == null) {
         } else {
             User user = getUserBySession(session);
@@ -87,10 +110,13 @@ public class HabitationController {
         Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
         List<Rating> ratings = ratingRepository.getRatingsByHabitation(habitation);
         List<Equipment> equipmentList = equipmentRepository.getEquipmentByHabitation(habitation);
+        ReservationPeriod reservationPeriod = reservationPeriodRepository.getReservationPeriodByReservationPeriodId(reservationPeriodId);
+        System.out.println("test" + reservationPeriodId);
         model.addAttribute("photos", habitation.getPhotos());
         model.addAttribute("equipments", equipmentList);
         model.addAttribute("ratings", ratings);
         model.addAttribute("habitation", habitation);
+        model.addAttribute("reservationPeriod", reservationPeriod);
         return "habitationInfo";
     }
 
