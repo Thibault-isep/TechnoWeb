@@ -7,37 +7,71 @@
 <head>
     <meta charset="UTF-8">
     <title>My messagings</title>
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/chat.css">
 </head>
 <body>
-<h1>List of my messagings</h1>
-<div>
+<nav class="white">
+    <a href="/"><h2 class="logo">HomeExchange</h2></a>
+    <ul class="nav-links">
+        <li><a href="/habitation/search">Accommodations</a></li>
+        <li><a href="#">Become a Host</a></li>
+    </ul>
     <c:choose>
-        <c:when test="${listOfExchanges.size() == 0}">
-            You haven't any messaging yet
-            <br/>
+        <c:when test="${user.userId != null}">
+            <label for="profile2" class="profile-dropdown">
+                <input type="checkbox" id="profile2">
+                <p>${user.username}</p>
+                <label for="profile2"><i class="fa-solid fa-bars"></i></label>
+                <ul>
+                    <li><a href="/myMessagings"><i class="fa-solid fa-message"></i>Messages</a></li>
+                    <li><a href=/infoscompte><i class="fa-solid fa-user"></i>Account</a></li>
+                    <li><a href="#"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                    <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
+                </ul>
+            </label>
         </c:when>
         <c:otherwise>
-            <table>
-                <c:forEach items="${listOfExchanges}" var="exchange">
-                    <tr>
-                        <td>
-                            <c:choose>
-                                <c:when test="${exchange.user1 == user}">
-                                    Messaging with ${exchange.user2.first_name} ${exchange.user2.last_name}
-                                </c:when>
-                                <c:otherwise>
-                                    Messaging with ${exchange.user1.first_name} ${excchange.user1.last_name}
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                        <td><form action="/messaging/${exchange.exchangeId}" method="GET">
-                            <input type="submit" name="seeExchange" value="See the exchange"/>
-                        </form></td>
-                    </tr>
-                </c:forEach>
-            </table>
+            <ul class="nav-links">
+                <li><a href="/login" class="login-btn">Login</a></li>
+                <li><a href="/register" class="register-btn">Register Now</a></li>
+            </ul>
         </c:otherwise>
     </c:choose>
+</nav>
+
+<h1>List of my messagings</h1>
+<div class="wrapper">
+    <section class="users">
+        <c:choose>
+            <c:when test="${listOfExchanges.size() == 0}">
+                You haven't any messaging yet
+                <br/>
+            </c:when>
+            <c:otherwise>
+                <div class="users-list">
+                    <c:forEach items="${listOfExchanges}" var="exchange">
+                        <div class="content">
+                            <td>
+                                <c:choose>
+                                    <c:when test="${exchange.user1 == user}">
+                                        Messaging with ${exchange.user2.first_name} ${exchange.user2.last_name}
+                                    </c:when>
+                                    <c:otherwise>
+                                        Messaging with ${exchange.user1.first_name} ${excchange.user1.last_name}
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td><form action="/messaging/${exchange.exchangeId}" method="GET">
+                                <input type="submit" name="seeExchange" value="See the exchange"/>
+                            </form></td>
+                        </div>
+                    </c:forEach>
+                </div>
+            </c:otherwise>
+        </c:choose>
+    </section>
+
 </div>
 </body>
 </html>
