@@ -30,7 +30,6 @@ public class ReservationRequest {
     private Habitation habitation;
 
     @ManyToOne
-    @JoinColumn(name="habitation_to_exchange_id")
     private Habitation habitationToExchange;
 
     @OneToOne
