@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>HomeExchange | Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="css/home.css">
     <script type="text/javascript">
@@ -36,7 +36,10 @@
                     <ul>
                         <li><a href="/myMessagings"><i class="fa-solid fa-message"></i>Messages</a></li>
                         <li><a href=/infoscompte><i class="fa-solid fa-user"></i>Account</a></li>
-                        <li><a href="#"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                        <c:if test="${user.roles == 'ROLE_ADMIN'}">
+                            <li><a href="/admin"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                        </c:if>
+                        <li><a href="/myReservationsRequests"><i class="fa-solid fa-calendar"></i>Reservations</a></li>
                         <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                     </ul>
                 </label>

@@ -6,14 +6,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Search Results</title>
+    <title>Search Results | HomeExchange</title>
     <link rel="stylesheet" href="../css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
 </head>
 <body>
 <nav class="white">
-    <h2 class="logo">HomeExchange</h2>
+    <a href="/"><h2 class="logo">HomeExchange</h2></a>
     <ul class="nav-links">
         <li><a href="/habitation/search">Accommodations</a></li>
         <li><a href="#">Become a Host</a></li>

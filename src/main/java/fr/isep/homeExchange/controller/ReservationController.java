@@ -42,6 +42,8 @@ public class ReservationController {
             return "redirect:/login";
         } else {
             int userId = (int) httpSession.getAttribute("userId");
+            User user = getUserBySession(httpSession);
+            model.addAttribute("user",user);
             Habitation habitationToRequest = habitationRepository.getHabitationByHabitationId(habitationId);
             List<Habitation> habitationsToExchange = habitationRepository.getHabitationByUserId(userId);
             ReservationPeriod reservationPeriod = reservationPeriodRepository.getReservationPeriodByReservationPeriodId(reservationPeriodId);
@@ -77,6 +79,7 @@ public class ReservationController {
             return "redirect:/login";
         } else {
             User user = getUserBySession(httpSession);
+            model.addAttribute("user",user);
             List<ReservationRequest> reservationRequests = reservationRequestRepository.getReservationRequestByUser(user);
             model.addAttribute("listOfReservationRequests", reservationRequests);
             return "myReservationsRequests";
@@ -89,6 +92,8 @@ public class ReservationController {
             return "redirect:/login";
         } else {
             int userId = (int) httpSession.getAttribute("userId");
+            User user = getUserBySession(httpSession);
+            model.addAttribute("user",user);
             ReservationRequest reservationRequest = reservationRequestRepository.getReservationRequestByReservationRequestId(reservationRequestId);
             List<Habitation> habitations = habitationRepository.getHabitationsByUserId(userId);
             model.addAttribute("reservationRequest", reservationRequest);
@@ -131,6 +136,8 @@ public class ReservationController {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
         } else {
+            User user = getUserBySession(httpSession);
+            model.addAttribute("user", user);
             List<ReservationRequest> reservationRequests = reservationRequestRepository.getReservationRequestByHabitationHabitationIdAndValidateNot(habitationId, -1);
             model.addAttribute("listOfReservationRequests", reservationRequests);
             return "reservationRequestsFromUsers";

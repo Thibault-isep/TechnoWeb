@@ -10,11 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <title>Habitation</title>
+    <title>${habitation.name} | HomeExchange</title>
 </head>
 <body>
 <nav class="white">
-    <h2 class="logo">HomeExchange</h2>
+    <a href="/"><h2 class="logo">HomeExchange</h2></a>
     <ul class="nav-links">
         <li><a href="/habitation/search">Accommodations</a></li>
         <li><a href="#">Become a Host</a></li>
@@ -26,9 +26,12 @@
                 <p>${user.username}</p>
                 <label for="profile2"><i class="fa-solid fa-bars"></i></label>
                 <ul>
-                    <li><a href="/messaging"><i class="fa-solid fa-message"></i>Messages</a></li>
-                    <li><a href=/infosCompte><i class="fa-solid fa-user"></i>Account</a></li>
-                    <li><a href="#"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                    <li><a href="/myMessagings"><i class="fa-solid fa-message"></i>Messages</a></li>
+                    <li><a href=/infoscompte><i class="fa-solid fa-user"></i>Account</a></li>
+                    <c:if test="${user.roles == 'ROLE_ADMIN'}">
+                        <li><a href="/admin"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                    </c:if>
+                    <li><a href="/myReservationsRequests"><i class="fa-solid fa-calendar"></i>Reservations</a></li>
                     <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                 </ul>
             </label>
@@ -65,7 +68,6 @@
     <hr class="line">
     <div style="display: flex;justify-content: space-between;align-items: center;">
         <div class="host">
-            <img src="../../images/thib.jpg">
             <div>
                 <h2>Hosted by ${habitation.user.first_name}</h2>
                 <p>${habitation.user.description}</p>

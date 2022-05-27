@@ -6,116 +6,170 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>${user.username} page de profil</title>
-    <link rel="stylesheet" href="">
+    <title>${user.username} Profile | HomeExchange</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/table.css">
 </head>
 <body>
+<nav class="white">
+    <a href="/"><h2 class="logo">HomeExchange</h2></a>
+    <ul class="nav-links">
+        <li><a href="/habitation/search">Accommodations</a></li>
+        <li><a href="#">Become a Host</a></li>
+    </ul>
+    <c:choose>
+        <c:when test="${user.userId != null}">
+            <label for="profile2" class="profile-dropdown">
+                <input type="checkbox" id="profile2">
+                <p>${user.username}</p>
+                <label for="profile2"><i class="fa-solid fa-bars"></i></label>
+                <ul>
+                    <li><a href="/myMessagings"><i class="fa-solid fa-message"></i>Messages</a></li>
+                    <li><a href=/infoscompte><i class="fa-solid fa-user"></i>Account</a></li>
+                    <c:if test="${user.roles == 'ROLE_ADMIN'}">
+                        <li><a href="/admin"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                    </c:if>
+                    <li><a href="/myReservationsRequests"><i class="fa-solid fa-calendar"></i>Reservations</a></li>
+                    <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
+                </ul>
+            </label>
+        </c:when>
+        <c:otherwise>
+            <ul class="nav-links">
+                <li><a href="/login" class="login-btn">Login</a></li>
+                <li><a href="/register" class="register-btn">Register Now</a></li>
+            </ul>
+        </c:otherwise>
+    </c:choose>
+</nav>
 <c:if test="${!empty sessionScope.userId}">
-    <h1>Infos de compte</h1>
-    <form method="post" action="user/update">
-        <label for="username">Pseudo : </label>
-        <input name="username" type="text" id="username" value="${user.username}">
-        <br>
+<div class="container" style="height: 70vh">
+    <h2 class="sub-title">Your Profile</h2>
+    <div class="profile" style="display: flex;justify-content: center;align-items: center;">
+        <form method="post" action="user/update" style="width: 50%;display: flex;flex-direction: column;  padding: 80px;box-shadow: 0 5px 10px rgba(0,0,0,0.05);">
+            <div style="display: flex; flex-direction: column;">
+                <div style="display: flex; flex-direction: column; width: 30%;padding-top: 15px;">
+                    <label for="username">Username: </label>
+                    <input name="username" type="text" id="username" value="${user.username}">
+                </div>
+                <div style="display: flex; flex-direction: row; justify-content: space-between;padding-top: 15px;">
+                    <div style="display: flex;flex-direction: column;width: 25%;">
+                        <label for="firstname">First name: </label>
+                        <input name="firstname" type="text" id="firstname" value="${user.first_name}">
+                    </div>
+                    <div style="display: flex;flex-direction: column;width: 25%;">
+                        <label for="lastname">Last name: </label>
+                        <input name="lastname" type="text" id="lastname" value="${user.last_name}">
+                    </div>
+                    <div style="display: flex;flex-direction: column;width: 20%;">
+                        <label for="Dob">Date of Birth: </label>
+                        <input name="Dob" type="date" id="Dob" value="${user.dob}">
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: row; justify-content: space-between;padding-top: 15px;">
+                    <div style="display: flex;flex-direction: column;width: 50%;">
+                        <label for="Email">Email: </label>
+                        <input name="Email" type="text" id="Email" value="${user.email}">
+                    </div>
+                    <div style="display: flex;flex-direction: column;width: 25%;">
+                        <label for="Gender">Gender</label>
+                        <select id="Gender" name="Gender" value="${user.gender}"/>
+                            <option value="Man">Man</option>
+                            <option value="Woman">Woman</option>
+                            </select>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: space-between;padding-top: 15px;">
+                    <label for="Address">Address: </label>
+                    <input name="Address" type="text" id="Address" value="${user.address}">
+                </div>
+                <div style="display: flex; flex-direction: row; justify-content: space-between;padding-top: 15px;">
+                    <div style="display: flex;flex-direction: column;width: 25%;">
+                        <label for="City">City: </label>
+                        <input name="City" type="text" id="City" value="${user.city}">
+                    </div>
+                    <div style="display: flex;flex-direction: column;width: 25%;">
+                        <label for="Zip_Code">Zip Code: </label>
+                        <input name="Zip_Code" type="text" id="Zip_Code" value="${user.zip_code}">
+                    </div>
+                    <div style="display: flex;flex-direction: column;width: 20%;">
+                        <label for="Phone_Number">Phone number: </label>
+                        <input name="Phone_Number" type="text" id="Phone_Number" value="${user.phone_number}">
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: space-between;padding-top: 15px;">
+                    <label for="Description">Description: </label>
+                    <input name="Description" type="text" id="Description" value="${user.description}">
+                </div>
+            </div>
+            <div style="display: flex; align-items: center;justify-content: center;padding-top: 15px;">
+                <button style="border-radius:10px; border:none;padding: 15px 30px; background: #008489; color: white;" type="submit" class="button">Send</button>
+            </div>
+        </form>
+    </div>
+    <hr class="line">
+</div>
 
-        <label for="firstname">Prénom : </label>
-        <input name="firstname" type="text" id="firstname" value="${user.first_name}">
-        <br>
 
-        <label for="lastname">Nom de famille : </label>
-        <input name="lastname" type="text" id="lastname" value="${user.last_name}">
-        <br>
-
-        <label for="Dob">Date de naissance : </label>
-        <input name="Dob" type="date" id="Dob" value="${user.dob}">
-        <br>
-
-        <label for="Email">Email : </label>
-        <input name="Email" type="text" id="Email" value="${user.email}">
-        <br>
-
-        <label for="Gender">Gender</label>
-        <select id="Gender" name="Gender" value="${user.gender}"/>
-        <option value="Man">Homme</option>
-        <option value="Woman">Femme</option>
-        </select>
-        <br>
-
-        <label for="Address">Adresse : </label>
-        <input name="Address" type="text" id="Address" value="${user.address}">
-        <br>
-
-
-        <label for="City">Ville : </label>
-        <input name="City" type="text" id="City" value="${user.city}">
-        <br>
-
-        <label for="Zip_Code">Code postal : </label>
-        <input name="Zip_Code" type="text" id="Zip_Code" value="${user.zip_code}">
-        <br>
-
-        <label for="Phone_Number">Numéro de téléphone : </label>
-        <input name="Phone_Number" type="text" id="Phone_Number" value="${user.phone_number}">
-        <br>
-
-        <label for="Description">Description : </label>
-        <input name="Description" type="text" id="Description" value="${user.description}">
-        <br>
-
-        <button type="submit" class="button">Envoyer</button>
-
-    </form>
-    <table>
-        <tr>
-            <th>Nom de l'habitation</th>
-            <th>Type</th>
-            <th>Nombre de lits</th>
-            <th>Nombre de pièces</th>
-            <th>Salle de bain</th>
-            <th>Description</th>
-            <th>Adresse</th>
-            <th>Ville</th>
-            <th>Pays</th>
-            <th>Code Postal</th>
-            <th>Services</th>
-            <th>Constraints</th>
-            <c:forEach var="equipment" items="${equipments}">
-                <th>${equipment.name}</th>
-            </c:forEach>
-            <th></th>
-        </tr>
-        <c:forEach var="habits" items="${habits}" varStatus="loop">
+    <div class="container" style="min-height: 10vh">
+        <h2 class="sub-title">Your Habitations</h2>
+        <table class="rwd-table">
             <tr>
-                <th>${habits.name}</th>
-                <th>${habits.type}</th>
-                <th>${habits.bed}</th>
-                <th>${habits.rooms}</th>
-                <th>${habits.bathrooms}</th>
-                <th>${habits.description}</th>
-                <th>${habits.address}</th>
-                <th>${habits.city}</th>
-                <th>${habits.country}</th>
-                <th>${habits.zip_code}</th>
-                <th>${habits.services}</th>
-                <th>${habits.constraints}</th>
+                <th>Habitation</th>
+                <th>Type</th>
+                <th>Beds</th>
+                <th>Rooms</th>
+                <th>Bathrooms</th>
+                <th>Description</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Zip Code</th>
+                <th>Services</th>
+                <th>Constraints</th>
                 <c:forEach var="equipment" items="${equipments}">
-                    <th>
-                        <c:forEach var="equipments" items="${equipmentsByHabitation[loop.index]}">
-                            <p><c:if test="${equipment.name == equipments.name}">TRUE</c:if></p>
-                        </c:forEach>
-                    </th>
+                    <th>${equipment.name}</th>
                 </c:forEach>
-                <form action="myhabitations/${habits.habitationId}" method="post">
-                    <th><input type="submit" value="Modifier"></th>
-                </form>
-                <form action="reservationRequest/${habits.habitationId}/fromUsers" method="get">
-                    <th><input type="submit" value="View users reservations requests on my habitation"></th>
-                </form>
+                <th>Edit</th>
+                <th>Reservations</th>
+                <th>Delete</th>
             </tr>
-        </c:forEach>
-    </table>
+            <c:forEach var="habits" items="${habits}" varStatus="loop">
+                <tr>
+                    <td>${habits.name}</td>
+                    <td>${habits.type}</td>
+                    <td>${habits.bed}</td>
+                    <td>${habits.rooms}</td>
+                    <td>${habits.bathrooms}</td>
+                    <td>${habits.description}</td>
+                    <td>${habits.address}</td>
+                    <td>${habits.city}</td>
+                    <td>${habits.country}</td>
+                    <td>${habits.zip_code}</td>
+                    <td>${habits.services}</td>
+                    <td>${habits.constraints}</td>
+                    <c:forEach var="equipment" items="${equipments}">
+                        <td>
+                            <c:forEach var="equipments" items="${equipmentsByHabitation[loop.index]}">
+                                <p>
+                                    <c:if test="${equipment.name == equipments.name}">TRUE</c:if>
+                                </p>
+                            </c:forEach>
+                        </td>
+                    </c:forEach>
+                    <form action="myhabitations/${habits.habitationId}" method="post">
+                        <td><input type="submit" value="Edit"></td>
+                    </form>
+                    <form action="reservationRequest/${habits.habitationId}/fromUsers" method="get">
+                        <td><input type="submit" value="Reservations"></td>
+                    </form>
+                    <form action="myhabitations/${habits.habitationId}/delete" method="GET">
+                        <td><input type="submit" name="deleteHabitation" value="Delete"/></td>
+                    </form>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </c:if>
-<a href="addhabitation">Ajouter une habitation</a>
-<a href="myMessagings">View my messagings</a>
-<a href="/">Menu</a>
-
 </body>
