@@ -16,7 +16,7 @@
     <a href="/"><h2 class="logo">HomeExchange</h2></a>
     <ul class="nav-links">
         <li><a href="/habitation/search">Accommodations</a></li>
-        <li><a href="#">Become a Host</a></li>
+        <li><a href="/add-habitation">Become a Host</a></li>
     </ul>
     <c:choose>
         <c:when test="${user.userId != null}">
@@ -25,9 +25,12 @@
                 <p>${user.username}</p>
                 <label for="profile2"><i class="fa-solid fa-bars"></i></label>
                 <ul>
-                    <li><a href="/myMessagings"><i class="fa-solid fa-message"></i>Messages</a></li>
-                    <li><a href=/infoscompte><i class="fa-solid fa-user"></i>Account</a></li>
-                    <li><a href="#"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                    <li><a href="/my-messagings"><i class="fa-solid fa-message"></i>Messages</a></li>
+                    <li><a href="/my-reservations-requests"><i class="fa-solid fa-calendar"></i>Reservations</a></li>
+                    <li><a href=/infos-account><i class="fa-solid fa-user"></i>Account</a></li>
+                    <c:if test="${user.roles == 'ROLE_ADMIN'}">
+                        <li><a href="/admin"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                    </c:if>
                     <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                 </ul>
             </label>
@@ -67,8 +70,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 

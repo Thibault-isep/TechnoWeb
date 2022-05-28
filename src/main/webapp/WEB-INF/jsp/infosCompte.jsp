@@ -16,7 +16,7 @@
     <a href="/"><h2 class="logo">HomeExchange</h2></a>
     <ul class="nav-links">
         <li><a href="/habitation/search">Accommodations</a></li>
-        <li><a href="#">Become a Host</a></li>
+        <li><a href="/add-habitation">Become a Host</a></li>
     </ul>
     <c:choose>
         <c:when test="${user.userId != null}">
@@ -25,12 +25,12 @@
                 <p>${user.username}</p>
                 <label for="profile2"><i class="fa-solid fa-bars"></i></label>
                 <ul>
-                    <li><a href="/myMessagings"><i class="fa-solid fa-message"></i>Messages</a></li>
-                    <li><a href=/infoscompte><i class="fa-solid fa-user"></i>Account</a></li>
+                    <li><a href="/my-messagings"><i class="fa-solid fa-message"></i>Messages</a></li>
+                    <li><a href="/my-reservations-requests"><i class="fa-solid fa-calendar"></i>Requests</a></li>
+                    <li><a href=/infos-account><i class="fa-solid fa-user"></i>Account</a></li>
                     <c:if test="${user.roles == 'ROLE_ADMIN'}">
                         <li><a href="/admin"><i class="fa-solid fa-gear"></i>Settings</a></li>
                     </c:if>
-                    <li><a href="/myReservationsRequests"><i class="fa-solid fa-calendar"></i>Reservations</a></li>
                     <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                 </ul>
             </label>
@@ -158,15 +158,16 @@
                             </c:forEach>
                         </td>
                     </c:forEach>
-                    <form action="myhabitations/${habits.habitationId}" method="post">
+                    <form action="my-habitations/${habits.habitationId}" method="post">
                         <td><input type="submit" value="Edit"></td>
                     </form>
-                    <form action="reservationRequest/${habits.habitationId}/fromUsers" method="get">
+                    <form action="reservation-request/${habits.habitationId}/from-users" method="get">
                         <td><input type="submit" value="Reservations"></td>
                     </form>
-                    <form action="myhabitations/${habits.habitationId}/delete" method="GET">
+                    <form action="my-habitations/${habits.habitationId}/delete" method="GET">
                         <td><input type="submit" name="deleteHabitation" value="Delete"/></td>
                     </form>
+                    <a href="add-habitation">Add a new habitation</a>
                 </tr>
             </c:forEach>
         </table>

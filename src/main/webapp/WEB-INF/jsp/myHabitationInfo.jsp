@@ -20,7 +20,7 @@
         <a href="/"><h2 class="logo">HomeExchange</h2></a>
         <ul class="nav-links">
             <li><a href="/habitation/search">Accommodations</a></li>
-            <li><a href="#">Become a Host</a></li>
+            <li><a href="/add-habitation">Become a Host</a></li>
         </ul>
         <c:choose>
             <c:when test="${user.userId != null}">
@@ -29,12 +29,12 @@
                     <p>${user.username}</p>
                     <label for="profile2"><i class="fa-solid fa-bars"></i></label>
                     <ul>
-                        <li><a href="/myMessagings"><i class="fa-solid fa-message"></i>Messages</a></li>
-                        <li><a href=/infoscompte><i class="fa-solid fa-user"></i>Account</a></li>
+                        <li><a href="/my-messagings"><i class="fa-solid fa-message"></i>Messages</a></li>
+                        <li><a href="/my-reservations-requests"><i class="fa-solid fa-calendar"></i>Requests</a></li>
+                        <li><a href=/infos-account><i class="fa-solid fa-user"></i>Account</a></li>
                         <c:if test="${user.roles == 'ROLE_ADMIN'}">
                             <li><a href="/admin"><i class="fa-solid fa-gear"></i>Settings</a></li>
                         </c:if>
-                        <li><a href="/myReservationsRequests"><i class="fa-solid fa-calendar"></i>Reservations</a></li>
                         <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                     </ul>
                 </label>
@@ -47,7 +47,7 @@
             </c:otherwise>
         </c:choose>
     </nav>
-    <form action="/updatehabitation" method="POST" enctype="multipart/form-data">
+    <form action="/update-habitation" method="POST" enctype="multipart/form-data">
         <input type="hidden" value="${habitation.habitationId}" name="habitationId">
         <div class="container" id="part1">
             <h1 style="padding-top: 1%;">Edit your habitation</h1>
@@ -181,12 +181,10 @@
         <c:forEach items="${photos}" var="photo" varStatus="loop">
             <div class="gallery-img-${loop.index + 1}">
                 <img src="${photos[loop.index]}">
-                <a href="/myhabitation/${habitation.habitationId}/deleteimage/${loop.index}">Delete this image</a>
+                <a href="/my-habitation/${habitation.habitationId}/delete-image/${loop.index}">Delete this image</a>
             </div>
         </c:forEach>
     </div>
-
-
 </div>
 
 </body>

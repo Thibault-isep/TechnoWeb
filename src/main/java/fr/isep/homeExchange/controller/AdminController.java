@@ -44,7 +44,7 @@ public class AdminController {
         this.messageRepository = messageRepository;
     }
 
-    @GetMapping("/userlist")
+    @GetMapping("/user-list")
     public String getUsers(HttpSession session, Model model) {
         if (session.getAttribute("userId") == null) {
             return "redirect:/";
@@ -56,7 +56,7 @@ public class AdminController {
         model = createUserModel(user, model);
         model.addAttribute("users", userRepository.findAll());
 
-        return "Admin/userlist";
+        return "admin/user-list";
     }
 
     @GetMapping("/user/{userId}/edit")
@@ -81,7 +81,7 @@ public class AdminController {
         model.addAttribute("equipmentsByHabitation", equipmentByHabitation);
         model.addAttribute("UsersHabitationsList", habits);
         model.addAttribute("user", userRepository.findUserByUserId(userId));
-        return "Admin/editUser";
+        return "admin/edit-user";
     }
 
     @GetMapping("/user/{userId}/delete")
@@ -113,7 +113,7 @@ public class AdminController {
         }
         exchangeRepository.deleteAll(exchanges);
         userRepository.delete(userRepository.findUserByUserId(userId));
-        return "redirect:/admin/userlist";
+        return "redirect:/admin/user-list";
     }
 
     @GetMapping("")
@@ -126,7 +126,7 @@ public class AdminController {
             return "redirect:/";
         }
         model = createUserModel(user, model);
-        return "Admin/AdminHomepage";
+        return "admin/admin-homepage";
     }
 
     @RequestMapping("user/{userId}/update")
@@ -142,7 +142,7 @@ public class AdminController {
         userEdit.updateUser(username, firstname, lastname, Description, Address, City, Gender, Phone_Number, Email, Zip_Code, Dob);
 
         userRepository.save(userEdit);
-        return "redirect:/admin/userlist";
+        return "redirect:/admin/user-list";
     }
 
     @PostMapping("user/{userId}/habitations/{habitationId}")
@@ -163,7 +163,7 @@ public class AdminController {
         model.addAttribute("habitationsequipment", habitationsEquipment);
         model.addAttribute("reservationPeriods", reservationPeriods);
         model.addAttribute("habitation", habitation);
-        return "Admin/editUserHabitation";
+        return "admin/edit-user-habitation";
     }
 
     @RequestMapping("user/{userId}/habitations/update")
@@ -228,15 +228,15 @@ public class AdminController {
                 reservationPeriodRepository.save(newReservationPeriod);
             }
         }
-        return "redirect:/admin/userlist";
+        return "redirect:/admin/user-list";
     }
 
-    @RequestMapping("user/{habitationId}/habitations/deleteimage/{image}")
+    @RequestMapping("user/{habitationId}/habitations/delete-image/{image}")
     public String deleteImageHabitation(@PathVariable int habitationId, @PathVariable int image, HttpSession session) {
         Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
         habitation.deletePhoto(image);
         habitationRepository.save(habitation);
-        return "redirect:/admin/userlist";
+        return "redirect:/admin/user-list";
     }
 
     @GetMapping(value = "/{habitationId}/habitations/delete")
@@ -258,7 +258,7 @@ public class AdminController {
             reservationPeriodRepository.deleteAll(reservationPeriods);
             ratingRepository.deleteAll(ratings);
             habitationRepository.delete(habitation);
-            return "redirect:/admin/userlist";
+            return "redirect:/admin/user-list";
         }
     }
 
