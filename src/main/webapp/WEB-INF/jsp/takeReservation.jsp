@@ -54,8 +54,8 @@
                 <th>Choose your habitation for the reservation request :</th>
             </tr>
             <tr>
-                <td><input type="date" name="userDateOfStart" value="2018-07-22" min="2018-01-01" max="2018-12-31"></td>
-                <td><input type="date" name="userDateOfEnd" value="2018-07-22" min="2018-01-01" max="2018-12-31"></td>
+                <td><input type="date" name="userDateOfStart" value="${reservationPeriod.start}"></td>
+                <td><input type="date" name="userDateOfEnd" value="${reservationPeriod.end}"></td>
                 <td>
                     <select name="habitationToExchangeId"/>
                     <option>--Please choose an option--</option>
