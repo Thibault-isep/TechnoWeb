@@ -31,7 +31,7 @@
                         <li><a href="/my-reservations-requests"><i class="fa-solid fa-calendar"></i>Requests</a></li>
                         <li><a href=/infos-account><i class="fa-solid fa-user"></i>Account</a></li>
                         <c:if test="${user.roles == 'ROLE_ADMIN'}">
-                            <li><a href="/admin"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                            <li><a href="/admin"><i class="fa-solid fa-gear"></i>Admin</a></li>
                         </c:if>
                         <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                     </ul>
@@ -125,9 +125,15 @@
                 </c:forEach>
             </div>
         </div>
+        <div class="container">
+            <div class="search-bar">
+                <div class="other-input" style="display: flex;flex-direction: column;">
+                    <label>Define reservation periods</label>
+                    <input type="button" value="Add a new period reservation" onclick="addReservationPeriod()"/>
+                </div>
+            </div>
+        </div>
 
-        <label>Define reservation periods</label>
-        <input type="button" value="Add a new period reservation" onclick="addReservationPeriod()"/>
         <div id="periodReservationContainer"></div>
 
         <div class="description">
@@ -144,7 +150,7 @@
 <script>
     function addReservationPeriod() {
         var divDefineReservationPeriod = document.createElement('div');
-        divDefineReservationPeriod.innerHTML = '<br><table><tr><th>Date of start</th><th>Date of end</th></tr><tr><td><input type="date" name="dateOfStart"></td><td><input type="date" name="dateOfEnd"></td></tr></table>';
+        divDefineReservationPeriod.innerHTML = '<div class="container"><div class="search-bar" style="display: flex;flex-direction: row; justify-content: space-around"><div class="other-input" style="display: flex;flex-direction: column;"><label>Date of start</label><input type="date" name="dateOfStart"></div><div class="other-input" style="display: flex;flex-direction: column;"><label>Date of end</label><input type="date" name="dateOfEnd"></div></div></div>';
         console.log(divDefineReservationPeriod);
         document.getElementById('periodReservationContainer').append(divDefineReservationPeriod);
     }

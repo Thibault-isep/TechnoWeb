@@ -29,7 +29,7 @@
                     <li><a href="/my-reservations-requests"><i class="fa-solid fa-calendar"></i>Requests</a></li>
                     <li><a href=/infos-account><i class="fa-solid fa-user"></i>Account</a></li>
                     <c:if test="${user.roles == 'ROLE_ADMIN'}">
-                        <li><a href="/admin"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                        <li><a href="/admin"><i class="fa-solid fa-gear"></i>Admin</a></li>
                     </c:if>
                     <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                 </ul>
@@ -114,6 +114,7 @@
 
     <div class="container" style="min-height: 10vh">
         <h2 class="sub-title">Your Habitations</h2>
+        <a href="/add-habitation" style="padding: 10px 30px; border-radius: 15px; background: #008489; color: white; text-decoration: none;">Add a new habitation</a>
         <table class="rwd-table">
             <tr>
                 <th>Habitation</th>
@@ -167,7 +168,6 @@
                     <form action="my-habitations/${habits.habitationId}/delete" method="GET">
                         <td><input type="submit" name="deleteHabitation" value="Delete"/></td>
                     </form>
-                    <a href="add-habitation">Add a new habitation</a>
                 </tr>
             </c:forEach>
         </table>
