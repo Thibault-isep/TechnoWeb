@@ -28,7 +28,7 @@ public class MessagingController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping(value = "/messagingFromHabitation")
+    @PostMapping(value = "/messaging-from-habitation")
     public String checkExchange(@RequestParam() int habitationId, HttpSession httpSession) {
         if(httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
@@ -57,7 +57,7 @@ public class MessagingController {
         }
     }
 
-    @GetMapping(value = "/myMessagings")
+    @GetMapping(value = "/my-messagings")
     public String getMyMessagings(Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";

@@ -3,7 +3,6 @@ package fr.isep.homeExchange.controller;
 import fr.isep.homeExchange.model.*;
 import fr.isep.homeExchange.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +42,7 @@ public class HabitationController {
 
     @RequestMapping(value = "habitation/search")
     public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, @RequestParam(defaultValue = "") String dateOfStartString, @RequestParam(defaultValue = "") String dateOfEndString, HttpSession session) {
-        if (session.getAttribute("userId") == null) {
-        } else {
+        if (session.getAttribute("userId") != null) {
             User user = getUserBySession(session);
             model.addAttribute("user", user);
         }
@@ -98,17 +96,9 @@ public class HabitationController {
         return "searchResults";
     }
 
-    @GetMapping(value = "profile")
-    public String profile(Model model, @RequestParam(name = "userId") int userId) {
-        List<Habitation> usersHabitationsList = habitationRepository.getHabitationByUserId(userId);
-        model.addAttribute("UsersHabitationsList", usersHabitationsList);
-        return "profile";
-    }
-
     @RequestMapping(value = "habitation/{habitationId}/{reservationPeriodId}")
     public String habitationInfo(Model model, @PathVariable("habitationId") int habitationId, @PathVariable("reservationPeriodId") int reservationPeriodId, HttpSession session) {
-        if (session.getAttribute("userId") == null) {
-        } else {
+        if (session.getAttribute("userId") != null) {
             User user = getUserBySession(session);
             model.addAttribute("user", user);
         }
@@ -128,27 +118,27 @@ public class HabitationController {
     @RequestMapping(value = "habitation/{habitationId}/exchange")
     public String habitationInfoExchange(Model model, @PathVariable("habitationId") int habitationId, HttpSession session) {
         if (session.getAttribute("userId") == null) {
-        } else {
-            User user = getUserBySession(session);
-            model.addAttribute("user", user);
+            return "redirect:/login";
         }
+        User user = getUserBySession(session);
         Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
         List<Rating> ratings = ratingRepository.getRatingsByHabitation(habitation);
         model.addAttribute("ratings", ratings);
         model.addAttribute("habitation", habitation);
+        model.addAttribute("user", user);
         return "habitationInfosExchange";
     }
 
-    @RequestMapping(value = "myhabitations/{habitationId}")
+    @RequestMapping(value = "my-habitations/{habitationId}")
     public String myHabitationInfo(Model model, @PathVariable("habitationId") int habitationId, HttpSession session) {
         if (session.getAttribute("userId") == null) {
-            return "redirect:/";
+            return "redirect:/login";
         }
         User user = getUserBySession(session);
         model = createUserModel(user, model);
         Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
         if (habitation.getUser().getUserId() != user.getUserId()) {
-            return "redirect:/infoscompte";
+            return "redirect:/infos-account";
         }
         List<Equipment> equipments = equipmentRepository.findAll();
         List<Equipment> habitationsEquipment = equipmentRepository.getEquipmentByHabitation(habitation);
@@ -161,7 +151,7 @@ public class HabitationController {
         return "myHabitationInfo";
     }
 
-    @GetMapping(value = "/myhabitations/{habitationId}/delete")
+    @GetMapping(value = "/my-habitations/{habitationId}/delete")
     public String deleteHabitation(@PathVariable() int habitationId, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/login";
@@ -176,22 +166,25 @@ public class HabitationController {
             reservationPeriodRepository.deleteAll(reservationPeriods);
             ratingRepository.deleteAll(ratings);
             habitationRepository.delete(habitation);
-            return "redirect:/infoscompte";
+            return "redirect:/infos-account";
         }
     }
 
-    @RequestMapping("myhabitation/{habitationId}/deleteimage/{image}")
+    @RequestMapping("my-habitation/{habitationId}/delete-image/{image}")
     public String deleteImageHabitation(@PathVariable int habitationId, @PathVariable int image, HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+            return "redirect:/login";
+        }
         Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
         habitation.deletePhoto(image);
         habitationRepository.save(habitation);
-        return "redirect:/infoscompte";
+        return "redirect:/infos-account";
     }
 
-    @GetMapping(value = "addhabitation")
+    @GetMapping(value = "add-habitation")
     public String addHabitation(Model model, HttpSession session) {
         if (session.getAttribute("userId") == null) {
-            return "redirect:/";
+            return "redirect:/login";
         }
         User user = getUserBySession(session);
         List<Equipment> equipment = equipmentRepository.findAll();
@@ -200,8 +193,11 @@ public class HabitationController {
         return "addHabitation";
     }
 
-    @PostMapping(value = "addhabitation")
+    @PostMapping(value = "add-habitation")
     public String saveHabitation(Model model, HttpSession session, @RequestParam String Type, @RequestParam String Address, HttpServletRequest request, HttpServletResponse response, @RequestParam String Country, @RequestParam String Zip_Code, @RequestParam String City, @RequestParam int Rooms, @RequestParam int Bed, @RequestParam int Bathrooms, @RequestParam String Description, @RequestParam String Services, @RequestParam String Constraints, @RequestParam String Name, @RequestParam MultipartFile[] Photos) throws IOException {
+        if (session.getAttribute("userId") == null) {
+            return "redirect:/login";
+        }
         String[] equipments;
         equipments = request.getParameterValues("equipments");
         User user = getUserBySession(session);
@@ -238,14 +234,13 @@ public class HabitationController {
                 reservationPeriodRepository.save(reservationPeriod);
             }
         }
-
-        return "redirect:/infoscompte";
+        return "redirect:/infos-account";
     }
 
-    @RequestMapping("updatehabitation")
+    @RequestMapping("update-habitation")
     public String updateHabitation(Model model, HttpServletRequest request, HttpSession session, @RequestParam String Type, @RequestParam String Name, @RequestParam String Address, @RequestParam String Country, @RequestParam String Zip_Code, @RequestParam String City, @RequestParam int Rooms, @RequestParam int Bed, @RequestParam int Bathrooms, @RequestParam String Description, @RequestParam String Services, @RequestParam String Constraints, @RequestParam int habitationId, @RequestParam MultipartFile[] Photos) throws IOException {
         if (session.getAttribute("userId") == null) {
-            return "redirect:/";
+            return "redirect:/login";
         }
         List<Equipment> equipmentList = equipmentRepository.findAll();
         Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
@@ -304,8 +299,7 @@ public class HabitationController {
                 reservationPeriodRepository.save(newReservationPeriod);
             }
         }
-
-        return "redirect:/infoscompte";
+        return "redirect:/infos-account";
     }
 
     private User getUserBySession(HttpSession session) {

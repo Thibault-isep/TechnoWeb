@@ -16,7 +16,7 @@
     <a href="/"><h2 class="logo">HomeExchange</h2></a>
     <ul class="nav-links">
         <li><a href="/habitation/search">Accommodations</a></li>
-        <li><a href="#">Become a Host</a></li>
+        <li><a href="/add-habitation">Become a Host</a></li>
     </ul>
     <ul class="connexion-links">
         <li><a href="/login" class="login-btn">Login</a></li>

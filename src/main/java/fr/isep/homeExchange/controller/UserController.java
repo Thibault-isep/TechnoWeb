@@ -121,7 +121,7 @@ public class UserController {
         return encoder.encodeToString(password.getBytes());
     }
 
-    @GetMapping("/infoscompte")
+    @GetMapping("/infos-account")
     public String collectInfosCompte(Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             return "redirect:/";
@@ -151,6 +151,6 @@ public class UserController {
         user.updateUser(username, firstname, lastname, Description, Address, City, Gender, Phone_Number, Email, Zip_Code, Dob);
 
         userRepository.save(user);
-        return "redirect:/infoscompte";
+        return "redirect:/infos-account";
     }
 }
