@@ -19,6 +19,8 @@ public class ReservationPeriod {
     private LocalDate end;
     private boolean validate;
 
+
+
     @ManyToOne
     @JoinColumn(name = "habitation_id")
     private Habitation habitation;
