@@ -30,7 +30,7 @@
                     <li><a href="/my-reservations-requests"><i class="fa-solid fa-calendar"></i>Requests</a></li>
                     <li><a href=/infos-account><i class="fa-solid fa-user"></i>Account</a></li>
                     <c:if test="${user.roles == 'ROLE_ADMIN'}">
-                        <li><a href="/admin"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                        <li><a href="/admin"><i class="fa-solid fa-gear"></i>Admin</a></li>
                     </c:if>
                     <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                 </ul>
