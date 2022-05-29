@@ -16,7 +16,6 @@ public class Habitation {
     private int rooms;
     private int bathrooms;
     private String description;
-    private boolean available;
     private String address;
     private String city;
     private String country;
@@ -184,14 +183,6 @@ public class Habitation {
         this.description = description;
     }
 
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -241,7 +232,6 @@ public class Habitation {
                 ", rooms=" + rooms +
                 ", bathrooms=" + bathrooms +
                 ", description='" + description + '\'' +
-                ", available=" + available +
                 ", address='" + address + '\'' +
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
