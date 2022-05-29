@@ -67,7 +67,7 @@
                                 </c:choose>
                             </td>
                             <td><form action="/messaging/${exchange.exchangeId}" method="GET">
-                                <input type="submit" name="seeExchange" value="See the exchange"/>
+                                <input type="submit" name="seeExchange" value="See the exchange" style="cursor:pointer;color:white;padding: 15px 30px; border-radius: 10px; border: none; background: #008489"/>
                             </form></td>
                         </div>
                     </c:forEach>
