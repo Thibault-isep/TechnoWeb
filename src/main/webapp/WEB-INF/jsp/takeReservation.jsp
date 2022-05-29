@@ -58,7 +58,6 @@
                 <td><input type="date" name="userDateOfEnd" value="${reservationPeriod.end}"></td>
                 <td>
                     <select name="habitationToExchangeId"/>
-                    <option>--Please choose an option--</option>
                     <c:forEach items="${habitationsToExchange}" var="habitation">
                         <option name="habitationToExchange" value="${habitation.habitationId}">${habitation.name}</option>
                     </c:forEach>

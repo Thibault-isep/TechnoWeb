@@ -27,7 +27,7 @@ public class Rating {
     @JoinColumn(name = "habitation_id")
     private Habitation habitation;
 
-    public Rating(){}
+    public Rating() {}
 
     public Rating(int rate, Habitation habitation, User user, String description) {
         this.rate = rate;
