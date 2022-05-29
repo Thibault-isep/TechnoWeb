@@ -41,7 +41,7 @@ public class HabitationController {
     }
 
     @RequestMapping(value = "habitation/search")
-    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, @RequestParam(defaultValue = "") String dateOfStartString, @RequestParam(defaultValue = "") String dateOfEndString, HttpSession session) {
+    public String habitationSearch(Model model, @RequestParam(name = "habitationSearch", defaultValue = "") String userSearch, @RequestParam int Beds, @RequestParam(defaultValue = "") String dateOfStartString, @RequestParam(defaultValue = "") String dateOfEndString, HttpSession session) {
         if (session.getAttribute("userId") != null) {
             User user = getUserBySession(session);
             model.addAttribute("user", user);
@@ -91,6 +91,7 @@ public class HabitationController {
         for (Habitation h: habitations){
             Equipments.add(equipmentRepository.getEquipmentByHabitation(h));
         }
+        model.addAttribute("Beds", Beds);
         model.addAttribute("Equipments",Equipments);
         model.addAttribute("MaxBeds", habitationRepository.getMaxHabitation());
         return "searchResults";

@@ -123,7 +123,7 @@
         <c:forEach items="${photos}" var="photo" varStatus="loop">
             <div class="gallery-img-${loop.index + 1}">
                 <img src="../../../${photos[loop.index]}">
-                <a href="/admin/user/${userId}/habitations/deleteimage/${loop.index}">Delete this image</a>
+                <a href="/admin/user/${userId}/habitations/delete-image/${loop.index}">Delete this image</a>
             </div>
         </c:forEach>
     </div>

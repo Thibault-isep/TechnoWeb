@@ -70,7 +70,7 @@
                 </div>
                 <div class="other-input">
                     <label>Travelers</label>
-                    <input type="number" placeholder="Add Travelers">
+                    <input name="Beds" type="number" placeholder="Add Travelers">
                 </div>
                 <button type="submit" name="action" value="search"><img src="icons/search.png"></button>
             </form>

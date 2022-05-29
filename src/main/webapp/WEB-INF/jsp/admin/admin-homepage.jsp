@@ -11,5 +11,5 @@
 </head>
 <body>
 <h1>Bonjour ${user.username}</h1>
-<a href="/admin/userlist">Liste des utilisateurs</a>
+<a href="/admin/user-list">Liste des utilisateurs</a>
 </body>

@@ -50,7 +50,7 @@
             <div class="other-input">
                 <label for="Beds"><small>Beds</small></label>
                 <div style="display: flex">
-                    <input type="range" id="Beds" name="rooms" min="1" max="${MaxBeds}" value="1" step="1" oninput="document.getElementById('AfficheRange').textContent=value"/><span id="AfficheRange">1</span>
+                    <input type="range" id="Beds" name="rooms" min="1" max="${MaxBeds}" step="1" value="${Beds}" oninput="document.getElementById('AfficheRange').textContent=value"/><span id="AfficheRange">${Beds}</span>
                 </div>
             </div>
             <div class="other-input">
