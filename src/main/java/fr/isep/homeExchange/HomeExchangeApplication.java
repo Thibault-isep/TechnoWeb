@@ -55,7 +55,8 @@ public class HomeExchangeApplication {
         reservationRequestRepository.saveAll(reservations);
         Rating rate1 = new Rating(5, hab1, Barth,"Belle terrasse");
         Rating rate2 = new Rating(4, hab2, Thibault, "Maison très propre et agréable");
-        List<Rating> ratings = Arrays.asList(rate1, rate2);
+        Rating rate3 = new Rating(4, hab2, Thibault, "Maison très propre et agréable :)");
+        List<Rating> ratings = Arrays.asList(rate1, rate2,rate3);
         ratingRepository.saveAll(ratings);
 
         Exchange exchange1 = new Exchange(Barth, Thibault);

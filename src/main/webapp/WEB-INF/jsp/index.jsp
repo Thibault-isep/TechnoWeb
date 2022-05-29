@@ -60,11 +60,11 @@
                     <label>Location</label>
                     <input type="text" name="habitationSearch" placeholder="Where do you want to go?">
                 </div>
-                <div class="date-of-start-input">
+                <div class="date-of-start-input" style="flex: 0.4">
                     <label>Check In</label>
                     <input type="date" name="dateOfStartString" placeholder="Add Date">
                 </div>
-                <div class="date-of-end-input">
+                <div class="date-of-end-input" style="flex: 0.4">
                     <label>Check Out</label>
                     <input type="date" name="dateOfEndString" placeholder="Add Date">
                 </div>
@@ -125,11 +125,7 @@
             <p>Sed posuere sem euismod malesuada suscipit. Etiam ac quam vitae sem pulvinar ornare in tincidunt enim. Sed ex lorem, ullamcorper sit amet nisi sed, laoreet pretium nulla. Suspendisse sed dictum orci, quis tincidunt ante. Proin auctor iaculis odio, non dignissim dolor sagittis ut. Vestibulum mollis sed turpis ac volutpat. Donec consectetur dolor ullamcorper, volutpat ex eu, ornare velit. Quisque pulvinar porttitor massa vel efficitur. Proin commodo cursus dui, sit amet dignissim est facilisis quis. Fusce iaculis diam congue tellus blandit interdum. Nullam feugiat ac leo quis tempus. Donec tincidunt lacinia ante, eget lobortis nulla sagittis ac. Nullam accumsan justo metus, quis tincidunt ipsum interdum sed. Quisque a commodo justo, ut imperdiet neque. In ultricies ipsum facilisis faucibus consectetur. Aenean sit amet eleifend diam.</p>
         </div>
     </div>
-    <div class="cta" style="background-image: linear-gradient(to right, #3f2321, transparent), url('images/contact.png');">
-        <h3>Questions about accommodation?</h3>
-        <p>Do not hesitate to contact us !</p>
-        <a href="#" class="cta-btn">Contact</a>
-    </div>
+    <div style="height: 300px"></div>
 </div>
 </body>
 </html>

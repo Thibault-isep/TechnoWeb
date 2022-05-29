@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,6 +66,20 @@
             Kitchen</p>
     </div>
     <hr class="line">
+    <div style="display: flex; flex-direction: column; justify-content: center;">
+        <h2 style="font-weight: 500;">Services & Constraints</h2>
+        <br>
+        <p><strong>Services:</strong></p>
+        <ul style="list-style: none">
+            <li style="margin-left: 50px;">${habitation.services}</li>
+        </ul>
+        <br>
+        <p><strong>Constraints:</strong></p>
+        <ul style="list-style: none">
+            <li style="margin-left: 50px;">${habitation.constraints}</li>
+        </ul>
+    </div>
+    <hr class="line">
     <div style="display: flex;justify-content: space-between;align-items: center;">
         <div class="host">
             <div>
@@ -85,20 +99,29 @@
         </div>
     </div>
     <hr class="line">
-    <div>
+    <div class="">
         <h2 class="sub-title">Comments</h2>
-        <c:forEach var="rating" items="${ratings}">
-            <div class="comments">
+        <c:forEach var="rating" items="${ratings}" varStatus="loop">
+            <div class="comments" style="display: flex; justify-content: space-around; height: 100px; flex-direction: column;">
                 <div class="user-rating" style="display: flex; flex-direction: column">
                     <span style="font-size: 16px;line-height: 19px">${rating.user.username}</span>
                     <span style="font-size: 12px;line-height: 14px;">${rating.user.city}</span>
                 </div>
-
+                <div class="rating" style="display: flex;">
+                    <i class="fa-solid fa-star"></i><p>${rating.rate}</p>
+                </div>
                 <div class="rating">
-                    <p>${rating.rate}</p>
                     <p>${rating.description}</p>
                 </div>
             </div>
+            <c:choose>
+                <c:when test="${fn:length(ratings) == loop.index +1}">
+
+                </c:when>
+                <c:otherwise>
+                    <hr class="line" style="background: #D3D3D3;">
+                </c:otherwise>
+            </c:choose>
         </c:forEach>
     </div>
     <hr class="line">
