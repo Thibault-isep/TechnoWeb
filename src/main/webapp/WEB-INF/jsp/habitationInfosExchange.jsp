@@ -54,7 +54,8 @@
     <div class="gallery">
         <div class="gallery-img-1"><img src="../../images/house.jpg"></div>
         <c:forEach items="${photos}" var="photo" varStatus="loop">
-            <div><img class="gallery-img-${loop.index + 2}" src="../${photo}"></div></c:forEach>
+            <div><img class="gallery-img-${loop.index + 2}" src="../${photo}"></div>
+        </c:forEach>
     </div>
 
     <div class="small-details">
@@ -73,7 +74,8 @@
                 <p>${habitation.user.description}</p>
                 <form action="/messaging-from-habitation" method="POST">
                     <input type="hidden" name="habitationId" value="${habitation.habitationId}"/>
-                    <input class="reservation" style="border: none;background: #008489;color: white;cursor: pointer;" type="submit" name="seeMessaging" value="Contact the owner"/>
+                    <input class="reservation" style="border: none;background: #008489;color: white;cursor: pointer;"
+                           type="submit" name="seeMessaging" value="Contact the owner"/>
                 </form>
             </div>
         </div>
@@ -102,7 +104,6 @@
                 src="https://www.google.com/maps/embed/v1/place?q=${habitation.city}, France&amp;key=AIzaSyDOwVaIg70MQVTpE86Ykwo1zzz7BOLwwuk">
         </iframe>
     </div>
-
 </div>
 </body>
 </html>

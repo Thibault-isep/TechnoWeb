@@ -28,6 +28,7 @@
         <div class="right-form">
             <div style="text-align: center; height: 35%;">
                 <h1 class="sub-title" style="font-weight: 800; font-size: 6.2vw; color: white;">Connexion</h1>
+                <h2>${errorMsg}</h2>
             </div>
 
             <div style="height: 75%; display: flex; align-items: center;justify-content: center">
