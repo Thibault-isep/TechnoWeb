@@ -50,24 +50,24 @@
             <h1 style="padding-top: 1%;">Enter your home caracteristics</h1>
             <div class="search-bar" style="display: flex;flex-direction: row; justify-content: space-around">
                 <div class="other-input">
-                    <label for="Type">Type d'habitation</label>
+                    <label for="Type">Habitation's Type</label>
                     <select id="Type" name="Type"/>
-                        <option value="Appartement">Appartement</option>
-                        <option value="House">Maison</option>
+                        <option value="Apartment">Apartment</option>
+                        <option value="House">House</option>
                         <option value="Studio">Studio</option>
-                        <option value="Chambre">chambre</option>
+                        <option value="Room">Room</option>
                     </select>
                 </div>
                 <div class="other-input">
-                    <label for="Name">Nom de l'habitation</label>
+                    <label for="Name">Habitation's name</label>
                     <input name="Name" id="Name" type="text" placeholder="Name" required>
                 </div>
                 <div class="other-input">
-                    <label for="Address">Adresse</label>
+                    <label for="Address">Address</label>
                     <input name="Address" id="Address" type="text" placeholder="Address" required>
                 </div>
                 <div class="other-input">
-                    <label for="Country">Pays</label>
+                    <label for="Country">Country</label>
                     <input name="Country" id="Country" type="text" placeholder="Country" required>
                 </div>
             </div>
@@ -75,19 +75,19 @@
         <div class="container" id="part2">
             <div class="search-bar" style="display: flex;flex-direction: row; justify-content: space-around">
                 <div class="other-input">
-                    <label for="Zip_Code">Code postal</label>
+                    <label for="Zip_Code">Zip Code</label>
                     <input name="Zip_Code" id="Zip_Code" type="text" placeholder="Zip_Code" required>
                 </div>
                 <div class="other-input">
-                    <label for="City">Ville</label>
+                    <label for="City">City</label>
                     <input name="City" id="City" type="text" placeholder="City" required>
                 </div>
                 <div class="other-input">
-                    <label for="Rooms">Nombre de pièces</label>
+                    <label for="Rooms">Rooms</label>
                     <input name="Rooms" id="Rooms" type="number" placeholder="Rooms" required>
                 </div>
                 <div class="other-input" style="display: flex;flex-direction: column;">
-                    <label for="Bed">Lits</label>
+                    <label for="Bed">Beds</label>
                     <input name="Bed" id="Bed" type="number" placeholder="Bed" required>
                 </div>
             </div>
@@ -95,7 +95,7 @@
         <div class="container" id="part3">
             <div class="search-bar" style="display: flex;flex-direction: row; justify-content: space-around">
                 <div class="other-input">
-                    <label for="Bathrooms">Salle de bain</label>
+                    <label for="Bathrooms">Bathrooms</label>
                     <input name="Bathrooms" id="Bathrooms" type="number" placeholder="Bathrooms" required>
                 </div>
                 <div class="other-input">
@@ -103,7 +103,7 @@
                     <input name="Services" id="Services" type="text" placeholder="Services" required>
                 </div>
                 <div class="other-input">
-                    <label for="Constraints">Contraintes</label>
+                    <label for="Constraints">Constraints</label>
                     <input name="Constraints" id="Constraints" type="text" placeholder="Constraints" required>
                 </div>
                 <div class="other-input" style="display: flex;flex-direction: column;">
