@@ -87,7 +87,7 @@
                         <a href="/habitation/${h.habitationId}/${reservationPeriods[loop.index].reservationPeriodId}" style="text-decoration: none;">
                             <div class="house ${h.habitationId}">
                                 <div class="house-img">
-                                    <img src="../images/house.jpg">
+                                    <img src="${h.photos[0]}">
                                 </div>
                                 <div class="house-info">
                                     <p>Entire ${h.type} in ${h.city}</p>
