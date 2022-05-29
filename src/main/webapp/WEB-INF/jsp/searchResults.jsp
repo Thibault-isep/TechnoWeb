@@ -85,7 +85,7 @@
                     <p id="error"></p>
                     <c:forEach items="${habitations}" var="h" varStatus="loop">
                         <a href="/habitation/${h.habitationId}/${reservationPeriods[loop.index].reservationPeriodId}" style="text-decoration: none;">
-                            <div class="house" id="${h.habitationId}">
+                            <div class="house ${h.habitationId}">
                                 <div class="house-img">
                                     <img src="../images/house.jpg">
                                 </div>
@@ -194,17 +194,25 @@
             city = habitation[i].city;
             bed = habitation[i].bed;
             bathrooms = habitation[i].bathrooms;
-            if(!(typeFilter === "All")){
+            if(!(typeFilter == "All")){
                 if (city.toLowerCase().indexOf(cityFilter) < 0 || bed < bedFilter || bathrooms < bathroomsFilter || type.indexOf(typeFilter) < 0) {
-                    document.getElementById(habitation[i].habitationId).style.display = "none";
+                    for (var j = 0; j < document.getElementsByClassName(habitation[i].habitationId).length; j++) {
+                        document.getElementsByClassName(habitation[i].habitationId)[j].style.display = "none";
+                    }
                 } else {
-                    document.getElementById(habitation[i].habitationId).style.display = "";
+                    for (var j = 0; j < document.getElementsByClassName(habitation[i].habitationId).length; j++) {
+                        document.getElementsByClassName(habitation[i].habitationId)[j].style.display = "";
+                    }
                 }
             }else{
                 if (city.toLowerCase().indexOf(cityFilter) < 0 || bed < bedFilter || bathrooms < bathroomsFilter) {
-                    document.getElementById(habitation[i].habitationId).style.display = "none";
+                    for (var j = 0; j < document.getElementsByClassName(habitation[i].habitationId).length; j++) {
+                        document.getElementsByClassName(habitation[i].habitationId)[j].style.display = "none";
+                    }
                 } else {
-                    document.getElementById(habitation[i].habitationId).style.display = "";
+                    for (var j = 0; j < document.getElementsByClassName(habitation[i].habitationId).length; j++) {
+                        document.getElementsByClassName(habitation[i].habitationId)[j].style.display = "";
+                    }
                 }
             }
 
