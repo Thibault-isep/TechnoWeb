@@ -110,7 +110,6 @@
                     <i class="fa-solid fa-star"></i><p>${rating.rate}</p>
                 </div>
                 <div class="rating">
-                    <p>Note : ${rating.rate}</p>
                     <p>${rating.description}</p>
                 </div>
             </div>
