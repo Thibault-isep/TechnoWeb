@@ -104,7 +104,7 @@
             <c:choose>
                 <c:when test="${ratingFromUser != null}">
                     <div>
-                        <strong>Modify your comment</strong>
+                        <strong>Edit your comment</strong>
                         <form class="" action="/edit-my-rating/${habitation.habitationId}/${ratingFromUser.ratingId}" method="POST" style="width: 200px;height: 100px;">
                             <div style="display: flex; flex-direction: column;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; padding: 10px; border-radius: 10px;">
                                 <div style="display: flex;flex-direction: column;">
@@ -115,10 +115,8 @@
                                     <label>Rating</label>
                                     <input type="number" name="ratingRate" value="${ratingFromUser.rate}" min="0" max="5" required>
                                 </div>
-
                                 <input type="submit" style="border:none; border-radius:10px; margin-top: 10px;cursor: pointer; padding: 10px; background: #008489;color: white;" name="editRating" value="Edit my rating"/>
                                 <input type="hidden" name="reservationPeriodId" value="${reservationPeriod.reservationPeriodId}"/>
-                                </tr>
                             </div>
                         </form>
                     </div>
@@ -137,6 +135,7 @@
                                     <input type="number" name="ratingRate" min="0" max="5" required>
                                 </div>
                                 <input type="submit" style="border:none; border-radius:10px; margin-top: 10px;cursor: pointer; padding: 10px; background: #008489;color: white;" name="addRating" value="Add my rating"/>
+
                                 <input type="hidden" name="reservationPeriodId" value="${reservationPeriod.reservationPeriodId}"/>
                             </div>
                         </form>
@@ -161,7 +160,6 @@
                     </div>
                     <c:choose>
                         <c:when test="${fn:length(ratings) == loop.index +1}">
-
                         </c:when>
                         <c:otherwise>
                             <hr class="line" style="background: #D3D3D3;">
