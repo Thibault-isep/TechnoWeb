@@ -100,6 +100,46 @@
     <hr class="line">
     <div class="">
         <h2 class="sub-title">Comments</h2>
+            <c:choose>
+                <c:when test="${ratingFromUser != null}">
+                    <div>
+                        <p>Modify your comment</p>
+                        <form class="" action="/edit-my-rating/${habitation.habitationId}/${ratingFromUser.ratingId}" method="POST">
+                            <table>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Rate</th>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="ratingDescription" value="${ratingFromUser.description}" required></td>
+                                    <td><input type="number" name="ratingRate" value="${ratingFromUser.rate}" required></td>
+                                    <td><input type="submit" style="cursor: pointer;" name="editRating" value="Edit my rating"/></td>
+                                    <input type="hidden" name="reservationPeriodId" value="${reservationPeriod.reservationPeriodId}"/>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div>
+                        <p>Add your comment</p>
+                        <form class="" action="/add-my-rating/${habitation.habitationId}" method="POST">
+                            <table>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Rate</th>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="ratingDescription" required></td>
+                                    <td><input type="number" name="ratingRate" required></td>
+                                    <td><input type="submit" style="cursor: pointer;" name="addRating" value="Add my rating"/></td>
+                                    <input type="hidden" name="reservationPeriodId" value="${reservationPeriod.reservationPeriodId}"/>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </c:otherwise>
+            </c:choose>
         <c:forEach var="rating" items="${ratings}" varStatus="loop">
             <div class="comments" style="display: flex; justify-content: space-around; height: 100px; flex-direction: column;">
                 <div class="user-rating" style="display: flex; flex-direction: column">

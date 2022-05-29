@@ -101,6 +101,8 @@ public class HabitationController {
     public String habitationInfo(Model model, @PathVariable("habitationId") int habitationId, @PathVariable("reservationPeriodId") int reservationPeriodId, HttpSession session) {
         if (session.getAttribute("userId") != null) {
             User user = getUserBySession(session);
+            Rating ratingFromUser = ratingRepository.getRatingByUserUserIdAndHabitationHabitationId(user.getUserId(), habitationId);
+            model.addAttribute("ratingFromUser", ratingFromUser);
             model.addAttribute("user", user);
         }
         Habitation habitation = habitationRepository.getHabitationByHabitationId(habitationId);
