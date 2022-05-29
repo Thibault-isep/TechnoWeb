@@ -117,14 +117,13 @@
                                 </div>
                                 <input type="submit" style="border:none; border-radius:10px; margin-top: 10px;cursor: pointer; padding: 10px; background: #008489;color: white;" name="editRating" value="Edit my rating"/>
                                 <input type="hidden" name="reservationPeriodId" value="${reservationPeriod.reservationPeriodId}"/>
-
                             </div>
                         </form>
                     </div>
                 </c:when>
                 <c:otherwise>
                     <div>
-                        <p>Add your comment</p>
+                        <strong>Add your comment</strong>
                         <form class="" action="/add-my-rating/${habitation.habitationId}" method="POST" style="width: 200px;height: 100px;">
                             <div style="display: flex; flex-direction: column;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; padding: 10px; border-radius: 10px;">
                                 <div style="display: flex;flex-direction: column;">
@@ -135,7 +134,8 @@
                                     <label>Rating</label>
                                     <input type="number" name="ratingRate" min="0" max="5" required>
                                 </div>
-                                <input type="submit"  style="border:none; border-radius:10px; margin-top: 10px;cursor: pointer; padding: 10px; background: #008489;color: white;" name="addRating" value="Add my rating"/>
+                                <input type="submit" style="border:none; border-radius:10px; margin-top: 10px;cursor: pointer; padding: 10px; background: #008489;color: white;" name="addRating" value="Add my rating"/>
+
                                 <input type="hidden" name="reservationPeriodId" value="${reservationPeriod.reservationPeriodId}"/>
                             </div>
                         </form>
@@ -143,28 +143,31 @@
                 </c:otherwise>
             </c:choose>
         </div>
-        <c:forEach var="rating" items="${ratings}" varStatus="loop">
-            <div class="comments" style="display: flex; justify-content: space-around; height: 100px; flex-direction: column;">
-                <div class="user-rating" style="display: flex; flex-direction: column">
-                    <span style="font-size: 16px;line-height: 19px">${rating.user.username}</span>
-                    <span style="font-size: 12px;line-height: 14px;">${rating.user.city}</span>
-                </div>
-                <div class="rating" style="display: flex;">
-                    <i class="fa-solid fa-star"></i><p>${rating.rate}</p>
-                </div>
-                <div class="rating">
-                    <p>${rating.description}</p>
-                </div>
+        <div style="width: 800px;">
+            <div style="display: flex; flex-direction: column;">
+                <c:forEach var="rating" items="${ratings}" varStatus="loop">
+                    <div class="comments" style="display: flex; justify-content: space-around; height: 100px; flex-direction: column;">
+                        <div class="user-rating" style="display: flex; flex-direction: column">
+                            <span style="font-size: 16px;line-height: 19px">${rating.user.username}</span>
+                            <span style="font-size: 12px;line-height: 14px;">${rating.user.city}</span>
+                        </div>
+                        <div class="rating" style="display: flex;">
+                            <i class="fa-solid fa-star"></i><p>${rating.rate}</p>
+                        </div>
+                        <div class="rating">
+                            <p>${rating.description}</p>
+                        </div>
+                    </div>
+                    <c:choose>
+                        <c:when test="${fn:length(ratings) == loop.index +1}">
+                        </c:when>
+                        <c:otherwise>
+                            <hr class="line" style="background: #D3D3D3;">
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
             </div>
-            <c:choose>
-                <c:when test="${fn:length(ratings) == loop.index +1}">
-
-                </c:when>
-                <c:otherwise>
-                    <hr class="line" style="background: #D3D3D3;">
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
+        </div>
     </div>
     <hr class="line">
     <div class="map">
