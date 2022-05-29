@@ -90,14 +90,19 @@ public class UserController {
     @PostMapping("login")
     public String verifLogin(ModelMap modelMap, @RequestParam String Email, @RequestParam String Password, Model model, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
+        if (userRepository.getUserByEmail(Email) == null) {
+            modelMap.put("errorMsg", "Please provide the correct username and password");
+            return "login";
+        }
         User user = userRepository.getUserByEmail(Email);
         if (user.getPassword().equals(encoder(Password))) {
             session.setAttribute("userId", user.getUserId());
             model = createUserModel(user, model);
             return "redirect:/";
+        } else {
+            modelMap.put("errorMsg", "Please provide the correct username and password");
+            return  "login";
         }
-        modelMap.put("errorMsg", "Please provide the correct username and password");
-        return "login";
     }
 
     @GetMapping("logout")
