@@ -169,9 +169,6 @@
                     </c:choose>
                 </c:forEach>
             </div>
-
-
-
         </div>
     </div>
     <hr class="line">
