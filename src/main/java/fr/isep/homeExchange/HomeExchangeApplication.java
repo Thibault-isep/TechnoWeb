@@ -31,9 +31,11 @@ public class HomeExchangeApplication {
         MessageRepository messageRepository = configurableApplicationContext.getBean(MessageRepository.class);
         EquipmentRepository equipmentRepository = configurableApplicationContext.getBean(EquipmentRepository.class);
 
-        User Barth = new User("Barth", "Est", "estignard.barthelemy@gmail.com", "BarthEst", encoder("Password123"), LocalDate.of(2000, 11, 10), "Man", "10 rue Jules Ferry", "Levallois", "92300", "0606060606", "I'm Barthelemy Estignard", "ROLE_USER");
-        User Thibault = new User("Thibault", "Chanier", "thibchan@gmail.fr", "ThibChan", encoder("Pass12"), LocalDate.of(1911, 01, 02), "Woman", "24 rue de Vanves", "Issy-les-Moulineaux", "92130", "0707070707", "Too old for that stuff", "ROLE_ADMIN");
-        List<User> users = Arrays.asList(Barth, Thibault);
+        User Barth = new User("Barthélémy", "Estignard", "estignard.barthelemy@gmail.com", "BarthEst", encoder("BarthPass12"), LocalDate.of(2000, 11, 10), "Man", "10 rue Jules Ferry", "Levallois", "92300", "0675893241", "I'm Barthelemy Estignard", "ROLE_ADMIN");
+        User Thibault = new User("Thibault", "Chanier", "thibchan@gmail.com", "ThibChan", encoder("PassThibChan45"), LocalDate.of(2000, 03, 8), "Man", "24 rue de Vanves", "Issy-les-Moulineaux", "92130", "0778416985", "Too old for that stuff", "ROLE_ADMIN");
+        User Krishan = new User("Krishan", "Navas", "krishan.navas@gmail.com", "KrishNav", encoder("KrishPass89"), LocalDate.of(2000,8,12), "Man", "8 Boulevard Poissonière", "Paris", "75009", "0645974032", "Appartement in Paris", "ROLE_USER");
+        User Jad = new User("Jad", "Hariri", "jad.hariri", "JadHari", encoder("JadHari"), LocalDate.of(2000, 9, 28), "Man", "129 Avenue du Maine", "Paris", "75014", "0649253781", "Appartement in Paris", "ROLE_USER");
+        List<User> users = Arrays.asList(Barth, Thibault, Krishan);
         userRepository.saveAll(users);
 
         List<String> Photos = new ArrayList<String>(Arrays.asList("../images/house.jpg", "../images/house.jpg", "../images/house.jpg", "../images/house.jpg"));
