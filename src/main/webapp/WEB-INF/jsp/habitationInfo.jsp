@@ -52,9 +52,8 @@
         </div>
     </div>
     <div class="gallery">
-        <div class="gallery-img-1"><img src="../../images/house.jpg"></div>
         <c:forEach items="${photos}" var="photo" varStatus="loop">
-        <div><img class="gallery-img-${loop.index + 2}" src="../${photo}"></div></c:forEach>
+        <div class="gallery-img-${loop.index + 1}"><img src="../${photo}"></div></c:forEach>
     </div>
 
     <div class="small-details">
@@ -95,7 +94,7 @@
                 </div>
 
                 <div class="rating">
-                    <p>${rating.rate}</p>
+                    <p>Note : ${rating.rate}</p>
                     <p>${rating.description}</p>
                 </div>
             </div>
