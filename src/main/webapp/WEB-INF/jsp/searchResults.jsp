@@ -65,7 +65,7 @@
                     <select id="Type">
                         <option value="All" selected="selected">All</option>
                         <option value="House">House</option>
-                        <option value="Flat">Flat</option>
+                        <option value="Apartment">Apartment</option>
                     </select>
                 </div>
             </div>

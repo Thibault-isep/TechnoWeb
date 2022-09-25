@@ -70,7 +70,7 @@
                             </div>
                             <div class="form-item">
                                 <label for="Password">Password</label>
-                                <input name="Password" id="Password" type="text" placeholder="Password" required>
+                                <input name="Password" id="Password" type="password" placeholder="Password" required>
                             </div>
                             <div class="form-item">
                                 <label for="Dob">Date of birth</label>
@@ -111,7 +111,7 @@
                             </div>
                             <div class="form-item">
                                 <label for="Zip_Code">ZipCode</label>
-                                <input name="Zip_Code" id="Zip_Code" type="text" placeholder="Zip_Code" required>
+                                <input name="Zip_Code" id="Zip_Code" type="text" placeholder="ZipCode" required>
                             </div>
                             <div class="form-item">
                                 <label for="Description">Description</label>
